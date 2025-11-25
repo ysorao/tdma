@@ -77,4 +77,7 @@ Rails.application.configure do
   
   config.web_console.allowed_ips = ['10.214.0.0/24', '10.80.90.0/24']
 
+  # Allow all hosts in development
+  config.hosts.clear
 end
+
