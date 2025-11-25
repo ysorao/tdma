@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-6">
+    <div class="row">
+      <div class="borde"><h4 class="style_title">Editar perfil</h4></div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-3 col-md-12">
+        <div id="imaginary_container">
+          <%= form_for @profile, url: {controller: '/specialists/especialista', action: 'edit_profile'}, html: {method: "put"} do |f| %>
+            <% if @profile.errors.any? %>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>No se puede actualizar este usuario por que: </strong>
+                    <ul>
+                      <% @profile.errors.full_messages.each do |msg| %>
+                      <li>
+                        <%= msg %>
+                      </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <div class="row">
+            <div class="form-group">
+                <!-- , class: "imgRedonda"-->
+                <% if @profile.photo? %>
+                  <%= image_tag(@profile.photo_url, class:"imgRedonda") %>
+                <%end%>
+                <%= f.file_field :photo, class: "form-control"%>
+                <%= f.hidden_field :photo_cache, value: @profile.photo_url %>
+              </div>  
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Nombre(s)</h4>
+                </div>
+                <%= f.text_field :name, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Apellidos(s)</h4>
+                </div>
+                <%= f.text_field :surnames, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Identificación</h4>
+                </div>
+                <%= f.text_field :number_document, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Tarjeta profesional</h4>
+                </div>
+                <%= f.text_field :professional_card, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Celular</h4>
+                </div>
+                <%= f.text_field :phone, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Correo electrónico</h4>
+                </div>
+                <%= f.text_field :email, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Contraseña</h4>
+                </div>
+                <%= f.password_field :password, id: "password-field", class: "form-control", required: true%>
+                <span toggle="#password-field" class="fa fa-fw fa-eye fa-lg field-icon toggle-password"></span>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Confirmar contraseña</h4>
+                </div>
+                <%= f.password_field :password_confirmation, id: "confirmation", class: "form-control", required: true%>
+                <span toggle="#confirmation" class="fa fa-fw fa-eye fa-lg field-icon toggle-password"></span>
+              </div>
+              <%= f.hidden_field :id %>
+              <div class="form-group">
+                <%= button_tag(type: "submit", class:"btn btn-primary btn-md") do %>
+                  Guardar <span class=""></span>
+                <% end %>
+              </div> 
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(".toggle-password").click(function() {
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    var input = $($(this).attr("toggle"));
+    if (input.attr("type") == "password") {
+      input.attr("type", "text");
+    } else {
+      input.attr("type", "password");
+    }
+  });
+</script>

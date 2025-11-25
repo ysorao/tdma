@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-6">
+    <div class="row">
+      <div class="borde"><h4 class="style_title">Buscar pacientes</h4></div>
+    </div>
+    <br>
+    <!-- Campos Lesión -->
+    <div class="row">
+      <div class="col-md-12 secondary_title">
+        <h4 class="control">Paciente</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3 col-md-12">
+        <div id="imaginary_container">
+          <%= form_tag(search_patient_clients_cliente_index_path, method: 'get') do %>
+            <div class="row">   
+              <div class="form-group"> 
+                <%= text_field_tag('search', nil, placeholder: "Ingrese el número de identificación del paciente", class: "form-control", required: true) %> 
+              </div>
+              <div class="form-group">
+                <%= button_tag(type: "submit", class:"btn btn-primary btn-md") do %>
+                  Buscar <span class="glyphicon glyphicon-search"></span>
+                <% end %>
+              </div>  
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="col-md-offset-1 col-md-10">
+    <div class="row">
+      <div class="col-md-12">
+        <p style="color:#578ab6;">Resultados de busqueda</p>
+        <div class="panel panel-default">
+          <table class="table table-hover" id="dev-table">
+            <thead>
+              <tr>
+                <th class="text-center border_color">
+                  Nombre
+                </th>
+                <th class="text-center border_color">
+                  Identificación  
+                </th>
+                <th class="text-center border_color">
+                  EPS
+                </th>
+                <th class="text-center border_color">
+                  Estado de la consulta  
+                </th>
+                <th class="text-center border_color">
+                  Compartir historia clinica 
+                </th>
+                <th class="text-center border_color">
+                  Imprimir 
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            <% @patient.each do |paciente| %>
+              <tr>
+                <td class="text-center"><%= paciente.name + ' ' + paciente.second_name.to_s + ' ' + paciente.last_name.to_s + ' ' + paciente.second_surname.to_s%></td>
+                <td class="text-center"><%= paciente.number_document%></td>
+                <td class="text-center"><%= paciente.patient_informations.last.insurance.nil? ? 'No tiene asociado' : paciente.patient_informations.last.insurance.name%></td>
+                <td class="text-center"><%= estado_consulta(paciente.patient_informations.last.status)%></td>
+                <td class="text-center">
+                  <%#= link_to(send_history_clinic_clients_cliente_path(id: paciente.id), method: :get, data: { confirm: 'Estás seguro de enviar la historia clínica?' }, class:"") do %>
+                    <!--<i class="fa fa-share-alt fa-2x"></i>-->
+                  <%#= end %>
+                  <button class="fa fa-share-alt fa-2x" data-toggle="modal" data-target="#edit_patient<%=paciente.id%>" id="">
+                  </button>
+                  <%= render partial: 'modal_edit_patient', locals: {patient: paciente}%>
+                </td>
+                <td class="text-center">
+                  <a href="/clients/cliente/generate_history_clinic.pdf?p=<%= paciente.id %>" target="_blank" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-print"></span></a>
+                </td>
+              </tr>
+            <%end%>
+              <% if @patient.blank? %>
+                <tr>
+                  <td colspan="6">
+                    <h3 class="text-center">ACTUALMENTE ESTA SECCION ESTA VACÍA</h3>
+                  </td>
+                </tr>
+              <%end%>
+            </tbody>
+          </table>
+        </div>
+        <%= link_to "Crear paciente", new_patient_clients_cliente_index_path, method: :get, class: "btn btn-primary" %>
+      </div>
+    </div> 
+  </div>
+</div>

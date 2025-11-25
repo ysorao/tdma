@@ -1,0 +1,22 @@
+<div id="todo">
+  <%= form_tag(assign_update_admin_mesa_ayuda_index_path(), method: 'put') do %>
+    <div class="seccion1">
+      <div class="barra_superior1">
+        Asignar ticket
+      </div>
+      <li class="lista"> 
+        <label><h2 id="name_esp">Nombre especialista</h2></label>
+        <%= select_tag(:other_admin, options_for_select(AdminUser.where(role: AdminUser::SOPORTE_TECNICO).collect {|r| [r.email, r.id] }), prompt: 'Seleccionar', class: 'select_espe', required: true) %> 
+        <%= hidden_field_tag(:desk_id, params[:id]) %>    
+      </li>  
+    </div> <!--CIERRA LA SECCIÓN--> 
+    <div class="botones1">
+       <%= button_tag(type: "submit", class:"btn btn-primary btn-lg") do %>
+         Asignar
+        <% end %>
+       <a class="boton_cancelar1" href="/admin/help_desks">
+         Cancelar
+       </a>
+    </div>
+  <%end%>
+</div>

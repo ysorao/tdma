@@ -1,0 +1,947 @@
+(function () {
+
+	var module = angular.module("nurse_consult-module", ['angularFileUpload']);
+
+	module.controller('NurseConsultController', ['$http', '$scope', 'FileUploader', function ($http, $scope, FileUploader) {
+		var self = this;
+		this.consult_id = null;
+    this.control_id = null;
+    this.etiology = [];
+    this.ulcer_etiology = null;
+    this.handle = [];
+    this.ulcer_handle = null;
+    this.signs = "1,2,3,4";
+    this.vector = [];
+    this.infection_signs = null;
+    this.tissue = "1,2,3,4,5,6";
+    this.vector2 = [];
+    this.wound_tissue = null;
+    this.correct_save = false;
+
+		this.initialize = function (user_email, user_token, consult_id, control_id) {
+			self.user_email = user_email;
+			self.user_token = user_token;
+			this.consult_id = consult_id;
+      this.control_id = control_id;
+      self.CreateSpecialistResponse();
+      self.get_patient_information();
+		}
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-09-07
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Crea la respuesta del especialista temporal
+    */
+    this.CreateSpecialistResponse = function() {
+      var params = {
+        specialist_response: {
+          consultation_id: this.consult_id,
+          consultation_control_id: this.control_id
+        },
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.post("/api/v1/enfermera/nurse_consult/create_specialist_response", params).then(
+        function(res, status){
+        },
+        function(res, status){
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-14
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Actualizar analisis de la consulta en la respuesta de la especialista enfermera
+    */
+    this.UpdateNurseConsult = function() {
+
+      var params = {  
+        specialist_response: {
+          consultation_id: self.consult_id,
+          consultation_control_id: self.control_id,
+          case_analysis: self.case_analysis,
+          analysis_description: self.analysis_description, 
+        },
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      debugger;
+      self.id = self.consult_id == "" ? self.control_id : self.consult_id
+
+      $http.put("/api/v1/enfermera/nurse_consult/"+ self.id +"/update_nurse_consultation", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#edit_consult').prop('disabled', true);
+          $('#edit_consult').css("background-color", "grey");
+          $('#edit_consult').css("color", "white");
+          self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+        }
+      );    
+    }
+
+    //EVENTO KEYUP CAMPOS INPUT MANEJO DE COLORES
+    $scope.show_button = function (boton, event) {
+      debugger;
+      if (event.keyCode === 8) {
+      }else{
+        $('#'+boton).prop('disabled', false);
+        $('#'+boton).css("background-color", "green"); 
+        $('#'+boton).css("color", "white");
+      }
+
+      //Verificar que se haya guardado la informacion (activacion de botones)
+      if(!$('#'+boton).is(":disabled")) {
+        self.correct_save = true;
+      }else{
+        self.correct_save = false;
+      }
+      debugger;
+    };
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-14
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Edita el tratamiento recomendado por el especialista enfermera
+    */
+    this.EditNurseConsult = function() {
+
+      var params = {  
+        recommended_treatment: self.recommended_treatment,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      self.id = self.consult_id == "" ? self.control_id : self.consult_id
+
+      $http.put("/api/v1/enfermera/nurse_consult/"+ self.id, params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#save_recommend').prop('disabled', true);
+          $('#save_recommend').css("background-color", "grey");
+          $('#save_recommend').css("color", "white");
+          self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          $('#alert_notification').show(200).delay(5000).hide(200);
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-14
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Almacenar proximo control
+    */
+    this.UpdateControlNurse = function() {
+
+      var params = {  
+        response_specialist: {
+          control_recommended: self.control_recommended,  
+          consultation_id: this.consult_id,
+          consultation_control_id: this.control_id
+        },
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      $http.post("/api/v1/enfermera/nurse_consult/create_next_control", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);   
+          $('#save_control').prop('disabled', true);
+          $('#save_control').css("background-color", "grey");
+          $('#save_control').css("color", "white");
+          self.correct_save = false;
+          //$('#input_control').prop('disabled', true);
+          
+          //$('#input_control').val("");
+        },
+        function(res, status){
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+        }
+      );    
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-14
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Almacenar requerimiento
+    */
+    this.NewRequestNurse = function() {
+
+      var params = {  
+        request: {
+          comment: self.comment,
+          type_request: self.type_request,  
+          consultation_id: this.consult_id,
+          consultation_control_id: this.control_id,
+        },
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      $http.post("/api/v1/enfermera/nurse_consult/create_request", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('.field_req').prop('disabled', true);
+          $('#btn_req').prop('disabled', true);
+          $('#btn_req').css("background-color", "grey");
+          $('#btn_req').css("color", "white");
+          self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          self.request = res.data.request
+        }
+      );    
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-14
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista toda la información de respuesta del especialista enfermera
+    */
+    this.get_nurse_information = function() {
+      var params = {
+        consultation_id: this.consult_id,
+        consultation_control_id: this.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/enfermera/nurse_consult/get_info_nurse", {params: params})
+      .then(function(response){
+        debugger;
+        self.info_specialist = response.data;
+        self.name_complete = response.data.specialist.name + ' ' + response.data.specialist.surnames
+        self.specialist_response = response.data.specialist_response
+        self.request = response.data.request
+        self.remission = response.data.remission
+
+      })
+      .catch(function(fallback){     
+      });    
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-14
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista la historia clinica del paciente
+    */
+    this.get_patient_information = function() {
+      debugger;
+      var params = {
+        consultation_id: self.consult_id,
+        consultation_control_id: self.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/enfermera/nurse_consult/show_info", {params: params})
+      .then(function(response){
+        self.information = response.data;
+        self.name_complete = response.data.patient.name + ' ' + response.data.patient.second_name + ' ' + response.data.patient.last_name
+        self.requests_consult = response.data.request
+        self.requests_control = response.data.nurse_control == null ? 0 : response.data.nurse_control.consultation_control.request
+
+
+        //Información de el Diagnostico etimologico de la ulcera
+        var a = response.data.nurse_consult.ulcer_etiology.split(",")
+        for (i = 0; i < a.length; i++) { 
+          switch (a[i]) {
+            case "1":
+              self.etiology.push("Venosa")
+              break;
+            case "2":
+              self.etiology.push("Arterial")
+              break;
+            case "3":
+              self.etiology.push("Diabetes")
+              break;
+            case "4":
+              self.etiology.push("Úlcera por presión")
+              break;
+            case "5":
+              self.etiology.push("Neuropatica")
+              break;
+            case "6":
+              self.etiology.push("Otra")
+              break;
+            case "7":
+              self.etiology.push("Sin diagnóstico")
+              break;
+          }
+        }
+
+        debugger;
+
+        //Información del Manejo de ulcera
+        var b = response.data.nurse_consult.ulcer_handle.split(",")
+        for (j = 0; j < b.length; j++) { 
+          switch (b[j]) {
+            case "1":
+              self.handle.push("Medidas de compresión(medias, vendaje elástico")
+              break;
+            case "2":
+              self.handle.push("Lavado SSN")
+              break;
+            case "3":
+              self.handle.push("Gasas vaselinadas")
+              break;
+            case "4":
+              self.handle.push("Colagenasa")
+              break;
+            case "5":
+              self.handle.push("Apósito")
+              break;
+            case "6":
+              self.handle.push("Otro")
+              break;
+          }
+        }
+
+        //Información de signos de infección
+        var signos = self.signs.split(",")
+        for (z = 0; z < signos.length; z++) {
+          if (response.data.nurse_consult.infection_signs.indexOf(signos[z]) > -1){
+            self.vector.push("Sí")
+          }else{
+            self.vector.push("No")
+          }
+        }
+
+
+        //Información de tejido de la herida
+        var tejido = self.tissue.split(",")
+        for (y = 0; y < tejido.length; y++) {
+          if (response.data.nurse_consult.wound_tissue.indexOf(tejido[y]) > -1){
+            self.vector2.push("Sí")
+          }else{
+            self.vector2.push("No")
+          }
+        }
+
+        self.ulcer_etiology = self.etiology
+        self.ulcer_handle = self.handle
+        self.infection_signs = self.vector
+        self.wound_tissue = self.vector2
+        
+        setTimeout(function(){
+          $("#jquery_jplayer_3").jPlayer({
+            ready: function () {
+              $(this).jPlayer("setMedia", {
+                mp3: self.information.nurse_consult.consultation_reason_audio
+              });
+            },
+
+            cssSelectorAncestor: '#jp_container_3',
+            cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+            loop: false, 
+            volume: 7,
+            swfPath: "/jplayer",
+            supplied: 'mp3',
+            preload: "none",
+            wmode: "window",
+            useStateClassSkin: true,
+            autoBlur: false,
+            keyEnabled: true,
+            autoPlay: true,
+
+            play: function(){ 
+              $('.track-name').addClass('active');
+            },
+            pause: function(){
+              $('.track-name').removeClass('active');
+            },
+            ended: function(){
+              $('.track-name').removeClass('active');
+            }
+          });
+        
+          $("#jquery_jplayer_2").jPlayer({
+            ready: function () {
+              $(this).jPlayer("setMedia", {
+                mp3: self.information.audio_annex
+              });
+            },
+
+            cssSelectorAncestor: '#jp_container_2',
+            cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+            loop: false, 
+            volume: 2,
+            swfPath: "/jplayer",
+            supplied: 'mp3',
+            preload: "none",
+            wmode: "window",
+            useStateClassSkin: true,
+            autoBlur: false,
+            keyEnabled: true,
+            autoPlay: false,
+
+            play: function(){ 
+              $('.track-name').addClass('active');
+            },
+            pause: function(){
+              $('.track-name').removeClass('active');
+            },
+            ended: function(){
+              $('.track-name').removeClass('active');
+            }
+          });
+        }, 1000);    
+      })
+      .catch(function(fallback){   
+      });    
+    }
+
+    //Permite reproducir los audios de los requerimientos de una consulta
+    this.AudioRequestConsult = function(index) {
+      debugger;
+      //AUDIO DEL REQUERIMIENTO
+      setTimeout(function(){
+        $("#jquery_jplayer"+index).jPlayer({
+          ready: function () {
+            debugger;
+            $(this).jPlayer("setMedia", {
+              mp3: self.requests_consult[index].audio_request
+            });
+          },
+
+          cssSelectorAncestor: '.jp_container'+index,
+          cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+          loop: false, 
+          volume: 7,
+          swfPath: "/jplayer",
+          supplied: 'mp3',
+          preload: "none",
+          wmode: "window",
+          useStateClassSkin: true,
+          autoBlur: false,
+          keyEnabled: true,
+          autoPlay: true,
+
+          play: function(){ 
+            $('.track-name').addClass('active');
+          },
+          pause: function(){
+            $('.track-name').removeClass('active');
+          },
+          ended: function(){
+            $('.track-name').removeClass('active');
+          }
+        });
+      }, 2000);
+    }
+
+    //Permite reproducir los audios de los requerimientos de un control
+    this.AudioRequestControl = function(index) {
+      debugger;
+      //AUDIO DEL REQUERIMIENTO
+      setTimeout(function(){
+        $("#jplayer"+index).jPlayer({
+          ready: function () {
+            debugger;
+            $(this).jPlayer("setMedia", {
+              mp3: self.requests_control[index].audio_request
+            });
+          },
+
+          cssSelectorAncestor: '.jplayer_container'+index,
+          cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+          loop: false, 
+          volume: 7,
+          swfPath: "/jplayer",
+          supplied: 'mp3',
+          preload: "none",
+          wmode: "window",
+          useStateClassSkin: true,
+          autoBlur: false,
+          keyEnabled: true,
+          autoPlay: true,
+
+          play: function(){ 
+            $('.track-name').addClass('active');
+          },
+          pause: function(){
+            $('.track-name').removeClass('active');
+          },
+          ended: function(){
+            $('.track-name').removeClass('active');
+          }
+        });
+      }, 2000);
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-14
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Responder Consulta
+    */
+    this.UpdateResponseConsult = function(bandera, type) {
+
+      var params = {
+        flag: bandera,
+        type: type,  
+        consultation_id: this.consult_id,
+        consult_control_id: this.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+      debugger;
+
+      if(self.correct_save == true && type == "1") {
+        $('#warnning_notification').show(200).delay(5000).hide(200);
+        $('#message_warnning').text("Aviso: Revisar que alguna información no ha sido guardada");
+      }else{
+        $http.put("/api/v1/enfermera/nurse_consult/response_consult", params).then(
+          function(res, status){
+            //SUCCESS
+            $('#success_notification').show(200).delay(5000).hide(200);
+            $('#contenedor').hide();
+            $('#div_oculto').addClass('col-md-6');
+            if (bandera == true) {
+              $('#div_oculto').append("<h3>LA RESPUESTA HA SIDO ENVIADA</h3>");
+              $('#div_oculto > h3').css("padding-left","44px");
+            }else{
+              $('#div_oculto').append("<h3>El PACIENTE ESTA EN REMISIÓN</h3>");
+              $('#div_oculto > h3').css("padding-left","44px");
+            }
+          },
+          function(res, status){
+            //ERROR
+            debugger;
+            $('#alert_notification').show(200).delay(5000).hide(200);
+            if(bandera == true && type == "2"){
+              $('#message_error').text("No se pudo responder la consulta ya que requerimiento no tiene información.");  
+            }else if(bandera == false){
+              $('#message_error').text("No se pudo responder la consulta ya que remisión no tiene información.");
+            }else{
+              $('#message_error').text("No se pudo guardar la información.");
+            }
+          }
+        );
+      }  
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-14
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista las imagenes de las lesiones
+    */
+    this.charge_images = function() {
+      var params = {
+        consultation_id: self.consult_id,
+        consult_control_id: self.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+      $http.get("/api/v1/enfermera/nurse_consult/get_charge_images", {params: params})
+      .then(function(response){
+        debugger;
+        self.images = response.data;
+        setTimeout(function(){
+
+          $('#DataDisplay').click(function () {
+            setTimeout(function(){
+              if ($('.modal-backdrop').is(':visible')) {
+                $('body').removeClass('modal-open'); 
+                $('.modal-backdrop').remove(); 
+              };
+            }, 180);
+          });
+
+          $('.small-thumbnail img').click(function () {
+            //alert("hola");
+            $('#DataDisplay').attr("src", $(this).attr("data-display"));
+            $(".sigPad").show();
+            $(".sigPad").signaturePad({ drawOnly:true });
+          });
+
+          if ($( ".fancybox-button " ).hasClass( "fancybox-button" ) != false){
+            $(".fancybox-button").fancybox({
+              prevEffect    : 'none',
+              nextEffect    : 'none',
+              helpers   : {
+                title : {
+                  type: 'inside'
+                }
+              }
+            });
+          }
+        }, 1000);
+      })
+      .catch(function(fallback){     
+      });    
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-12-19
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista las imagenes de las lesiones editadas
+    */
+    this.edited_images = function() {
+      var params = {
+        consultation_id: self.consult_id,
+        consult_control_id: self.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+      $http.get("/api/v1/enfermera/nurse_consult/get_edit_images", {params: params})
+      .then(function(response){
+        debugger;
+        self.edit_images = response.data;
+        setTimeout(function(){
+          $('#DataDisplay2').click(function () {
+            setTimeout(function(){
+              if ($('.modal-backdrop').is(':visible')) {
+                $('body').removeClass('modal-open'); 
+                $('.modal-backdrop').remove(); 
+              };
+              //$('#viewer2 > img').css({"width": "382px", "height": "509px"});
+            }, 180);
+          });
+
+          $('.small-thumbnail img').click(function () {
+            $('#DataDisplay2').attr("src", $(this).attr("data-display"));
+          });
+
+          if ($( ".fancybox-button " ).hasClass( "fancybox-button" ) != false){
+            $(".fancybox-button").fancybox({
+              prevEffect    : 'none',
+              nextEffect    : 'none',
+              helpers   : {
+                title : {
+                  type: 'inside'
+                }
+              }
+            });
+          }
+        }, 1000);
+      })
+      .catch(function(fallback){     
+      });    
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-01
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Editar la foto de la lesión
+    */
+    this.EditImageInjury = function(image_id, index) {
+      var params = {  
+        images_injury: {
+          id: image_id,
+          edited_photo: angular.element('#campo'+index).val(),
+          commentations: self.commentations, 
+        },
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+      debugger;
+      self.id = self.consult_id == "" ? self.control_id : self.consult_id
+
+      $http.put("/api/v1/especialista/consult/"+ self.id +"/update_images_injury", params).then(
+        function(res, status){
+          //SUCCESS
+          debugger;
+          $('#message_success').text(res.data.message);
+          $('#success_notification').show(200).delay(5000).hide(200);
+          
+        },
+        function(res, status){
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+        }
+      );    
+    }
+
+    //Permite identificar la imagen del modal la cual se esta editando para la seleccion de área
+    $scope.index_image = function(index) {
+      $('#edit_image'+index).prop('disabled', true);
+      cargar_visualizador(index); 
+    };
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-11-16
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Responder Consulta pero en remisión
+    */
+    this.UpdateConsultation = function() {
+
+      var params = {
+        consultation_id: this.consult_id,
+        consultation_control_id: this.control_id,
+        type_remission: self.type_remission,
+        remission_comments: self.remission_comments,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.put("/api/v1/enfermera/nurse_consult/update_remission_consult", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#message_success').text(res.data.message);
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#btn_remission').css("background-color", "white");
+          $('#btn_remission').css("color", "#337ab7");
+          self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          debugger;
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#message_error').text(res.data.error);
+          self.error = res.data.remission;
+        }
+      );    
+    }
+
+    //Permite limpiar la imagen cuando se dibuja
+    $scope.clean_image = function(index) {
+      var imagen1 = document.getElementById("imagen_hide"+index);
+      var b = document.getElementsByTagName('canvas');
+      var ctx = b[index].getContext("2d");
+      ctx.drawImage(imagen1,0,0); 
+    };
+
+    this.image_index = function(index) {
+      debugger;
+      $scope.pos = index;
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion: 
+    *
+    * Fecha actualizacion: 
+    *
+    * Metodo: Valida si puede mostrar el botón de regresar
+    *
+    * Parámetros: Ninguno
+    *
+    * Resultado: Permite mostrar las imagenes de la posicion 3 en adelante
+    */
+    $scope.slide_imagenes = function(){
+      if($scope.pos >= 3){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    //Slide inicial
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion: 
+    *
+    * Fecha actualizacion: 
+    *
+    * Metodo: Iguala la variable slides con el array de slides existentes en en tour
+    *
+    * Parámetros: Cantidad de slide en el array 
+    *
+    * Resultado: Almacena la cantidad de slides
+    */
+    $scope.total_slide = function(count_slides){
+      $scope.slides = count_slides;
+    }
+    
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion: 
+    *
+    * Fecha actualizacion: 
+    *
+    * Metodo: Incrementa o decrementa el slide a visualizar
+    *
+    * Parámetros: Posición de slide
+    *
+    * Resultado: qué resultado me arroja el método
+    */
+    $scope.actualSlide = function(position){
+      if( position == 'next'){
+        $scope.pos += 1;
+      }
+      else if(position == 'prev'){
+        $scope.pos -= 1;
+      }
+    }
+
+    
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion: 
+    *
+    * Fecha actualizacion: 
+    *
+    * Metodo: Valida si puede mostrar el botón de regresar
+    *
+    * Parámetros: Ninguno
+    *
+    * Resultado: Permite o no mostrar el botón de regresar
+    */
+    $scope.can_come_back = function(){
+      if( $scope.pos > 0){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion: 
+    *
+    * Fecha actualizacion: 
+    *
+    * Metodo: Valida si puede mostrar el botón de siguiente
+    *
+    * Parámetros: Ninguno
+    *
+    * Resultado: Permite o no mostrar el botón de siguiente
+    */
+    $scope.can_continue = function(){
+      if( $scope.pos < $scope.slides - 1){
+        return true;
+        cargar_visualizador();
+      }
+      else {
+        return false;
+      }
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion: 
+    *
+    * Fecha actualizacion: 
+    *
+    * Metodo: Valida si puede mostrar el botón de finalizar
+    *
+    * Parámetros: Ninguno
+    *
+    * Resultado: Permite o no mostrar el botón de finalizar
+    */
+    $scope.can_finalize = function(){
+      if( $scope.pos == $scope.slides ){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-18
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite abrir archivos en una ventana aparte para poder visualizarlos
+    */
+    $scope.open_file = function(file) {
+      $window.location.href = file;
+    };
+
+    //Permite guardar la imagen en base64 de la edicion
+    $scope.create_image = function(id, index) {
+      var canvas = document.getElementsByTagName('canvas');
+      $('#campo'+index).val(canvas[index].toDataURL());
+      self.EditImageInjury(id, index);
+    }
+	}]);
+})();

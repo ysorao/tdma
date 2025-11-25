@@ -1,0 +1,329 @@
+<div class="col-md-10" id="images" style="display: none;padding-left:6px;"> <!-- ng-if="cCtlr.show_information() == true" -->
+  <!--<button ng-click="cCtlr.charge_images()" class="btn btn-primary" style="margin-left:40%;">Imágenes</button>-->
+  <br>
+  <br>
+  <!-- DATOS BASICO DEL PACIENTE -->
+  <body data-twttr-rendered="true" data-spy="scroll" data-target=".bs-docs-sidebar">
+    <% if @consulta.status == Consultation::EVALUANDO %>
+      <div class="container">
+        <!-- Lista desplegable para la consulta y sus controles -->
+        <div class="row">
+          <div class="col-md-6 title_image image_extend">
+            <h4 class="text-center">Imágenes</h4>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-6 select_extend">
+            <h4 ng-show="cCtlr.evolution.length == 1 || cCtlr.evolution == null" class="btn btn-primary form-control" style="background-color:#2f91eb">Sin control</h4>
+            <select id="select_images" class="btn btn-primary form-control" style="font-size:17px;" ng-model="cCtlr.select_id" ng-change="cCtlr.ShowResponseImages()" ng-show="cCtlr.evolution.length > 1">
+              <option ng-repeat="option in cCtlr.evolution" ng-value="option.value" ng-init='option.value == (cCtlr.consult_id == "" ? cCtlr.select_id = (cCtlr.control+"-control") : cCtlr.select_id = (cCtlr.consulta+"-consulta"))'>{{$index == 0 ? 'Consulta - ' + option.created_at : 'Control - ' + option.created_at}}</option>
+            </select>
+          </div>
+        </div>
+        <!-- IMAGENES QUE APENAS SE EDITARAN -->
+        <div class="row">
+          <div class="col-md-3" ng-if="cCtlr.index == undefined || (cCtlr.init_image == cCtlr.index)" style="padding-left:0px;">
+            <div>
+              <h4 class="text-center count">{{cCtlr.number_image + 1}}</h4>
+            </div>
+            <div class="pull-left single-container">
+              <img ng-src="{{cCtlr.images[0].photo}}" id="DataDisplay2" data-toggle="modal" data-target="#images_consult" crossorigin="anonymous" class="principal_imagen"/> 
+              <%= render partial: 'modal_images_consult'%>
+            </div>
+          </div>
+          <div class="col-md-3" ng-if="cCtlr.index != undefined && (cCtlr.init_image != cCtlr.index)">
+            <div>
+              <h4 class="text-center count">{{cCtlr.number_image + 1}}</h4>
+            </div>
+            <div class="pull-left single-container">
+              <img ng-src="{{cCtlr.edit_images[0].photo}}" id="DataDisplay2" data-toggle="modal" data-target="#images_edit" class="principal_imagen"/>
+              <%= render partial: 'modal_view_images'%>
+            </div>
+          </div>
+          <div class="col-md-3" style="margin-top:-4%;">
+            <h1>&nbsp;</h1>
+
+            <!-- SOLO MUESTRA LAS IMAGENES PARA EDITARLAS CUANDO SE ABRE POR PRIMERA VEZ
+                 YA SEA UNA CONSULTA O UN CONTROL -->
+            <div class="" ng-if="cCtlr.index == undefined || (cCtlr.init_image == cCtlr.index)">
+              <div id="myCarousel" class="carousel vertical slide pull-left image_carrusel" data-interval="false">
+                <a href="#myCarousel" data-slide="prev"><p class="text-center"><span class="glyphicon glyphicon-chevron-up text-center"></span><p></a>
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                   <div class="item active">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.images | limitTo : 6">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image" crossorigin="anonymous"><p class="text-center etiqueta" ng-if="image.son_images >= 1">Dermatoscopía</p></a></div></td>
+                        </tr>
+                        <br>
+                      </table>
+                    </div><!--row-fluid-->
+                  </div><!--/item-->
+                  
+                  <div class="item" ng-if="(cCtlr.images.length - 6) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.images" ng-if="$index >= 6 && $index < 12">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image" crossorigin="anonymous"><p class="text-center etiqueta" ng-if="image.son_images >= 1">Dermatoscopía</p></a>
+                          </div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.images.length - 12) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.images" ng-if="$index >= 12 && $index < 18">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image" crossorigin="anonymous"><p class="text-center etiqueta" ng-if="image.son_images >= 1">Dermatoscopía</p></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.images.length - 18) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.images" ng-if="$index >= 18 && $index < 24">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image" crossorigin="anonymous"><p class="text-center etiqueta" ng-if="image.son_images >= 1">Dermatoscopía</p></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.images.length - 24) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.images" ng-if="$index >= 24 && $index < 30">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image" crossorigin="anonymous"><p class="text-center etiqueta" ng-if="image.son_images >= 1">Dermatoscopía</p></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.images.length - 30) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.images" ng-if="$index >= 30 && $index < 36">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image" crossorigin="anonymous"><p class="text-center etiqueta" ng-if="image.son_images >= 1">Dermatoscopía</p></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.images.length - 36) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.images" ng-if="$index >= 36 && $index < 42">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image" crossorigin="anonymous"><p class="text-center etiqueta" ng-if="image.son_images >= 1">Dermatoscopía</p></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                </div> <!--/carousel-inner--> 
+                <a href="#myCarousel" data-slide="next"><p class="text-center"><span class="glyphicon glyphicon-chevron-down" ng-click="sumar(count, cCtlr.images.length)"></span><p></a>    
+              </div><!--/myCarousel-->
+            </div><!--/well-->
+
+            <!-- SOLO CUANDO SE PERMITAN VER LAS IMAGENES -->
+            <div class="" ng-if="cCtlr.index != undefined && (cCtlr.init_image != cCtlr.index)">
+              <div id="myCarousel" class="carousel vertical slide pull-left image_carrusel" data-interval="false">
+                <a href="#myCarousel" data-slide="prev"><p class="text-center"><span class="glyphicon glyphicon-chevron-up text-center"></span><p></a>
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                  <div class="item active">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images | limitTo : 6">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                        <br>
+                      </table>
+                    </div><!--/row-fluid-->
+                  </div><!--/item-->
+                  <!--<p>{{count}}</p>-->
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 6) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 6 && $index < 12">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 12) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 12 && $index < 18">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 18) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 18 && $index < 24">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 24) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 24 && $index < 30">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 30) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 30 && $index < 36">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 36) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 36 && $index < 42">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+                  
+                </div><!--/carousel-inner--> 
+                <a href="#myCarousel" data-slide="next"><p class="text-center"><span class="glyphicon glyphicon-chevron-down" ng-click="sumar(count, cCtlr.images.length)"></span><p></a>    
+              </div><!--/myCarousel-->
+            </div><!--/well-->
+          </div>
+        </div>
+      </div>
+    <%else%>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 title_image">
+            <h4 class="text-center">Imágenes</h4>
+          </div>
+        </div>
+        <br>
+        <!-- Lista desplegable para la consulta y sus controles solo de vista -->
+        <div class="row">
+          <div class="col-md-6 select_extend">
+            <h4 ng-show="cCtlr.evolution.length == 1 || cCtlr.evolution == null" class="btn btn-primary form-control" style="background-color:#2f91eb">Sin control</h4>
+            <select id="select_images" class="btn btn-primary form-control" style="font-size:17px;" ng-model="cCtlr.select_id" ng-change="cCtlr.ShowResponseImages()" ng-show="cCtlr.evolution.length > 1">
+              <option ng-repeat="option in cCtlr.evolution" ng-value="option.value" ng-init='option.value == (cCtlr.consult_id == "" ? cCtlr.select_id = (cCtlr.control+"-control") : cCtlr.select_id = (cCtlr.consulta+"-consulta"))'>{{$index == 0 ? 'Consulta - ' + option.created_at : 'Control - ' + option.created_at}}</option>
+            </select>
+          </div>
+        </div>
+        <!-- IMAGENES PARA VISUALIZAR -->
+        <div class="row">
+          <div class="col-md-3">
+            <div>
+              <h4 class="text-center count">{{cCtlr.number_image + 1}}</h4>
+            </div>
+            <div class="pull-left single-container">
+              <img ng-src="{{cCtlr.edit_images[0].photo}}" id="DataDisplay2" data-toggle="modal" data-target="#images_edit" class="principal_imagen"/>
+              <%= render partial: 'modal_view_images'%>
+            </div>
+          </div>
+          <div class="col-md-3" style="margin-top:-4%;">
+            <h1>&nbsp;</h1>
+            <div class="">
+              <div id="myCarousel2" class="carousel vertical slide pull-left image_carrusel" data-interval="false">
+                <a href="#myCarousel2" data-slide="prev"><p class="text-center"><span class="glyphicon glyphicon-chevron-up text-center"></span><p></a>
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                  <div class="item active">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images | limitTo : 6">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                        <br>
+                      </table>
+                    </div><!--/row-fluid-->
+                  </div><!--/item-->
+                  
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 6) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 6 && $index < 12">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 12) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 12 && $index < 18">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 18) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 18 && $index < 24">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 24) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 24 && $index < 30">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 30) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 30 && $index < 36">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                  <div class="item" ng-if="(cCtlr.edit_images.length - 36) > 0">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images" ng-if="$index >= 36 && $index < 42">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> <!--/item-->
+
+                </div><!--/carousel-inner--> 
+                <a href="#myCarousel2" data-slide="next"><p class="text-center"><span class="glyphicon glyphicon-chevron-down" ng-click="cCtlr.image_index($index)"></span><p></a>    
+              </div><!--/myCarousel-->
+            </div><!--/well-->
+          </div>
+        </div>
+      </div>
+    <%end%>
+</div>

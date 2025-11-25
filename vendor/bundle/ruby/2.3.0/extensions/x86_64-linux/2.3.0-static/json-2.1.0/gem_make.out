@@ -1,0 +1,13 @@
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+/home/rails/.rbenv/versions/2.3.5/bin/ruby -r ./siteconf20190118-4584-mkk4x6.rb extconf.rb
+creating Makefile
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" clean
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+make "DESTDIR="
+make: Nothing to be done for 'all'.
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" install

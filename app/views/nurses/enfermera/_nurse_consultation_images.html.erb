@@ -1,0 +1,107 @@
+<div class="col-md-10" id="images" style="display: none;"> <!-- ng-if="cCtlr.show_information() == true" -->
+  <!--<button ng-click="cCtlr.charge_images()" class="btn btn-primary" style="margin-left:40%;">Imágenes</button>-->
+  <br>
+  <br>
+  <!-- DATOS BASICO DEL PACIENTE -->
+  <body data-twttr-rendered="true" data-spy="scroll" data-target=".bs-docs-sidebar">
+    <% if @consulta.status == Consultation::EVALUANDO %>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 title_image">
+            <h4 class="text-center">Imágenes</h4>
+          </div>
+        </div>
+        <!-- IMAGENES QUE APENAS SE EDITARAN -->
+        <div class="row">
+          <div class="col-md-3">
+            <div class="pull-left single-container">
+              <!--<a class="fancybox-button" rel="fancybox-button" href="{{cCtlr.images[0].mipres.url}}" ><img ng-src="{{cCtlr.images[0].mipres.url}}" id="DataDisplay"/>-->
+              <img ng-src="{{cCtlr.images[0].photo}}" id="DataDisplay" data-toggle="modal" data-target="#images_consult" style="width: 242px;"/>
+              <%= render partial: 'modal_nurse_images_consult'%>
+            </div>
+          </div>
+          <div class="col-md-3" style="margin-top:-4%;">
+            <h1>&nbsp;</h1>
+            <div class="">
+              <div id="myCarousel" class="carousel vertical slide pull-left image_carrusel" data-interval="false">
+                <a href="#myCarousel" data-slide="prev"><p class="text-center"><span class="glyphicon glyphicon-chevron-up text-center"></span><p></a>
+
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                  <div class="item active">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.images | limitTo : 3">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                        <br>
+                      </table>
+                    </div><!--/row-fluid-->
+                  </div><!--/item-->
+                  <div class="item">
+                    <div class="row-fluid">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.images | limitTo:3:3">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index + 3)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div><!--/row-fluid-->
+                  </div><!--/item-->
+
+                </div><!--/carousel-inner--> 
+
+                <a href="#myCarousel" data-slide="next"><p class="text-center"><span class="glyphicon glyphicon-chevron-down" ng-click="cCtlr.image_index($index)"></span><p></a>    
+              </div><!--/myCarousel-->
+            </div><!--/well-->
+          </div>
+        </div>
+      </div>
+    <%else%>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 title_image">
+            <h4 class="text-center">Imágenes</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="pull-left single-container">
+              <img ng-src="{{cCtlr.edit_images[0].photo}}" id="DataDisplay2" data-toggle="modal" data-target="#images_edit" style="width: 242px;"/>
+              <%= render partial: 'modal_view_images'%>
+            </div>
+          </div>
+          <div class="col-md-3" style="margin-top:-4%;">
+            <h1>&nbsp;</h1>
+            <div class="">
+              <div id="myCarousel2" class="carousel vertical slide pull-left image_carrusel" data-interval="false">
+                <a href="#myCarousel2" data-slide="prev"><p class="text-center"><span class="glyphicon glyphicon-chevron-up text-center"></span><p></a>
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                  <div class="item active">
+                    <div class="row-fluid text-center">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images | limitTo : 3">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                        <br>
+                      </table>
+                    </div><!--/row-fluid-->
+                  </div><!--/item-->
+                  <div class="item">
+                    <div class="row-fluid">
+                      <table>
+                        <tr ng-repeat="image in cCtlr.edit_images | limitTo:3:3">
+                          <td><div class="span3"><a class="small-thumbnail imagen_largo" ng-click="cCtlr.image_index($index + 3)"><img ng-src="{{image.photo}}" alt="Image" data-display="{{image.photo}}" class="image"></a></div></td>
+                        </tr>
+                      </table>
+                    </div><!--/row-fluid-->
+                  </div><!--/item-->
+                </div><!--/carousel-inner--> 
+                <a href="#myCarousel2" data-slide="next"><p class="text-center"><span class="glyphicon glyphicon-chevron-down" ng-click="cCtlr.image_index($index)"></span><p></a>    
+              </div><!--/myCarousel-->
+            </div><!--/well-->
+          </div>
+        </div>
+      </div>
+    <%end%>
+</div>

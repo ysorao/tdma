@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-6">
+    <div class="row">
+      <div class="borde"><h4 class="style_title">Buscar pacientes</h4></div>
+    </div>
+    <br>
+    <!-- Campos Lesión -->
+    <div class="row">
+      <div class="col-md-12 secondary_title">
+          <h4 class="control">Paciente</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3 col-md-12">
+          <div id="imaginary_container">
+            <%= form_tag(search_patient_nurses_enfermera_index_path, method: 'get') do %>
+              <div class="row">   
+                <div class="form-group"> 
+                  <%= text_field_tag('search', nil, placeholder: "Ingrese el número de identificación del paciente", class: "form-control", required: true) %> 
+                </div>
+                <div class="form-group">
+                  <%= button_tag(type: "submit", class:"btn btn-primary btn-md") do %>
+                    Buscar <span class="glyphicon glyphicon-search"></span>
+                  <% end %>
+                </div>  
+              </div>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="col-md-offset-1 col-md-10">
+    <div class="row">
+      <div class="col-md-12">
+        <p style="color:#578ab6;">Resultados de busqueda</p>
+        <div class="panel panel-default">
+          <table class="table table-hover" id="dev-table">
+            <thead>
+              <tr>
+                <th class="text-center border_color">
+                  Nombre
+                </th>
+                <th class="text-center border_color">
+                  Identificación  
+                </th>
+                <th class="text-center border_color">
+                  Fecha 
+                </th>
+                <th class="text-center border_color">
+                  Hora  
+                </th>
+                <th class="text-center border_color">
+                  Estado de consulta  
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            <% @consults.each do |consult| %>
+              <tr>
+                <td class="text-center"><%= consult.patient.name + ' ' + consult.patient.second_name.to_s + ' ' + consult.patient.last_name.to_s + ' ' + consult.patient.second_surname.to_s%></td>
+                <td class="text-center"><%= consult.patient.number_document%></td>
+                <td class="text-center"><%= consult.created_at.strftime("%d/%m/%Y")%></td>
+                <td class="text-center"><%= consult.created_at.strftime("%I:%M %P")%></td>
+                <% if consult.status == Consultation::PENDIENTE && consult.assign_id == nil %>
+                  <% if Date.today == consult.created_at.to_date && Time.now <= consult.created_at + 6.hour %>
+                    <td class="text-center">
+                      <%= link_to specialists_especialista_path(status: Consultation::PENDIENTE) do %>
+                        <span class="btn btn-success btn-md">Pendiente</span>
+                      <% end %>
+                    </td>
+                  <%elsif Date.today == consult.created_at.to_date && Time.now <= consult.created_at + 12.hour %>
+                    <td class="text-center">  
+                      <%= link_to specialists_especialista_path(status: Consultation::PENDIENTE) do %>
+                        <span class="btn btn-warning btn-md btn-color">Pendiente</span>
+                      <% end %>
+                    </td>
+                  <%else%>
+                    <td class="text-center">  
+                      <%= link_to specialists_especialista_path(status: Consultation::PENDIENTE) do %>
+                        <span class="btn btn-danger">Pendiente</span>
+                      <% end %>
+                    </td>
+                  <%end%>     
+                <%elsif consult.status == Consultation::EVALUANDO%>
+                  <% if Date.today == consult.created_at.to_date && Time.now <= consult.created_at + 6.hour %>
+                      <td class="text-center">
+                        <%= link_to new_specialists_especialistum_path(consult_id: consult.id) do %>
+                          <span class="btn btn-success">Pendiente</span>
+                        <% end %>
+                      </td>
+                    <%elsif Date.today == consult.created_at.to_date && Time.now <= consult.created_at + 12.hour %>
+                      <td class="text-center">
+                        <%= link_to new_specialists_especialistum_path(consult_id: consult.id) do %>
+                          <span class="btn btn-warning btn-md btn-color" >Pendiente</span>
+                        <% end %>
+                      </td>
+                    <%else%>
+                      <td class="text-center">
+                        <%= link_to new_specialists_especialistum_path(consult_id: consult.id) do %>
+                          <span class="btn btn-danger">Pendiente</span>
+                        <% end %>
+                      </td>
+                    <%end%>
+                <%elsif consult.status == Consultation::RESUELTO%>
+                  <td class="text-center">
+                    <%= link_to new_specialists_especialistum_path(consult_id: consult.id) do %>
+                      <span class="btn btn-success btn-md">Resuelta</span>
+                    <% end %>
+                  </td>
+                <%end%>
+              </tr>
+            <%end%>
+              <% if @consults.blank? %>
+                <tr>
+                  <td colspan="6">
+                    <h3 class="text-center">ACTUALMENTE ESTA SECCION ESTA VACÍA</h3>
+                  </td>
+                </tr>
+              <%end%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>

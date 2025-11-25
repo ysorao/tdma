@@ -1,0 +1,555 @@
+(function () {
+
+	var module = angular.module("admin_ips-module", ['angularFileUpload']);
+
+	module.controller('AdminIpsController', ['$http', '$scope', 'FileUploader', function ($http, $scope, FileUploader) {
+		var self = this;
+		
+    this.annex_audio = '';
+    this.sedes_ids = [];
+    this.insurance = null;
+    this.bills_insurances = null;
+    this.aseguradoras_ids = [];
+    this.facturas_ids = [];
+    this.ips_insurance = null;
+    this.errors = null;
+    this.expedicion = null;
+
+		this.initialize = function (client_user_email, client_user_token, client_id) {
+			self.client_user_email = client_user_email;
+			self.client_user_token = client_user_token;
+			this.client_id = client_id;
+      self.list_subsidiary();
+      self.list_insurances();
+      self.list_bills_insurances();
+		}
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-16
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista toda la información de respuesta del especialista
+    */
+    this.list_subsidiary = function() {
+      var params = {
+        client_id: this.client_id,
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token
+      }
+
+      $http.get("/api/v1/cliente/admin_ips/get_subsidiary", {params: params})
+      .then(function(response){
+        debugger;
+        self.Municipalities();
+        self.KitsClient();
+        self.subsidiary = response.data;
+
+      })
+      .catch(function(fallback){     
+      });    
+    }
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite guardar los ids seleccionados de la sede
+    */
+    this.SelectedSubsidiaries = function(id) {
+      this.sedes_ids.push(id);
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite borrar el tratamiento que se encuentra la biblioteca del especialista
+    */
+    this.DeleteSubsidiary = function() {
+
+      var params = {
+        ids: this.sedes_ids,
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token
+      }
+
+      debugger;
+
+      $http.delete("/api/v1/cliente/admin_ips/delete_subsidiaries", {params: params}).then(
+        function(res, status){
+          //SUCCESS
+          debugger;
+          //for(i=0; i < self.subsidiary.length; i++){
+            //for(j=0; j < self.sedes_ids.length; j++){
+              //if (self.subsidiary[i] == self.sedes_ids[j]){
+                //self.subsidiary.splice(i,1);
+              //}
+            //}
+          //}
+          self.list_subsidiary();
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#message_success').text(res.data.message);
+        },
+        function(res, status){
+          //ERROR
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Crear sedes
+    */
+    this.NewSubsidiary = function() {
+
+      var params = {  
+        subsidiary: {
+          name: self.name,
+          identification: self.identification,
+          kit_id: self.kit_id,
+          municipality_id: self.municipality_id,
+          address: self.address,
+          type_subs: self.type_subs,
+          code_sds: self.code_sds,
+          post_code: self.post_code,
+          email: self.email,
+          phone_one: self.phone_one,
+          client_id: this.client_id
+        },
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token,
+      }
+
+      debugger;
+
+      $http.post("/api/v1/cliente/admin_ips/create_subsidiaries", params).then(
+        function(res, status){
+          //SUCCESS
+          self.list_subsidiary();
+          $('#success_notification').show(200).delay(5000).hide(200);
+          window.location = res.data.page;
+        },
+        function(res, status){
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          debugger;
+          self.errors = res.data.message_error
+
+          emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+          if(!emailRegex.test($('#email').val())){
+            $('#email_error').css("visibility", "visible");
+          }
+        }
+      );    
+    }
+
+    
+    /* Lista los kits asignados a cada cliente */
+    this.KitsClient = function() {
+      var params = {
+        client_id: this.client_id,
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token
+      }
+
+      $http.get("/api/v1/cliente/admin_ips/get_kits_client", {params: params})
+      .then(function(response){
+        debugger;
+        self.kits = response.data;
+
+      })
+      .catch(function(fallback){     
+      });    
+    }
+
+    /* Lista los municipios */
+    this.Municipalities = function() {
+      var params = {
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token
+      }
+      $http.get("/api/v1/static_resources/municipalities", {params: params})
+      .then(function(response){
+        debugger;
+        self.municipalities = response.data;
+      })
+      .catch(function(fallback){     
+      });    
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-11
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista toda la información de las aseguradoras por IPS
+    */
+    this.list_insurances = function() {
+      var params = {
+        client_id: this.client_id,
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token
+      }
+
+      $http.get("/api/v1/cliente/admin_ips/get_insurances", {params: params})
+      .then(function(response){
+        debugger;
+        self.insurances = response.data;
+
+      })
+      .catch(function(fallback){     
+      });    
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-17
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Autocompletar para la aseguradora
+    */
+    $(".autocomplete_insurance").autocomplete({
+      source: "/api/v1/static_resources/get_insurances.json",
+      minLength: 3,
+      response: function( event, ui ) {},
+      select: function( event, ui ) {
+
+        $scope.$apply(function(){
+          //CODIGO PARA ANGULAR
+          //seleccionado ui.item.id
+          self.insurance = ui.item.id;
+        });
+      }
+    });
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-11
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Crear aseguradoras del cliente
+    */
+    this.NewInsurance = function() {
+
+      var params = {  
+        ips_insurance: {
+          client_id: this.client_id,
+          insurance_id: self.insurance
+        },
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token,
+      }
+
+      debugger;
+
+      $http.post("/api/v1/cliente/admin_ips/create_insurance", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          self.list_insurances();
+        },
+        function(res, status){
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          self.errors = res.data.message_error
+          debugger;
+        }
+      );    
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-11
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite guardar los ids seleccionados de la(s) aseguradora(s)
+    */
+    this.SelectedInsurances = function(id) {
+      this.aseguradoras_ids.push(id);
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite borrar el tratamiento que se encuentra la biblioteca del especialista
+    */
+    this.DeleteInsurance = function() {
+
+      var params = {
+        ids: this.aseguradoras_ids,
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token
+      }
+
+      debugger;
+
+      $http.delete("/api/v1/cliente/admin_ips/delete_insurances", {params: params}).then(
+        function(res, status){
+          //SUCCESS
+          //for(i=0; i < self.subsidiary.length; i++){
+            //for(j=0; j < self.sedes_ids.length; j++){
+              //if (self.subsidiary[i] == self.sedes_ids[j]){
+                //self.subsidiary.splice(i,1);
+              //}
+            //}
+          //}
+          self.list_insurances();
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#message_success').text(res.data.message);
+        },
+        function(res, status){
+          //ERROR
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          debugger;
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-11-03
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista todas las facturas de las aseguradoras por IPS
+    */
+    this.list_bills_insurances = function() {
+      var params = {
+        client_id: this.client_id,
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token
+      }
+
+      $http.get("/api/v1/cliente/admin_ips/get_bills_insurances", {params: params})
+      .then(function(response){
+        debugger;
+        self.date_send();
+        self.IpsInsurances();
+        self.bills_insurances = response.data;
+
+      })
+      .catch(function(fallback){ 
+        self.date_send();    
+      });    
+    }
+
+    this.date_send = function(){
+      $('.datepicker').datepicker({
+        language: 'es',
+        format: "dd/mm/yyyy",
+        startDate: Date.today,
+        maxDate: 0,
+        closeText: "Close",
+        autoclose: true
+      });
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-11-03
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Crear facturas de la aseguradora del cliente
+    */
+    this.NewBillInsurance = function() {
+
+      var params = {  
+        bills_insurance: {
+          client_id: this.client_id,
+          ips_insurance_id: self.ips_insurance_id,
+          bill_number: self.bill_number,
+          bill_expedition_date: self.bill_expedition_date, //angular.element('#bill_expedition').val(),
+          init_date: self.init_date,
+          end_date: self.end_date,
+          administrator_entity_code: self.administrator_entity_code,
+          administrator_entity_name: self.administrator_entity_name,
+          contract_number: self.contract_number,
+          benefits_plan: self.benefits_plan,
+          policy_number: self.policy_number,
+          value_consultation: self.value_consultation == null ? 0 : self.value_consultation,
+          value_moderator_fee: self.value_moderator_fee == null ? 0 : self.value_moderator_fee,
+          total_value_shared_payment: self.total_value_shared_payment == null ? 0 : self.total_value_shared_payment,
+          commision_value: self.commision_value == null ? 0 : self.commision_value,
+          total_value_discounts: self.total_value_discounts == null ? 0 : self.total_value_discounts,
+          net_to_pay_contract_entity: self.net_to_pay_contract_entity
+        },
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token,
+      }
+
+      debugger;
+
+      $http.post("/api/v1/cliente/admin_ips/create_bill_insurance", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          self.list_bills_insurances();
+          window.location = res.data.page;
+        },
+        function(res, status){
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          self.errors = res.data.message_error
+          debugger;
+        }
+      );    
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-11-03
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite guardar los ids seleccionados de la(s) factura(s) de la(s) aseguradora(s)
+    */
+    this.SelectedBillsInsurances = function(id) {
+      this.facturas_ids.push(id);
+    }
+
+    /* Lista las aseguradoras de una IPS */
+    this.IpsInsurances = function() {
+      var params = {
+        client_id: this.client_id,
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token
+      }
+
+      $http.get("/api/v1/static_resources/get_ips_insurances", {params: params})
+      .then(function(response){
+        debugger;
+        self.ips_insurance = response.data;
+
+      })
+      .catch(function(fallback){     
+      });    
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-11-03
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite borrar la factura de la aseguradora del cliente
+    */
+    this.DeleteBillsInsurance = function() {
+
+      var params = {
+        ids: this.facturas_ids,
+        client_user_email: self.client_user_email,
+        client_user_token: self.client_user_token
+      }
+
+      debugger;
+
+      $http.delete("/api/v1/cliente/admin_ips/delete_bills_insurance", {params: params}).then(
+        function(res, status){
+          //SUCCESS
+          //for(i=0; i < self.subsidiary.length; i++){
+            //for(j=0; j < self.sedes_ids.length; j++){
+              //if (self.subsidiary[i] == self.sedes_ids[j]){
+                //self.subsidiary.splice(i,1);
+              //}
+            //}
+          //}
+          self.list_bills_insurances();
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#message_success').text(res.data.message);
+        },
+        function(res, status){
+          //ERROR
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+        }
+      );
+    }
+
+    //Manejo de mensajes de error
+    $scope.message = function (field, input) {
+      if (event.keyCode === 8) {
+        if ($('#'+input).val().length == 0) {
+          $('#'+field).css("visibility", "visible");
+        } 
+      }else{
+        $('#'+field).css("visibility", "hidden"); 
+      }
+    };
+
+    //Manejo de mensajes de error para las facturas
+    $scope.message2 = function (input) {
+      if ($('#'+input).val().length == 0) {
+        self.errors.net_to_pay_contract_entity = ["no puede estar en blanco"]
+      }else if (isNaN((Number(parseInt($('#'+input).val())))) == true) {
+        self.errors.net_to_pay_contract_entity = ["no es un número"]
+      }else{
+        self.errors.net_to_pay_contract_entity = []
+      }
+    };
+
+    //Manejo de mensajes de error
+    $scope.message_selects = function (field, input) {
+      if ($('#'+input).val() == null) {
+        $('#'+field).css("visibility", "visible");
+      }else{
+        $('#'+field).css("visibility", "hidden"); 
+      }
+    };
+
+  }]);
+})();

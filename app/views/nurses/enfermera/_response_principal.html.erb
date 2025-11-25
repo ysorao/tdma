@@ -1,0 +1,71 @@
+<div class="col-md-12" id="response">
+  <!-- Campos Lesión -->
+  <div class="row">
+    <div class="col-md-12 secondary_title">
+        <h4 class="control">Análisis</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+      	<textarea class="form-control injury_control" placeholder="Análisis de la lesión" ng-model="cCtlr.case_analysis" rows="4" cols="10" ng-keyup="show_button('edit_consult', $event)"></textarea>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div>
+      	<textarea class="form-control injury_control" placeholder="Análisis del caso" ng-model="cCtlr.analysis_description" rows="4" cols="10" ng-keyup="show_button('edit_consult', $event)"></textarea>
+      </div>
+    </div>
+    <br>
+    <!-- Botones -->
+    <div class="row">
+    	<div class="col-md-offset-10">
+        <!--<label class="checkbox-inline"><input type="checkbox" class="checkbox-row" ng-model="checked6" ng-click="selected()" />No aplica</label>-->
+        <button type="button" class="btn button-save" ng-click="cCtlr.UpdateNurseConsult()" id="edit_consult" ng-disabled="checked6 || (cCtlr.case_analysis == null && cCtlr.analysis_description == null)">Guardar</button>
+      </div>
+    </div>
+    <br>
+	
+    <!-- Tratamiento -->
+    <div class="row">
+    	<div class="col-md-12 secondary_title">
+        <h4 class="control">Recomendaciones</h4>
+      </div>
+      <div>  	
+        <textarea class="form-control" placeholder="Ingrese el tratamiento recomendado" ng-model="cCtlr.recommended_treatment" rows="4" cols="10" ng-keyup="show_button('save_recommend', $event)"></textarea>
+      </div>
+    </div>
+    <br>
+    <!-- Botones tratamiento -->
+    <div class="row">
+    	<div class="col-md-offset-10">
+        <button type="button" class="btn button-save" id="save_recommend" ng-click="cCtlr.EditNurseConsult()" ng-disabled="cCtlr.recommended_treatment == null || cCtlr.recommended_treatment == ''">Guardar</button>
+      </div>
+    </div>
+    <br>
+    
+    <!-- Próximo control -->
+    <div class="row">
+    	<div class="col-md-12 secondary_title">
+        <h4 class="control">Próximo control</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+      	<input type="text" class="form-control" id="input_control" placeholder="Ingrese el próximo control recomendado para el paciente" ng-model="cCtlr.control_recommended" ng-keyup="show_button('save_control', $event)"> 
+      </div>
+    </div>
+    <br>
+    <!-- Botones -->
+    <div class="row">
+    	<div class="col-md-offset-10">
+        <!--<label class="checkbox-inline"><input type="checkbox" class="checkbox-row" ng-model="checked4" ng-click="selected()" />No aplica</label>-->
+        <button type="button" class="btn button-save" ng-click="cCtlr.UpdateControlNurse()" id="save_control" ng-disabled="cCtlr.control_recommended == null || cCtlr.control_recommended == ''">Guardar</button>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row"> 	
+      <button type="button" class="btn btn-primary form-control button_respond" ng-click="cCtlr.UpdateResponseConsult(true, 1)">Responder consulta</button>
+    </div>
+  </div>

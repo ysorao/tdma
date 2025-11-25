@@ -1,0 +1,550 @@
+<div class="col-md-9 scroll" id="clinic"> <!-- ng-if="cCtlr.show_information() == true" -->
+  <!--<button ng-click="cCtlr.get_patient_information()" class="btn btn-primary">Historia clínica</button>-->
+  <br>
+  <br>
+  <!-- DATOS BASICO DEL PACIENTE -->
+  <div class="col-md-12 col-sm-4 historic_title">
+    <h4 class="text-center">Historia clinica</h4>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title">Profesional:<p class="form_fields"> {{cCtlr.information.nurse_id}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title">Nombre paciente:<p class="form_fields"> {{cCtlr.name_complete}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title">Edad: <p class="form_fields">{{cCtlr.information.patient_information.age}} {{cCtlr.information.patient_information.unit_measure_age}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title">Identificación: <p class="form_fields">{{cCtlr.information.patient.number_document}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title">Fecha: <p class="form_fields">{{cCtlr.information.patient.created_at}} - Hora: {{cCtlr.information.patient.hour_at}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title">Sexo: <p class="form_fields">{{cCtlr.information.patient.genre}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title">Ocupación: <p class="form_fields">{{cCtlr.information.patient_information.occupation}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title">Zona de residencia: <p class="form_fields">{{cCtlr.information.patient_information.urban_zone}}</p></label>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12 col-sm-4"> 
+      <a class="see_more" onClick="muestra_oculta('contenido_patient')">Ver más</a>
+      <hr class="separator">   
+    </div>
+  </div>
+
+  <!-- CONTIENE LA INFORMACION DEL PACIENTE -->
+  <div class="row">
+    <div class="col-md-11 col-sm-4">
+      <div id="contenido_patient">
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Estado civil: <p class="form_fields"> {{cCtlr.information.patient_information.civil_status}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Edad: <p class="form_fields"> {{cCtlr.information.patient_information.age}} {{cCtlr.information.patient_information.unit_measure_age}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Fecha nacimiento: <p class="form_fields"> {{cCtlr.information.patient.birthdate}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Sexo: <p class="form_fields"> {{cCtlr.information.patient.genre}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Ocupación: <p class="form_fields"> {{cCtlr.information.patient_information.occupation}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Celular: <p class="form_fields"> {{cCtlr.information.patient_information.phone}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Email: <p class="form_fields"> {{cCtlr.information.patient_information.email}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Dirección: <p class="form_fields"> {{cCtlr.information.patient_information.address}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Departamento: <p class="form_fields"> {{cCtlr.information.patient_information.department_id}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Municipio: <p class="form_fields"> {{cCtlr.information.patient_information.municipality_id}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Zona residencia: <p class="form_fields"> {{cCtlr.information.patient_information.urban_zone}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Tipo de usuario: <p class="form_fields">{{cCtlr.information.patient_information.type_user}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Numero de autorización: <p class="form_fields"> {{cCtlr.information.patient_information.authorization_number}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Finalidad de la consulta: <p class="form_fields"> {{cCtlr.information.patient_information.purpose_consultation}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label>Causa externa: <p class="form_fields"> {{cCtlr.information.patient_information.external_cause}}</p></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSULTA DEL PACIENTE -->
+  <div class="row" id="consulta_principal" ng-if="cCtlr.information.nurse_consult.consultation_id == cCtlr.consult_id">
+    <div class="col-md-12 col-sm-4">
+      <h4 style="color:#2164a2">Historia clínica del paciente</h4>
+      <!-- Requerimientos -->
+      <div class="col-md-12 col-sm-4">
+        <div class="row" ng-if='cCtlr.requests_consult.length > 0'>
+          <div class="col-md-12 col-sm-4">
+            <div class="row title_field">
+              <div class="col-md-12 col-sm-4 color_field">
+                <label class="color-title">Requerimiento(s):</label>
+              </div>
+              <ul ng-repeat="request in cCtlr.requests_consult">
+                <br>
+                <h4>#{{$index + 1}}.</h4>
+                <li><b>Fecha:</b> {{request.created_at}} - <b>Hora: </b>{{request.hour}}</li>
+                <li><b>Medico:</b> {{request.nurse}}</li>
+                <li><b>Descripción:</b> {{request.description_request == null ? 'Ninguno' : request.description_request}}</li>
+                <li><b>Audio:</b> {{request.audio_request == null ? 'Ninguno' : ''}}
+                  <div id="jquery_jplayer{{$index}}"></div>
+                  <div class="jp_container{{$index}}" ng-show="request.audio_request != null">
+                    <div class="track-name">Audio</div>
+                    <div class="jp-play" ng-click="cCtlr.AudioRequestConsult($index)"></div>
+                    <div class="jp-pause"></div>
+                  </div>
+                </li>
+              </ul>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Diagnostico de ulcera -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Diagnóstico etiología de úlcera:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <ul ng-repeat="ulcer in cCtlr.ulcer_etiology">
+            <li>{{ulcer}}</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Otro diagnostico ulcera -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Otro diagnóstico:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_consult.ulcer_etiology_other}}
+        </div>
+      </div>
+      <!-- Intensidad de dolor -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Intensidad de dolor:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_consult.pain_intensity}}
+        </div>
+      </div>
+      <!-- Signos de infección -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Signos de infección:</label>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-6 col-sm-4">
+            <label class="color-title">Inflamación:</label>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <p class="info_color">{{cCtlr.infection_signs[0]}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-6 col-sm-4">
+            <label class="color-title">Olor fétido:</label>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <p class="info_color">{{cCtlr.infection_signs[1]}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-6 col-sm-4">
+            <label class="color-title">Exudado purulento:</label>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <p class="info_color">{{cCtlr.infection_signs[2]}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-6 col-sm-4">
+            <label class="color-title">Aumento reciente de olor:</label>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <p class="info_color">{{cCtlr.infection_signs[3]}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- Tejido en la herida -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Tejido en la herida:</label>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-6 col-sm-4">
+            <label class="color-title">Tejido de granulación:</label>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <p class="info_color">{{cCtlr.wound_tissue[0]}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-6 col-sm-4">
+            <label class="color-title">Fibrina:</label>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <p class="info_color">{{cCtlr.wound_tissue[1]}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-6 col-sm-4">
+            <label class="color-title">Tejido necrótico:</label>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <p class="info_color">{{cCtlr.wound_tissue[2]}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-6 col-sm-4">
+            <label class="color-title">Hipergranulación:</label>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <p class="info_color">{{cCtlr.wound_tissue[3]}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-6 col-sm-4">
+            <label class="color-title">Cicatrización completa:</label>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <p class="info_color">{{cCtlr.wound_tissue[4]}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-6 col-sm-4">
+            <label class="color-title">Costra:</label>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <p class="info_color">{{cCtlr.wound_tissue[5]}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- Piel alrededor de la ulcera -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Piel alrededor de la úlcera:</label>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-3 col-sm-4">
+            <label class="color-title">Dermatitis:</label>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <p class="info_color">{{cCtlr.information.nurse_consult.skin_among_ulcer}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-3 col-sm-4">
+            <label class="color-title">Fibrosis:</label>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <p class="info_color">{{cCtlr.information.nurse_consult.skin_among_ulcer}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- Manejo ulcera -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Manejo úlcera:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <ul ng-repeat="handle in cCtlr.ulcer_handle">
+            <li>{{handle}}</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Manejo ulcera aposito -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Otro manejo de úlcera apósito:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_consult.ulcer_handle_aposito}}
+        </div>
+      </div>
+      <!-- Otro Manejo ulcera -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Otro manejo de úlcera:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_consult.ulcer_handle_other}}
+        </div>
+      </div>
+      <!-- ¿Cúal es el motivo de la consulta -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">¿Cúal es el motivo de la consulta</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_consult.consultation_reason_description}}
+          <div id="jquery_jplayer_3"></div>
+          <div id="jp_container_3" ng-show="cCtlr.information.nurse_consult.consultation_reason_audio != null">
+            <div class="track-name">Audio</div>
+            <div class="jp-play"></div>
+            <div class="jp-pause"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Pulsos -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Pulsos:</label>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-2 col-sm-4">
+            <label class="color-title">Pedio:</label>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <p class="info_color">{{cCtlr.information.nurse_consult.pulses_pedio}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-2 col-sm-4">
+            <label class="color-title">Femoral:</label>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <p class="info_color">{{cCtlr.information.nurse_consult.pulses_femoral}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-2 col-sm-4">
+            <label class="color-title">Tibial:</label>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <p class="info_color">{{cCtlr.information.nurse_consult.pulses_tibial}}</p>
+          </div>
+        </div>
+        <div class="row title_field">
+          <div class="col-md-12 col-sm-4 color_field">
+            <label class="color-title">Imagenes anexas:</label>
+            <% unless @annex_images.blank? %>
+              <div class="main">
+                <div class="slider-nav">
+                  <% @annex_images.each do |x| %>
+                    <a class="single-image" href="<%= x.annex_url %>" title=""><img src="<%= x.annex_url %>" alt="Image" style="max-width:50%"></a>
+                  <%end%>
+                </div>
+              </div>
+            <%else%>
+              <p style="color:grey">Ninguna</p> 
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSULTA DEL CONTROL DEL PACIENTE -->
+  <div class="row" id="consulta_control" ng-if="cCtlr.information.nurse_control.consultation_control_id == cCtlr.control_id">
+    <label class="color-title" style="color:#13579a;">Historia clínica del paciente</label>
+    <div class="col-md-12 col-sm-4">
+      <!-- Requerimientos -->
+      <div class="col-md-12 col-sm-4">
+        <div class="row" ng-if='cCtlr.requests_control.length > 0'>
+          <div class="col-md-12 col-sm-4">
+            <div class="row title_field">
+              <div class="col-md-12 col-sm-4 color_field">
+                <label class="color-title">Requerimiento(s):</label>
+              </div>
+              <ul ng-repeat="request in cCtlr.requests_control">
+                <br>
+                <h4>#{{$index + 1}}.</h4>
+                <li><b>Fecha:</b> {{request.created_at}} - <b>Hora: </b>{{request.hour}}</li>
+                <li><b>Medico:</b> {{request.nurse}}</li>
+                <li><b>Descripción:</b> {{request.description_request == null ? 'Ninguno' : request.description_request}}</li>
+                <li><b>Audio:</b> {{request.audio_request == null ? 'Ninguno' : ''}}
+                  <div id="jplayer{{$index}}"></div>
+                  <div class="jplayer_container{{$index}}" ng-show="request.audio_request != null">
+                    <div class="track-name">Audio</div>
+                    <div class="jp-play" ng-click="cCtlr.AudioRequestControl($index)"></div>
+                    <div class="jp-pause"></div>
+                  </div>
+                </li>
+              </ul>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Mejoría subjetiva -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Mejoría subjetiva</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_control.subjetive_improvement}}
+        </div>
+      </div>
+      <!-- Longitud ulcera -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Longitud de la úlcera</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_control.ulcer_length}}
+        </div>
+      </div>
+      <!-- Ancho ulcera -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Ancho de la úlcera</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_control.ulcer_width}}
+        </div>
+      </div>
+      <!-- Intensidad de dolor -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Intensidad del dolor</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_control.pain_intensity}}
+        </div>
+      </div>
+      <!-- Toleró los medicamentos -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Intensidad del dolor</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_control.tolerated_treatment == true ? 'Sí' : 'No'}}
+        </div>
+      </div>
+      <!-- Toleró los medicamentos -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Mejora</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_control.improvement == true ? 'Sí' : 'No'}}
+        </div>
+      </div>
+      <!-- Comentarios -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Comentarios</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.information.nurse_control.commentation == '' ? 'Ninguno' : cCtlr.information.nurse_control.commentation}}
+        </div>
+      </div>
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Imagenes anexas:</label>
+          <% unless @annex_images.blank? %>
+            <div class="main">
+              <div class="slider-nav">
+                <% @annex_images.each do |x| %>
+                  <a class="single-image" href="<%= x.annex_url %>" title=""><img src="<%= x.annex_url %>" alt="Image" style="max-width:50%"></a>
+                <%end%>
+              </div>
+            </div>
+          <%else%>
+            <p style="color:grey">Ninguna</p> 
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function muestra_oculta(id){
+    if (document.getElementById){ //se obtiene el id
+      var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+      el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+      }
+    }
+    window.onload = function(){/*hace que se cargue la función lo que predetermina que div estará oculto hasta llamar a la función nuevamente*/
+    muestra_oculta('contenido_patient');/* "contenido_a_mostrar" es el nombre que le dimos al DIV */
+  }
+  
+  $(".single-image").fancybox({
+      openEffect : 'elastic',   //'fade', 'elastic'
+      closeEffect : 'elastic',
+      openSpeed:'normal', //ms, slow, normal, fast (default 250ms)
+      closeSpeed:'normal',
+      helpers : {
+        title : {
+           type : 'inside' //'float', 'inside', 'outside' or 'over'
+        },
+        overlay : {
+          closeClick : true  // if true, se cierra al hacer click fuera de la imagen
+        }
+    },
+    padding:11
+  }); 
+</script>

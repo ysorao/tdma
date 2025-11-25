@@ -1,0 +1,154 @@
+$( document ).ready(function() {
+  $('#kit_init_date_input').hide();
+  $('#kit_end_date_input').hide();
+
+  if(location.pathname == '/admin/consultations' || location.pathname == '/admin/consultation_controls' || location.pathname == '/admin/contacts' || location.pathname == '/admin/help_desks'){
+    $('#wrapper').load("#wrapper > *");
+  }
+ 
+  setTimeout(function(){
+    $('.blank_slate').text("No hay Consultas en estado de Pendiente o Evaluando. Para ver la lista completa de consultas ir a Filtros.");
+    if(location.href.includes("commit=Filtrar")){
+      for(var i=0; i<$('nav.pagination > span.page > a').length; i++){
+        var url_old = $('nav.pagination > span.page > a').eq(i).attr("href");
+        var url_new = url_old+"&commit=Filtrar"; 
+        var aux = $('nav.pagination > span.page > a').eq(i);
+        aux.attr("href", url_new);  
+      }
+      var url_old_previous = $('nav.pagination > span.last > a').attr("href");
+      var url_previous = url_old_previous+"&commit=Filtrar";
+      $('nav.pagination > span.last > a').attr("href", url_previous);
+
+      var url_old_next = $('nav.pagination > span.next > a').attr("href");
+      var url_next = url_old_next+"&commit=Filtrar";
+      $('nav.pagination > span.next > a').attr("href", url_next);
+
+      var url_old_prev = $('nav.pagination > span.prev > a').attr("href");
+      var url_prev = url_old_prev+"&commit=Filtrar";
+      $('nav.pagination > span.prev > a').attr("href", url_prev);
+
+      var url_old_first = $('nav.pagination > span.first > a').attr("href");
+      var url_first = url_old_first+"&commit=Filtrar";
+      $('nav.pagination > span.first > a').attr("href", url_first);
+    }
+    $('#sidebar').prepend('<div class="sidebar_section panel" id="indicadores_sidebar_section"><h3>Indicadores</h3><a class="view_link member_link" href="/admin/consultations/indicators"><h3 class="center" style="color: #38678b;">Ingresar a indicadores</h3></a></div>');
+    $("#filter_specialist").chosen(); 
+  }, 1000);
+});
+
+// Autor: Orlando Guzman Londono
+//
+// Fecha creacion: 24-09-2018
+//
+// Autor actualizacion:
+//
+// Fecha actualizacion:
+//
+// Metodo que al momento de desactivar un usuario, puede volver a activarlo
+function active_inactive(){
+  if (confirm('Esta Seguro(a)?') == true) {
+      return true;
+  }else{
+      return false;
+  }
+}
+
+// Autor: Orlando Guzman Londono
+//
+// Fecha creacion: 07-02-2019
+//
+// Autor actualizacion:
+//
+// Fecha actualizacion:
+//
+// Metodo que permite mostrar o esconder las fechas dependiendo del comodato
+function date_inputs(){
+  if ($('#kit_is_comodato option:selected').text() == "Si") {
+    $('#kit_init_date_input').show();
+    $('#kit_end_date_input').show();
+  }else{
+    $('#kit_init_date_input').hide();
+    $('#kit_init_date').val("");
+    $('#kit_end_date_input').hide();
+    $('#kit_end_date').val("");
+
+  }
+}
+
+// Metodo: toma el id de un departamento y filtra sus ciudades y llena el select de ciudad con estas
+function change_department_general(element_departament, element_city, name_default_city) {
+  // se vacia primero el select de ciudades
+  $('select#' + element_city).empty();
+  $.get('/api/v1/static_resources/get_municipalities?department_id='+$('select#'+element_departament).val(), function(responses){
+    // se añade al select de ciudades la opcion 'name_default_city' seleccionada por defecto
+    //$('select#'+element_city).append('<option value="" selected>'+name_default_city+'</option>');
+    // se recorren las ciudades traidas del ajax
+    console.log(responses.municipality);
+    $.each(responses.municipality, function (i, item) {
+      //alert("hola");
+      //se añade uno a uno los planes traidos en el ajax
+      $('select#' + element_city).append($('<option>', {
+        value: item.id,
+        text: item.name
+      }));
+      // se llama el trigger del plugin chosen para que
+      // funcione correctamente y aparescan las ciudades
+      $('select#' + element_city).trigger('chosen:updated');
+      if (name_default_city != 'Seleccione un departamento') {
+        $('select#' + element_city).val(name_default_city)
+      }
+    });
+  });
+}
+
+// Metodo: toma el id de un titulo prediseñado y filtra sus descripciones y llena el select de descripcion con estas
+function change_designed_general(element_title, element_description, name_default) {
+  $('select#' + element_description).empty();
+  $.get('/api/v1/static_resources/get_designed_responses?title='+$('select#'+element_title).val(), function(responses){
+    $.each(responses.designed, function (i, item) {
+      $('select#' + element_description).append($('<option>', {
+        value: item.id,
+        text: item.description
+      }));
+      $("#response_contact").val($("#description option:selected").val(0).text());
+      $("#area_ticket").val($("#description option:selected").val(0).text());
+      $('select#' + element_description).trigger('chosen:updated');
+      if (name_default != 'Seleccione un título') {
+        $('select#' + element_description).val(name_default);
+      }
+    });
+  });
+}
+
+// Metodo: Filtra por enfermedades
+function autocomplete_disease(id_field) {
+  var field = $('input#'+id_field);
+ 
+  $.get('/api/v1/static_resources/get_diseases.json?term=' + field.val(), function (responses){
+    console.log(responses['disease']);
+    field.autocomplete({
+     source: responses['disease'],
+     minLength: 4,
+      focus: function(event, ui){
+        field.val(ui.item.label);
+      }
+    });
+  });// end ajax 
+}
+
+//Permite hacer la funcionalidad del ver mas...
+function muestra_oculta(div){
+  if (document.getElementById){ //se obtiene el id
+    var el = document.getElementById(div); //se define la variable "el" igual a nuestro div
+    el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+  }
+}
+
+//Permite validad los input de rango de edades
+function validate_range_ages(){
+  if ($('#edad1').val() == "" && $('#edad2').val() != ""){
+    $('#edad1').attr('required', true); 
+  }else if($('#edad2').val() == "" && $('#edad1').val() != ""){
+    $('#edad2').attr('required', true);
+  }
+}

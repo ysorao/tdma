@@ -1,0 +1,7 @@
+<div class="email">
+  <h3><p style="margin-bottom: 5px;"><span style="font-weight:bold;">¡Felicidades! te has certificado como profesional prestador remisor en teledermatología. Puedes descargar el certificado. </span> </p> </h3>
+</div>
+<div class="ir" style="margin-top: 20px;">
+  <%= link_to("Descargar", generate_certified_specialists_especialista_url(u: @object.id, format: :pdf), style: "background: #0fd9a9; border: 0;padding: 15px;color: #fff;border-left: 3px solid #0db88b;text-transform: uppercase;font-family: 'Oswald', sans-serif;text-decoration: none;") %>
+  <!--<a href="http://www.telederma.gov.co/specialists/especialista/generate_certified.pdf?u=<%#= @object.id %>" target="_blank" class="btn btn-info btn-lg" style="background: #0fd9a9; border: 0;padding: 15px;color: #fff;border-left: 3px solid #0db88b;text-transform: uppercase;font-family: 'Oswald', sans-serif;text-decoration: none;">Descargar</a>-->
+</div>

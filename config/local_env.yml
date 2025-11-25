@@ -1,0 +1,12 @@
+
+D_MAIL_USERNAME: 'teledermadev@gmail.com' #'telederma.prueba@gmail.com' #telederma@dermatologia.gov.co
+D_MAIL_PASSWORD: 'pfvipymjpxhfynyo' #'julio123456aA$' # 'shpvnrbpczljknal'
+D_PROVIDER: 'AWS'
+D_ACCESS_KEY: 'AKIAIFTJR4EVFM4GI6AA'
+D_SECRET_KEY: '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'
+D_NAME: 'telederma'
+D_NAME2: 'teledermalocal'
+D_REGION: 'us-east-1'
+D_DIRECTORY: 'uploads/'
+D_SITE_KEY: '6Lf_v7wUAAAAAIeZlXdceqxXJUkuj5TtSNlEjgJY'
+D_KEY_SECRET: '6Lf_v7wUAAAAAPuLjNHR-1lvR31Cy9N983Am1ONF'

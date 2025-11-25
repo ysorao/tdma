@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <TITLE>Telederma | Telemedicina en Dermatología</TITLE>
+    <meta http-equiv="refresh" content="url=https://www.telederma.gov.co/landing/home/home">
+    <meta name="description" content="Encuentra servicios de teledermatología del Hospital Centro Dermatológico Federico Lleras A. para resolver tus problemas de piel de forma efectiva y segura.">
+    <meta name="keywords" content="Telederma, Teledermatologia, Innovación en dermatología, Telemedicina en dermatología">
+    <meta name="Resource-type" content="Document">
+    <meta name="robots" content="ALL">
+  	<link rel="shortcut icon" href="<%= asset_path("landing/ico_ventana.ico")%>">
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="D_7yVHX0Z0_4UNNXB8GJ7AHU1rxn4KIaz6iHnPOMXdw" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <%= stylesheet_link_tag    'landing/application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>  
+  </head>
+  <body>
+    <%= yield %>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-154919130-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-154919130-1');
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "Telederma Hospital Universitario Centro Dermatológico Federico Lleras Acosta ESE",
+        "url": "https://www.telederma.gov.co",
+        "address": "Carrera 10 # 01-99 sur",
+        "sameAs": [
+          "https://www.facebook.com/tele.derma.583",
+          "https://twitter.com/RedTelederma"
+        ]
+      }
+    </script>
+  </body>
+</html>

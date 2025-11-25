@@ -1,0 +1,48 @@
+<div class="modal fade" id="images_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
+        <div class="modal-header modal-header" style="padding: 3px !important;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle fa-lg"></i></span></button>
+        </div>
+          <div class="modal-body">
+            <div class="carousel-inner" role="listbox" ng-init="total_slide(cCtlr.edit_images.length)" ng-repeat="image in cCtlr.edit_images">
+              <article class="item {{pos == $index ? 'active' : '' }}">
+                <h3 class="text-center">{{image.body_area}}</h3>
+                <div align="center">    
+                  <img ng-src="{{image.photo}}" alt = "Thumbnail 2" data-display="{{image.photo}}", style="max-width:100%;">           
+                </div>
+                <br>
+                <div ng-if='image.commentations != ""'>
+                  <p class="text-center">Imagen editada por el dermatólogo.</p>
+                  <br>
+                  <p><b>Comentarios: </b>{{image.commentations}}</p>
+                </div>
+              </article>
+            </div> 
+          </div>
+        <div class="modal-footer">
+          <a id="prev" class="btn btn-primary" href="" role="button" data-slide="prev" ng-click="actualSlide('prev')" ng-show="can_come_back() == true">
+            <span class="glyphicon glyphicon-triangle-left"></span>
+            Anterior
+          </a>
+          <a class="btn btn-success" href="" role="button" data-slide="next" ng-click="actualSlide('next')" ng-show="can_continue() == true">
+            Siguiente
+            <span class="glyphicon glyphicon-triangle-right"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.modal-dialog {
+  width: 31%;
+  margin-top: 0;
+}
+
+.modal-content {
+  height: 100%;
+  border-radius: 0;
+}
+</style>

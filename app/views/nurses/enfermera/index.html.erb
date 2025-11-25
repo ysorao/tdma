@@ -1,0 +1,382 @@
+<div class="container">
+  <div class="row">
+	  <div class="col-md-12 text-center col-sm-6 col-xs-12" id="myDIV"> 
+    <br>
+    <br>
+    <% if params[:option].to_s == "1" %>
+      <%= link_to nurses_enfermera_index_path(status: Consultation::PENDIENTE, option: 1), class:"btn btn-primary btn-lg boton_superior presionar activo", "data-turbolinks" => "false", format: 'js' do %>
+        <span class=""><img src="<%= asset_path("pendientes.png")%>", style="width:20px;"> Pendientes</span>
+      <% end %>
+    <%else%>
+      <%= link_to nurses_enfermera_index_path(status: Consultation::PENDIENTE, option: 1), class:"btn btn-primary btn-lg boton_superior presionar", "data-turbolinks" => "false", format: 'js' do %>
+        <span class=""><img src="<%= asset_path("pendientes.png")%>", style="width:20px;"> Pendientes</span>
+      <% end %>
+    <%end%>
+      <% if current_user.type_professional == User::ESPECIALISTA && current_user.type_specialist == User::ENFERMERIA %>
+        <% if params[:option].to_s == "2" %>
+	        <%= link_to nurses_enfermera_index_path(status: Consultation::EVALUANDO, option: 2), class:"btn btn-primary btn-lg boton_superior presionar activo", "data-turbolinks" => "false", format: 'js' do %>
+	          <span class=""><img src="<%= asset_path("asignadas.png")%>", style="width:30px;"> Asignadas</span>
+	        <% end %>
+	      <%else%>
+          <%= link_to nurses_enfermera_index_path(status: Consultation::EVALUANDO, option: 2), class:"btn btn-primary btn-lg boton_superior presionar", "data-turbolinks" => "false", format: 'js' do %>
+	          <span class=""><img src="<%= asset_path("asignadas.png")%>", style="width:30px;"> Asignadas</span>
+	        <% end %>
+	      <%end%>
+		    <% if params[:option].to_s == "3" %>
+		      <%= link_to nurses_enfermera_index_path(status: Consultation::RESUELTO, option: 3), class:"btn btn-primary btn-lg boton_superior presionar activo", "data-turbolinks" => "false", format: 'js', id:'pendiente' do %>
+		        <span class="", id="prueba"><img src="<%= asset_path("resueltas.png")%>", style="width:33px;"> Resueltos</span>
+		      <% end %>
+		    <%else%>
+	        <%= link_to nurses_enfermera_index_path(status: Consultation::RESUELTO, option: 3), class:"btn btn-primary btn-lg boton_superior presionar", "data-turbolinks" => "false", format: 'js', id:'pendiente' do %>
+		        <span class="", id="prueba"><img src="<%= asset_path("resueltas.png")%>", style="width:33px;"> Resueltos</span>
+		      <% end %>
+		    <%end%>
+		    <% if params[:option].to_s == "4" %>
+	        <%= link_to nurses_enfermera_index_path(status: Consultation::REQUERIMIENTO, option: 4), class:"btn btn-primary btn-lg boton_superior presionar activo", "data-turbolinks" => "false", format: 'js', id:'pendiente' do %>
+	          <span class="", id="prueba"><img src="<%= asset_path("requerimientos.png")%>", style="width:32px;"> Requerimientos</span>
+	        <% end %>
+	      <%else%>
+	        <%= link_to nurses_enfermera_index_path(status: Consultation::REQUERIMIENTO, option: 4), class:"btn btn-primary btn-lg boton_superior presionar", "data-turbolinks" => "false", format: 'js', id:'pendiente' do %>
+	          <span class="", id="prueba"><img src="<%= asset_path("requerimientos.png")%>", style="width:32px;"> Requerimientos</span>
+	        <% end %>
+	      <%end%>
+	    <%end%>     
+	  </div>
+	</div>
+	<br>
+	<br>
+  <%#= unless @consults.nil? %>
+    <%#= if @consults.any? %> 
+		  	<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<table class="table table-hover" id="dev-table">
+								<thead>
+									<tr>
+										<% if params[:status].to_i == Consultation::EVALUANDO %>
+										  <th class="text-center border_color">
+											  Fecha
+											</th>
+										<%end%>
+										<% if params[:status].to_i == Consultation::EVALUANDO %>
+											<th class="text-center border_color">
+											  Hora
+											</th>
+										<%end%>
+										<th class="text-center border_color">
+											<%= Patient.human_attribute_name :name %>
+										</th>
+										<% if params[:status].to_i != Consultation::EVALUANDO %>
+										  <th class="text-center border_color">
+										    <%= Patient.human_attribute_name :number_document %>	
+										  </th>
+										<%end%>
+										<% if params[:status].to_i != Consultation::EVALUANDO %>
+									    <th class="text-center border_color">
+									      Fecha
+									    </th>
+									  <%end%>
+										<% if params[:status].to_i != Consultation::EVALUANDO %>
+										  <th class="text-center border_color">
+										    Hora
+										  </th>
+										<%end%>
+										<th class="text-center border_color">
+										  Estado de la consulta	
+										</th>
+										<%#= if params[:status].to_i == Consultation::ARCHIVADO %>
+											<!--<th class="text-center border_color">
+											  Desarchivar	
+											</th>-->
+										<%#=end%>
+										<% if params[:status].to_i == Consultation::EVALUANDO %>
+											<th class="text-center border_color">
+											  Asignación	
+											</th>
+										<%end%>
+										<% if params[:status].to_i == Consultation::PENDIENTE || request.fullpath == "/nurses/enfermera" %>
+										  <th class="border_color text-center">Asignar consulta</th>
+										<%end%>
+									</tr>
+								</thead>
+								<tbody>
+								<% @consults.each do |consult| %>
+									<tr>
+										<% if params[:status].to_i == Consultation::EVALUANDO %>
+										  <td class="text-center"><%= consult.created_at.strftime("%d/%m/%Y")%></td>
+										<%end%>
+										<% if params[:status].to_i == Consultation::EVALUANDO %>
+										  <td class="text-center"><%= consult.created_at.strftime("%I:%M %P")%></td>
+										<%end%>
+										<% if params[:status].to_i != Consultation::RESUELTO %>
+                      <% if consult.class.name == "ConsultationControl"%>
+                        <td class="text-center"><%= consult.consultation.patient.name + ' ' + consult.consultation.patient.last_name %></td>
+                      <%else%>
+                        <td class="text-center"><%= consult.patient.name + ' ' + consult.patient.last_name %></td>
+                      <%end%>
+                    <%end%>
+										<% if params[:status].to_i != Consultation::EVALUANDO && params[:status].to_i != Consultation::RESUELTO%>
+										  <% if consult.class.name == "ConsultationControl"%>
+                        <td class="text-center"><%= consult.consultation.patient.number_document %></td>
+                      <%else%>
+                        <td class="text-center"><%= consult.patient.number_document %></td>
+                      <%end%>
+										<%end%>
+										<% if params[:status].to_i != Consultation::EVALUANDO && params[:status].to_i != Consultation::RESUELTO%>
+										  <td class="text-center"><%= consult.created_at.strftime("%d/%m/%Y")%></td>
+										<%end%>
+										<% if params[:status].to_i != Consultation::EVALUANDO && params[:status].to_i != Consultation::RESUELTO%>
+										  <td class="text-center"><%= consult.created_at.strftime("%I:%M %P")%></td>
+										<%end%>
+										<% if consult.status == Consultation::PENDIENTE %>
+                      <% if Date.today == consult.created_at.to_date && Time.now <= consult.created_at + 6.hour %>
+									      <td class="text-center">
+                          <% if consult.class.name == "ConsultationControl"%>
+                            <%= link_to nurses_enfermera_index_path(control_id: consult.id) do %>
+                              <span class="btn btn-success btn-md">Pendiente</span>
+                            <% end %>
+                          <%else%>
+                            <%= link_to nurses_enfermera_index_path(consult_id: consult.id) do %>
+                              <span class="btn btn-success btn-md">Pendiente</span>
+                            <% end %>
+                          <%end%>
+									      </td>
+									    <%elsif Date.today == consult.created_at.to_date && Time.now <= consult.created_at + 12.hour %>
+									      <td class="text-center">  
+										      <% if consult.class.name == "ConsultationControl"%>
+	                          <%= link_to nurses_enfermera_index_path(control_id: consult.id) do %>
+	                            <span class="btn btn-warning btn-md">Pendiente</span>
+	                          <% end %>
+	                        <%else%>
+	                          <%= link_to nurses_enfermera_index_path(consult_id: consult.id) do %>
+	                            <span class="btn btn-warning btn-md">Pendiente</span>
+	                          <% end %>
+	                        <%end%>
+	                      </td>
+									    <%else%>
+	                      <td class="text-center">  
+                          <% if consult.class.name == "ConsultationControl"%>
+                            <%= link_to nurses_enfermera_index_path(control_id: consult.id) do %>
+                              <span class="btn btn-danger btn-md">Pendiente</span>
+                          <% end %>
+                          <%else%>
+                            <%= link_to nurses_enfermera_index_path(consult_id: consult.id) do %>
+                              <span class="btn btn-danger btn-md">Pendiente</span>
+                            <% end %>
+                          <%end%>
+	                      </td>
+									    <%end%>     
+										<%elsif consult.status == Consultation::EVALUANDO%>
+                      <% if Date.today == consult.created_at.to_date && Time.now <= consult.created_at + 6.hour %>
+									      <td class="text-center">
+                          <% if consult.class.name == "ConsultationControl"%>
+                            <%= link_to new_nurses_enfermera_path(control_id: consult.id) do %>
+                              <span class="btn btn-success btn-md">Pendiente</span>
+                            <% end %>
+                          <%else%>
+                            <%= link_to new_nurses_enfermera_path(consult_id: consult.id) do %>
+                              <span class="btn btn-success btn-md">Pendiente</span>
+                            <% end %>
+                          <%end%>
+									      </td>
+									    <%elsif Date.today == consult.created_at.to_date && Time.now <= consult.created_at + 12.hour %>
+									      <td class="text-center">
+                          <% if consult.class.name == "ConsultationControl"%>
+                            <%= link_to new_nurses_enfermera_path(control_id: consult.id) do %>
+                              <span class="btn btn-warning btn-md">Pendiente</span>
+                            <% end %>
+                          <%else%>
+                            <%= link_to new_nurses_enfermera_path(consult_id: consult.id) do %>
+                              <span class="btn btn-warning btn-md">Pendiente</span>
+                            <% end %>
+                          <%end%>
+									      </td>
+									    <%else%>
+	                      <td class="text-center">
+                          <% if consult.class.name == "ConsultationControl"%>
+                            <%= link_to new_nurses_enfermera_path(control_id: consult.id) do %>
+                              <span class="btn btn-danger btn-md">Pendiente</span>
+                            <% end %>
+                          <%else%>
+                            <%= link_to new_nurses_enfermera_path(consult_id: consult.id) do %>
+                              <span class="btn btn-danger btn-md">Pendiente</span>
+                            <% end %>
+                          <%end%>
+	                      </td>
+									    <%end%>
+										<%#=elsif consult.status == Consultation::RESUELTO%>
+                      <!--<td class="text-center">
+                        <%#= if consult.class.name == "ConsultationControl"%>
+                          <%#= link_to new_nurses_enfermera_path(control_id: consult.id) do %>
+                            <span class="btn btn-success btn-md">Resuelta</span>
+                          <%#= end %>
+                        <%#=else%>
+                          <%#= link_to new_nurses_enfermera_path(consult_id: consult.id) do %>
+                            <span class="btn btn-success btn-md">Pendiente</span>
+                          <%#= end %>
+                        <%#=end%>
+                      </td>-->
+										<%elsif consult.status == Consultation::REQUERIMIENTO%>
+                      <td class="text-center">
+                        <% if consult.class.name == "ConsultationControl"%>
+                          <%= link_to new_nurses_enfermera_path(control_id: consult.id) do %>
+                            <span class="btn btn-warning btn-md">Requerimiento</span>
+                          <% end %>
+                        <%else%>
+                          <%= link_to new_nurses_enfermera_path(consult_id: consult.id) do %>
+                            <span class="btn btn-warning btn-md">Requerimiento</span>
+                          <% end %>
+                        <%end%>
+                      </td>  
+                    <%end%>
+										<% if consult.status == Consultation::PENDIENTE %>
+											<td class="text-center">
+												<button class="btn button-login btn-open" data-toggle="modal" data-target="#assign_nurse<%=consult.id%>">
+			                    <i class="fa fa-share-alt fa-2x"></i>
+			                  </button>
+			                  <%= render partial: 'modal_assign_nurse', locals: {consult: consult.id, object: consult}%>
+			                </td>
+			              <%end%>
+			              <% if consult.status == Consultation::EVALUANDO %>
+										  <td class="text-center"><%= consult.assign_id.nil? ? '' : user_assign(consult.assign_id)%></td>
+			              <%end%>
+									</tr>	
+								<%end%>
+                <% @consults.group_by(&:patient_id).each_with_index do |consult, i| %>
+                  <tbody>
+                    <tr>
+                      <td colspan="5">
+                        <table cellpadding="0" cellspacing="0" class="tbl-accordion-nested">
+                          <thead>
+                            <% if consult[1][0].status == Consultation::RESUELTO || consult[1][0].status == Consultation::REMISION%>
+                              <tr>
+                                <td colspan="5" class="tbl-accordion-section" style="cursor: pointer"><b><%= Patient.find(consult[0]).name.to_s.capitalize + ' ' + Patient.find(consult[0]).second_name.to_s.capitalize + ' ' + Patient.find(consult[0]).last_name.to_s.capitalize + ' ' + Patient.find(consult[0]).second_surname.to_s.capitalize %></b></td>
+                              </tr>
+                            <%end%>
+                          </thead>
+                          <tbody>
+                            <% consult[1].each_with_index do |info, i| %>
+                              <% y = i %>
+                              <% if info.status == Consultation::RESUELTO || info.status == Consultation::REMISION %>
+                                <tr>
+                                  <td class="text-center" style="width:201px;"><%= info.class.name == "Consultation" ? "Consulta principal # #{i+1}" : "Control # #{y == 0 ? 1 : y}" %></td>
+                                  <td class="text-center" style="width:281px;"><%= info.patient.number_document %></td>
+                                  <td class="text-center" style="width:229px;"><%= info.created_at.strftime("%d/%m/%Y")%></td>
+                                  <td class="text-center" style="width:73px;"><%= info.created_at.strftime("%I:%M %P")%></td>
+                                  <% if info.status == Consultation::RESUELTO %> 
+                                    <td class="text-center" style="width:336px;padding-bottom: 8px;">
+                                      <% if info.class.name == "ConsultationControl"%>
+                                        <%= link_to new_nurses_enfermera_path(control_id: info.id) do %>
+                                          <span class="btn btn-success btn-md">Resuelta</span>
+                                        <% end %>
+                                      <%else%>
+                                        <%= link_to new_nurses_enfermera_path(consult_id: info.id) do %>
+                                          <span class="btn btn-success btn-md">Resuelta</span>
+                                        <%end%>
+                                      <%end%>
+                                    </td>
+                                  <%else%>
+                                    <td class="text-center" style="width:336px;padding-bottom: 8px;">
+                                      <% if info.class.name == "ConsultationControl"%>
+                                        <% if info.status == Consultation::REMISION %>
+                                          <%= link_to new_nurses_enfermera_path(control_id: info.id) do %>
+                                            <span class="btn btn-danger btn-md">Remitida</span>
+                                          <%end%>
+                                        <% else %>
+                                          <%= link_to new_nurses_enfermera_path(control_id: info.id) do %>
+                                            <span class="btn btn-success btn-md">Resuelta</span>
+                                          <%end%>
+                                        <% end %>
+                                      <%else%>
+                                        <% if info.status == Consultation::REMISION %>
+                                          <%= link_to new_nurses_enfermera_path(consult_id: info.id) do %>
+                                            <span class="btn btn-danger btn-md">Remitida</span>
+                                          <%end%>
+                                        <% else %>
+                                          <%= link_to new_nurses_enfermera_path(consult_id: info.id) do %>
+                                            <span class="btn btn-success btn-md">Resuelta</span>
+                                          <%end%>
+                                        <% end %>
+                                      <%end%>
+                                    </td>
+                                  <%end%>
+                                </tr>
+                              <%end%>
+                            <%end%>                 
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                <%end%>
+							  <% if @consults.blank? %>
+                  <tr>
+	                  <td colspan="6">
+	                  	<p class="text-center"><img src="<%= asset_path("ventana_vacia_consultas.png") %>" class="user-image" style="width: 40%;" alt="User Image"></p>
+	                  </td>
+                  </tr>
+								<%end%>
+								</tbody>
+								<!--<tfoot>
+			            <tr>
+			              <td colspan="6" class="text-center"><%#= paginate @consults %></td>
+			            </tr>
+			            </tfoot>-->
+							</table>
+						</div>
+					</div>
+				</div>	
+		<%#=end%>
+	<%#=end%>
+	</div>
+</div>
+<style>
+  .tbl-accordion{
+  margin: 0 auto;
+  width: 900px;
+  border: 1px solid #d9d9d9;
+  
+  
+  .tbl-accordion-nested{
+    width: 100%;
+    
+    td, th{
+      padding: 10px;
+      border-bottom: 1px solid #d9d9d9;
+    }
+    .tbl-accordion-section{
+      background:#333;
+      color: #fff;
+      cursor: pointer;
+    }
+  }  
+}
+</style>
+
+<script>
+	$(document).ready(function(){
+		$('#pendiente').click(function() {
+    });
+  });
+  var header = document.getElementById("myDIV");
+	var btns = header.getElementsByClassName("presionar");
+
+	for (var i = 0; i < btns.length; i++) {
+	  btns[i].addEventListener("click", function() {
+	    var current = document.getElementsByClassName("activo");
+	    current[0].className = current[0].className.replace(" activo", "");
+	    this.className += " activo";
+	    console.log(this.className);
+	  });
+  }
+
+  $(".tbl-accordion-nested").each(function() {
+	  var thead = $(this).find("thead");
+	  var tbody = $(this).find("tbody");
+
+	  tbody.hide();
+	  thead.click(function() {
+	    tbody.slideToggle();
+	  });
+	});
+</script>

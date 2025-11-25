@@ -1,0 +1,55 @@
+<div style="padding-top: 1px;" ng-controller="AdminIpsController as cCtlr" ng-init="cCtlr.initialize('<%= current_client_user.email %>', '<%= current_client_user.authentication_token %>', '<%= current_client_user.client_id%>')">
+  <div class="container">
+    <div class="row">
+      <br>
+      <br>
+      <div class="col-md-12">
+        <div class="borde"><h4 class="title_app">Ver y crear sedes / IPS</h4></div>
+        <br>
+      </div>
+      <div class="col-md-12">
+        <div class="table table-condensed">
+          <table class="table table-hover custom-table" id="dev-table">
+            <thead>
+              <tr>
+              	<th class="text-center border_color" scope="col"></th>
+                <th class="text-center border_color" scope="col">Entidad o sede</th>
+                <th class="text-center border_color" scope="col">Kit</th>
+                <th class="text-center border_color" scope="col">Fecha de creación</th>
+                <th class="text-center border_color" scope="col">Departamento</th>
+                <th class="text-center border_color" scope="col">Municipio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="sede in cCtlr.subsidiary" style="border-bottom: 1px solid #00000036;">
+              	<td class="text-center">
+                  <input type="checkbox" ng-model="sede.selected" ng-click="cCtlr.SelectedSubsidiaries(sede.id)"/>
+                </td>
+                <td class="text-center">{{sede.name}}</td>
+                <td class="text-center">{{sede.kit_id}}</td>
+                <td class="text-center">{{sede.created_at}}</td>
+                <td class="text-center">{{sede.department}}</td>
+                <td class="text-center">{{sede.municipality}}</td>
+              </tr>
+              <tr ng-show="{{cCtlr.subsidiary == ''}}">
+                <td colspan="6">
+                  <h3 class="text-center">ACTUALMENTE ESTA SECCION ESTA VACÍA</h3>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="col-md-12">
+        <button type="button" class="btn btn-primary" ng-click="cCtlr.DeleteSubsidiary()">Eliminar seleccionados</button>
+        <%= link_to 'Crear sede / IPS', new_subsidiary_clients_cliente_index_path(), class:"btn btn-primary", style:"background-color: #2f91eb;"%>
+      </div>
+    </div> 
+  </div>
+</div>

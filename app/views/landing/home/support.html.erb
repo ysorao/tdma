@@ -1,0 +1,19 @@
+<%= render partial: 'top_menu.html.erb'%>
+
+<!-- Soporte técnico -->
+<div class="contact-support relative">
+  <div class="container">
+    <div class="col-md-5 center-vertical" style="min-height: 88vh">
+      <div class="text-left">
+        <img src="<%= asset_path("landing/support-title.png") %>" class="support-title">
+      </div>
+      <br/>
+      <%= render partial: 'contact.html.erb', locals: {number: "2"}%>
+    </div>
+  </div>
+  <%= render partial: 'social_network.html.erb'%>   
+</div> 
+
+
+
+

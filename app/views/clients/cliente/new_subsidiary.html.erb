@@ -1,0 +1,110 @@
+<div style="padding-top: 1px;" ng-controller="AdminIpsController as cCtlr" ng-init="cCtlr.initialize('<%= current_client_user.email %>', '<%= current_client_user.authentication_token %>', '<%= current_client_user.client_id%>')">
+<!-- CREAR SEDE -->
+  <div class="container">
+    <div style="padding-top: 35px;">
+      <%= link_to subsidiaries_clients_cliente_index_path, format: 'js' do %>
+        <span class="glyphicon glyphicon-chevron-left"></span>Regresar
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="borde"><h4 class="title_app">Formulario</h4></div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <!-- Nombre -->
+      <div class="col-md-6">  
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Nombre(s)</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el nombre de la entidad o sede" ng-keyup="message('nombre_error', 'nombre')" id="nombre" ng-model="cCtlr.name">
+        <p class="error" id="nombre_error" ng-show="cCtlr.errors.name != null">{{cCtlr.errors.name[0]}} </p>
+      </div>
+      <!-- Código -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Identificación</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el número de identificación" ng-keyup="message('identificate_error', 'identificate')" id="identificate" ng-model="cCtlr.identification">
+        <p class="error" id="identificate_error" ng-show="cCtlr.errors.identification != null">{{cCtlr.errors.identification[0]}} </p>
+      <br>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Kit</h5>
+        </div>
+        <select class="form-control" ng-change="message_selects('kit_error', 'kit')" id="kit" ng-model="cCtlr.kit_id">
+          <option disabled selected value> Seleccione una opción </option>
+          <option ng-repeat="kit in cCtlr.kits" value="{{kit.id}}">{{kit.code}}</option>
+        </select>
+        <p class="error" id="kit_error" ng-show="cCtlr.errors.kit_id != null">{{cCtlr.errors.kit_id[0]}} </p>
+      </div>
+      <br>
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Municipio</h5>
+        </div>
+        <select class="form-control" ng-change="message_selects('munici_error', 'municipality')" id="municipality" ng-model="cCtlr.municipality_id">
+          <option disabled selected value> Seleccione una opción </option>
+          <option ng-repeat="municipio in cCtlr.municipalities" value="{{municipio.id}}">{{municipio.name}}</option>
+        </select>
+        <p class="error" id="munici_error" ng-show="cCtlr.errors.municipality_id != null">{{cCtlr.errors.municipality_id[0]}} </p>
+      <br>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Dirección</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese la dirección" ng-keyup="message('address_error', 'address')" id="address" ng-model="cCtlr.address">
+        <p class="error" id="address_error" ng-show="cCtlr.errors.address != null">{{cCtlr.errors.address[0]}} </p>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Código postal</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el código postal" ng-keyup="message('postcode_error', 'postcode')" id="postcode" ng-model="cCtlr.post_code">
+        <p class="error" id="postcode_error" ng-show="cCtlr.errors.post_code != null">{{cCtlr.errors.post_code[0]}} </p>
+      </br>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Correo electrónico</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el correo electrónico" ng-keyup="message('email_error', 'email')" id="email" ng-model="cCtlr.email">
+        <p class="error" id="email_error" ng-show="cCtlr.errors.email != null">{{cCtlr.errors.email[0]}} </p>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Teléfono</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el teléfono" ng-keyup="message('phone_error', 'phone')" id="phone" ng-model="cCtlr.phone_one">
+        <p class="error" id="phone_error" ng-show="cCtlr.errors.phone_one != null">{{cCtlr.errors.phone_one[0]}} </p>
+      <br>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Tipo de sede</h5>
+        </div>
+        <select class="form-control" ng-change="message_selects('subs_error', 'type_sub')" id="type_sub" ng-model="cCtlr.type_subs">
+          <option disabled selected value> Seleccione una opción </option>
+          <option value="1">IPS</option>
+          <option value="2">EPS</option>
+          <option value="3">Particular</option>
+        </select>
+        <p class="error" id="subs_error" ng-show="cCtlr.errors.type_subs != null">{{cCtlr.errors.type_subs[0]}} </p>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Código ente territorial</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el código del ente territorial" ng-keyup="message('code_error', 'code')" id="code" ng-model="cCtlr.code_sds">
+        <p class="error" id="code_error" ng-show="cCtlr.errors.code_sds != null">{{cCtlr.errors.code_sds[0]}} </p>
+      </div>
+    </div>
+    <br>
+    <button type="button" class="btn btn-primary button-save" id="save_formula" ng-click="cCtlr.NewSubsidiary()">Crear</button>
+  </div>
+  <!-- Mensajes sistema -->
+  <%= render partial: '/specialists/especialista/messages_system.html.erb'%>
+</div>

@@ -1,0 +1,66 @@
+<div id="responder">
+  <%= form_tag(response_update_admin_mesa_ayuda_index_path(), method: 'put', multipart: true) do %>
+    <div class="seccion3" style="height: 605px;">
+      <div class="barra_superior3"><%= "Responder ticket #{@desk.ticket}" %></div>
+       
+      <li class="campo" id="nombre">
+        <label><h2 class="titulo">Nombre:</h2></label>
+        <div class="area_texto3"><%= @desk.user.name.to_s + @desk.user.surnames.to_s %></div>
+      </li> 
+      
+      <li class="campo" id="email">
+        <label><h2 class="titulo">Email:</h2></label>
+        <div class="area_texto3"><%= @desk.user.email %></div>
+      </li>    
+      
+      <li class="campo" id="asunto">
+        <label><h2 class="titulo">Asunto:</h2></label>
+        <div class="area_texto3"><%= @desk.subject %></div>
+      </li>    
+      
+      <li class="campo" id="asunto">
+        <label><h2 class="titulo">Descripcion:</h2></label>
+        <div class="area_texto_descrip"><%= @desk.description %></div>
+      </li>
+       
+       <li class="campo" id="asunto">
+        <label><h2 class="titulo">Archivo adjunto:</h2>
+        <div class="area_texto_img"><%= @desk.image_user.nil? ? 'Sin foto' : image_tag(@desk.image_user, :style => "height: 100px")%></div>
+      </li>
+      <li class="lista"> 
+        <label><h2 id="name_esp">Título</h2></label>
+        <%= select_tag(:designed_title, options_for_select(DesignedResponse.where(status: DesignedResponse::ACTIVO).uniq(&:title).collect {|r| [r.title, r.title] }), prompt: 'Seleccione', id: 'title', onChange: 'change_designed_general("title", "description", "Seleccione un título")', class: 'select_espe', required: true) %>    
+      </li>
+      <li class="lista"> 
+        <label><h2 id="name_esp">Descripción</h2></label>
+        <%= select_tag(:designed_description, options_from_collection_for_select([], 'id', 'name'), prompt: 'Seleccione', id: 'description', onChange: '$("#area_ticket").val($("#description option:selected").text())', class: 'select_espe', required: true) %>    
+      </li>
+      <li class="campo" id="asunto">
+        <label><h2 class="titulo">Respuesta:</h2></label>
+      </li>
+      <div class="texto_area">
+        <%= text_area_tag :response_ticket, @desk.response_ticket, name: 'help_desk[response_ticket]', placeholder: "Respuesta", id:"area_ticket", class: 'texto_area', rows: 5, cols: 60, required: true %>
+      </div>
+      <div>
+        <%= file_field_tag(:image_admin, name: 'help_desk[image_admin]')%>
+        <% if !Array(alert)[0].nil? %>
+            <p style="color:red;font-weight:bold;">Solo está permitido subir imagen con formato: jpg, jpeg, gif, png</p>
+          <%end%>
+        <%= hidden_field_tag(:id, @desk.id, name: 'help_desk[id]') %>
+      </div>
+      <!-- <form>
+        <input type="file" name="test1" id="testFile" />
+        <button type="reset" id="cancelar">X</button>
+      </form> --> 
+    </div> <!--CIERRA LA SECCIÓN-->
+    <br>
+    <div class="botones3">
+      <%= button_tag(type: "submit", class:"btn btn-primary btn-lg") do %>
+         Enviar
+        <% end %>
+      <a class="boton_cancelar3" href="/admin/help_desks">
+         Cancelar
+       </a>
+    </div>
+  <%end%> 
+</div>

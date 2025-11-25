@@ -1,0 +1,271 @@
+<div class="col-md-12" id="response" style="padding-left: 20px;">
+	<div class="row">
+	  <div class="col-md-12 secondary_title">
+	    <h4 class="control">Análisis</h4>
+	  </div>
+	</div>
+	<!-- ANALISIS DE LESIÓN -->
+	<div class="row">
+	  <div class="areatext_order">
+	  	<textarea class="form-control injury_control analysis" placeholder="Análisis de la lesión" ng-model="cCtlr.case_analysis" id="texto_uno" style="display: inline-block;" rows="4" cols="10" ng-keyup="show_button('edit_injury', $event, 'texto_uno')"></textarea>
+	  </div>
+	  <div>
+      <button class="btn btn-primary btn-lg" style="margin: 20px 0px 0px 5px;border-radius:150px;" ng-click="icon_microfone('texto_uno', 'btn1');" id="btn1"><i class="fa fa-microphone"></i></button>
+	  </div>
+	  <br>
+	  <br>
+	  <!-- Botones -->
+	  <div class="text-right">
+	  	<!-- Botones analisis de lesion -->
+		  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#library_analysis" id="injury_analysis" disabled="true">Almacenar en biblioteca</button>
+		  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#see_injury_analysis" ng-click="cCtlr.LibraryInjuryAnalysis()">Ver biblioteca</button>
+	  	<button type="button" class="btn button-save" ng-click="cCtlr.UpdateSpecialistConsult(1)" id="edit_injury" ng-disabled='cCtlr.case_analysis == null || cCtlr.case_analysis == ""'>Guardar</button>
+	  </div>
+	  <%= render partial: 'modal_library_analysis'%>
+	  <%= render partial: 'modal_see_injury_analysis'%>
+	</div>
+	<br>
+	<!-- ANALISIS DE CASO -->
+	<div class="row">	
+	  <div class="areatext_order">
+	  	<textarea class="form-control injury_control" placeholder="Análisis del caso" ng-model="cCtlr.analysis_description" id="texto_dos" rows="4" cols="10" ng-keyup="show_button('edit_case', $event, 'texto_dos')"></textarea>
+	  </div>
+	  <div>
+      <button class="btn btn-primary btn-lg" style="margin: 20px 0px 0px 5px;border-radius:150px;" ng-click="icon_microfone('texto_dos', 'btn2');" id="btn2"><i class="fa fa-microphone"></i></button>
+	  </div>
+	  <br>
+	  <br>
+	  <div class="text-right">
+	  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#library_case" id="case_analysis" disabled="true">Almacenar en biblioteca</button>
+		  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#see_case_analysis" ng-click="cCtlr.LibraryCaseAnalysis()">Ver biblioteca</button>
+	  	<button type="button" class="btn button-save" ng-click="cCtlr.UpdateSpecialistConsult(2)" id="edit_case" ng-disabled='cCtlr.analysis_description == null || cCtlr.analysis_description == ""'>Guardar</button>
+	  </div>
+	  <%= render partial: 'modal_library_case'%>
+	  <%= render partial: 'modal_see_case_analysis'%>
+	</div>
+	<br>
+	<input type="hidden" id="specialist_response_id">
+	<!-- DIAGNOSTICOS -->
+	<div ng-repeat="consult in cCtlr.consults" on-last-repeat data-list="diagnostics">
+		<div class="row">
+			<div class="col-md-12 diagnostic_title">
+		    <h4 class="control">{{$index == 0 ? "Diagnóstico principal" : "Diagnóstico relacionado" }}</h4>
+		  </div>
+		  <div>
+		    <label class="control texto_color" for="Name">Diagnóstico</label>
+		  </div>
+		  <div>  	
+		    <input type="text" class="form-control autocomplete_diagnostic field_diag{{$index}}" id="disease" placeholder="Ingrese el diagnóstico principal del paciente" ng-model="consult.disease_id" ng-keyup="show_button('btn_diag'+$index, $event, '')">
+		    <p class="error" ng-show="cCtlr.error.consultant.disease_id != null || cCtlr.error.consultant.disease_id != undefined">{{cCtlr.disease == null ? cCtlr.error.consultant.disease_id[0] : ''}}</p>
+		  </div>
+	  </div>
+	  <br>
+		<div class="row">
+			<div>
+		    <label class="control texto_color" for="Name">Tipo</label>
+		  </div>
+		  <div>
+		    <select class="form-control field_diag{{$index}}" ng-model="consult.type_diagnostic">
+		  		<option value="1">Impresión diagnóstica</option>
+		  		<option value="2">Confirmado nuevo</option>
+		  		<option value="3">Confirmado repetido</option>
+				</select>
+		  </div>
+		</div>
+	  <br>
+	  <!-- Boton diagnostico  -->
+		<div class="row">
+			<div class="col-md-10">
+		    <label class="texto_color" for="Name"></label>
+		  </div>
+			<div class="text-right">
+		    <button type="button" class="btn button-save" id="btn_diag{{$index}}" ng-click="cCtlr.NewDiagnostic($index)" ng-disabled="consult.disease_id == ''">Guardar</button>
+		  </div>
+		</div>
+	</div>
+  <br>
+	<!-- Solicitud de examenes -->
+	<div class="row">
+		<div class="col-md-12 secondary_title">
+		  <h4 class="control">Solicitud de exámenes</h4>
+		</div>
+		<div  ng-repeat="exam in cCtlr.exams">
+		  <div class="row">
+		  	<br>
+		  	<div class="col-md-10">
+		    	<textarea class="form-control" placeholder="Ingrese el tipo de examen a solicitar" ng-model="exam.name_type_exam" id="field{{$index}}" rows="4" cols="10" ng-keyup="show_button('btn_exam'+$index, $event, '')"></textarea>
+		    </div>
+		    <div class="col-md-2" id="boton_exam" style="padding-left: 0px;">
+		      <button type="button" class="btn button-save" ng-disabled="exam.name_type_exam == ''" id="btn_exam{{$index}}" ng-click="cCtlr.NewTypeExam($index)">Guardar</button>
+		    </div>
+		  </div>
+		</div>
+	</div>
+  <br>
+	<!-- Formulación -->
+	<!--<div class="row">
+		<div class="col-md-12 secondary_title">
+		  <h4 class="control">Formulación</h4>
+		</div>
+		<div ng-repeat="formula in cCtlr.formulas">
+			<div class="row">
+				<br>-->
+				<!-- Nombre genérico -->
+				<!--<div class="col-md-6">
+			    <label class="control texto_color" for="Name">*Nombre genérico</label>
+			    <input type="text" class="form-control formulate{{$index}}" placeholder="Ingrese nombre genérico del medicamento" ng-model="formula.generic_name_medicament" ng-keyup="message('btn_formula'+$index, 'name_medicament'+$index, $event)">
+			    <p class="error" id="name_medicament{{$index}}" ng-show="cCtlr.messages.formula.generic_name_medicament != null || cCtlr.messages.formula.generic_name_medicament != undefined">{{cCtlr.messages.formula.generic_name_medicament[0]}}</p>
+			  </div>-->
+			  <!-- Tipo de medicamento -->
+				<!--<div class="col-md-3">
+			  	<label class="control texto_color" for="Name">Tipo</label>
+			    <select class="form-control formulate{{$index}}" ng-model="formula.type_medicament" ng-init="formula.type_medicament='Medicamento PBS'">
+					  <option value="Medicamento PBS">Med. PBS</option>
+					  <option value="Medicamento no PBS">Med. No PBS</option>
+				  </select>
+			  </div>-->
+			  <!-- Código medicamento -->
+				<!--<div class="col-md-3">
+			    <label class="control texto_color" for="Name">Código</label>
+			    <input type="text" class="form-control formulate{{$index}}" placeholder="Ingrese código" ng-model="formula.medication_code" ng-keyup="show_button('btn_formula'+$index, $event)">
+			  </div>
+			</div>
+			<div class="row">
+				<br>-->
+				<!-- Forma farmacéutica -->
+				<!--<div class="col-md-3">
+			  	<label class="control texto_color text-center" for="Name">*Forma farmacéutica</label>
+			    <input type="text" class="form-control formulate{{$index}}" placeholder="Según CUM" ng-model="formula.pharmaceutical_form" ng-keyup="message('btn_formula'+$index, 'pharmaceutical'+$index, $event)">
+			    <p class="error" id="pharmaceutical{{$index}}" ng-show="cCtlr.messages.formula.pharmaceutical_form != null || cCtlr.messages.formula.pharmaceutical_form != undefined">{{cCtlr.messages.formula.pharmaceutical_form[0]}}</p>
+			  </div>-->
+				<!-- Concentración -->
+				<!--<div class="col-md-3">
+			    <label class="control texto_color" for="Name">*Concentración</label>
+			    <input type="text" class="form-control formulate{{$index}}" placeholder="Según CUM" ng-model="formula.drug_concentration" ng-keyup="message('btn_formula'+$index, 'concentration'+$index, $event)">
+			    <p class="error" id="concentration{{$index}}" ng-show="cCtlr.messages.formula.drug_concentration != null || cCtlr.messages.formula.drug_concentration != undefined">{{cCtlr.messages.formula.drug_concentration[0]}}</p>
+			  </div>-->
+			  <!-- Unidad medida -->
+				<!--<div class="col-md-3">
+			  	<label class="control texto_color text-center"  for="Name">*Unidad de medida</label>
+			    <input type="text" class="form-control formulate{{$index}}" placeholder="Ingrese unidad" ng-model="formula.unit_measure_medication" ng-keyup="message('btn_formula'+$index, 'unit_measure'+$index, $event)">
+			    <p class="error" id="unit_measure{{$index}}" ng-show="cCtlr.messages.formula.unit_measure_medication != null || cCtlr.messages.formula.unit_measure_medication != undefined">{{cCtlr.messages.formula.unit_measure_medication[0]}}</p>
+			  </div>-->
+			  <!-- Número de unidades -->
+				<!--<div class="col-md-3">
+			    <label class="control texto_color text-center" for="Name">*Cantidad</label>
+			    <input type="text" class="form-control formulate{{$index}}" placeholder="# de unidades" ng-model="formula.number_of_units" ng-keyup="message('btn_formula'+$index, 'units'+$index, $event)">
+			    <p class="error" id="units{{$index}}" ng-show="cCtlr.messages.formula.number_of_units != null || cCtlr.messages.formula.number_of_units != undefined">{{cCtlr.messages.formula.number_of_units[0]}}</p>
+			  </div>
+			</div>
+			<div class="row">
+			</div>-->
+			<!--<div class="row">
+				<br>
+				 Valor unitario
+				<div class="col-md-6">
+			    <label class="control texto_color" for="Name">Valor unitario</label>
+			    <input type="text" class="form-control formulate{{$index}}" ng-model="formula.unit_value_medicament" ng-keyup="show_button('btn_formula'+$index, $event)">
+			  </div>
+			  Valor total
+				<div class="col-md-6">
+			  	<label class="control texto_color" for="Name">Valor total</label>
+			    <input type="text" class="form-control formulate{{$index}}" ng-model="formula.total_value_medicament" ng-keyup="show_button('btn_formula'+$index, $event)">
+			  </div>
+			</div>-->
+			<!--<br>-->
+			<!--<div class="row" style="display: inline;">-->
+			  <!-- Código medicamento -->
+			  <!--<div class="areatext_order">
+		      <label class="control texto_color" for="Name">*Formulación</label>
+		      <textarea class="form-control formulate{{$index}}" placeholder="Ingrese las indicaciones de formulación para este paciente" ng-model="formula.commentations" rows="4" cols="10" id="texto_tres{{$index}}" ng-keyup="message('btn_formula'+$index, 'comments'+$index, $event)"></textarea>
+		      <p class="error" id="comments{{$index}}" ng-show="cCtlr.messages.formula.commentations != null || cCtlr.messages.formula.commentations != undefined">{{cCtlr.messages.formula.commentations[0]}}</p>
+		    </div>-->
+		    <!--<div>
+    			<button class="btn btn-primary btn-lg" style="margin: 47px 0px 0px 5px;border-radius:150px;" ng-click="icon_microfone('texto_tres'+$index, 'btn_tres'+$index);" id="btn_tres{{$index}}"><i class="fa fa-microphone"></i></button>
+    		</div>-->
+			<!--</div>-->
+			<!--<br>-->
+			<!--<div class="row">
+				<div class="col-md-10">
+			    <label class="texto_color" for="Name"></label>
+			  </div>
+				<div class="col-md-2">
+			    <button type="button" class="btn plus_formula{{$index}} button-save" ng-click="cCtlr.NewFormula($index)" id="btn_formula{{$index}}" ng-disabled="formula.medication_code == '' && formula.generic_name_medicament == '' && formula.pharmaceutical_form == '' && formula.drug_concentration == '' && formula.unit_measure_medication == '' && formula.number_of_units == '' && formula.commentations == ''">Guardar</button>
+			  </div>
+			</div>-->
+			<!-- Botones -->
+			<!--<div class="row">
+			  <div class="text-right col-md-12">
+			  	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#library_formula" id="formula_library{{$index}}" disabled="true">Almacenar en biblioteca</button>
+				  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#see_library_formula" ng-click="cCtlr.library_formulas()">Ver biblioteca</button>
+			  	<button type="button" class="btn plus_formula{{$index}} button-save" ng-click="cCtlr.NewFormula($index)" id="btn_formula{{$index}}" ng-disabled="formula.medication_code == '' && formula.generic_name_medicament == '' && formula.pharmaceutical_form == '' && formula.drug_concentration == '' && formula.unit_measure_medication == '' && formula.number_of_units == '' && formula.commentations == ''">Guardar</button>
+			  </div>
+			  <%#= render partial: 'modal_library_formula'%>
+			  <%#= render partial: 'modal_see_library_formula'%>
+			</div>-->
+		<!--</div>-->
+	  <!--<br>-->
+	<!--</div>-->
+	<!-- Tratamiento -->
+	<div class="row">
+		<div class="col-md-12 secondary_title">
+		  <h4 class="control">Recomendaciones de manejo</h4>
+		</div>
+	</div>
+	<!-- Botones tratamiento -->
+	<div class="row">
+	  <div class="areatext_order">	
+	  	<textarea class="form-control" placeholder="Ingrese el tratamiento recomendado" ng-model="cCtlr.recommended_treatment" id="recommend_treatment" rows="4" cols="10" ng-keyup="show_button('save_treatment', $event, 'recommend_treatment')"></textarea>
+	  </div>
+	  <div>
+    	<button class="btn btn-primary btn-lg" style="margin: 20px 0px 0px 5px;border-radius:150px;" ng-click="icon_microfone('recommend_treatment', 'btn4');" id="btn4"><i class="fa fa-microphone"></i></button>
+    </div>
+	  <div class="text-right col-md-12">
+	    <br>
+	    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#library_treatment" id="treatment_library" disabled="true">Almacenar en biblioteca</button>
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#see_library_treatment" ng-click="cCtlr.library_treatments()">Ver biblioteca</button>
+	  	<button type="button" class="btn button-save" id="save_treatment" ng-click="cCtlr.EditConsult()" ng-disabled="cCtlr.recommended_treatment == null || cCtlr.recommended_treatment == ''">Guardar</button>
+	  </div>
+	  <%= render partial: 'modal_library_treatment'%>
+	  <%= render partial: 'modal_see_library_treatment'%>	
+	</div>
+	<br>
+	<!-- Mipres -->
+	<div class="row">
+		<div class="col-md-12 secondary_title">
+	    <h4 class="control">Mipres</h4>
+	  </div>
+	  <div>
+	  	<input type="file" nv-file-select uploader="cCtlr.uploader_mipress">
+	  	<span ng-show="cCtlr.uploader_mipress_progress > 0">
+	      {{cCtlr.uploader_mipress_progress}}%
+	  	</span>
+	  	<i class="fa fa-check" ng-show="cCtlr.uploader_mipress_status == 1"></i>
+	    <i class="fa fa-ban" ng-show="cCtlr.uploader_mipress_status == 2"></i>
+	    <i class="fa fa-spinner fa-spin" ng-show="cCtlr.uploader_mipress_progress > 0 && cCtlr.uploader_mipress_status == 0"></i>
+	  </div>
+	</div>
+	<br>
+	<!-- Próximo control -->
+	<div class="row">
+		<div class="col-md-12 secondary_title">
+	    <h4 class="control">Próximo control</h4>
+	  </div>
+	</div>
+	<div class="row">
+	  <div>
+	  	<input type="text" class="form-control" id="input_control" placeholder="Ingrese el próximo control recomendado para el paciente" ng-model="cCtlr.control_recommended" ng-keyup="show_button('save_control', $event, 'input_control')">
+	  </div>
+	</div>
+	<br>
+	<!-- Botones -->
+	<div class="row">
+		<div class="text-right">
+	    <button type="button" class="btn button-save" ng-click="cCtlr.NewControl()" id="save_control" ng-disabled="checked4 || cCtlr.control_recommended == null || cCtlr.control_recommended == ''">Guardar</button>
+	  </div>
+	</div>
+	<br>
+	<div class="row"> 	
+    <button type="button" class="btn btn-success form-control" style="background-color: rgb(0, 128, 0); color: rgb(255, 255, 255);" ng-click="cCtlr.UpdateResponseConsult(true, 1)">Responder consulta</button>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div id="historial">
+  <div class="seccion2">
+	  <div class="barra_superior2">
+	    <%= "Historial ticket #{@history.help_desk.ticket}" %>
+	  </div>
+	   
+	  <li class="parrafo" id="email">
+	    <label><h2 class="orden">1.</h2>
+	    </label>
+	    <div class="area_texto"><%= @history.message_create %></div>
+	  </li>    
+	  
+	  <li class="parrafo" id="asunto">
+	    <label><h2 class="orden">2.</h2>
+	    </label>
+	     <div class="area_texto"><%= @history.message_assign %></div>
+	  </li>
+    <li class="parrafo" id="asunto">
+	    <label><h2 class="orden">3.</h2>
+	    </label>
+	     <div class="area_texto"><%= @history.message_response %></div>
+	  </li>
+  </div> <!--CIERRA LA SECCIÓN-->
+  
+  <div class="botones2">
+   <a class="boton_atras" href="/admin/help_desks">
+     Atras
+   </a>
+  </div>  
+</div>

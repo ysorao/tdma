@@ -1,0 +1,95 @@
+<!--<div ng-controller="ConsultController as cCtlr" ng-init="cCtlr.initialize('<%#= current_user.email %>', '<%#= current_user.authentication_token %>', '<%#= 4%>', '<%#= params[:control_id]%>')">-->
+  
+  <!--<div class="main">
+    <div class="slider-nav">
+      <!--<div class="col-md-2" ng-repeat="image in cCtlr.annex_images"><a href="#" class="thumbnail"><h3><img src="{{image.annex_url}}" alt="Image" style="max-width:100%;"></a></h3></div>-->
+      <%#= @hola.each do |x| %>
+        <!--<div>
+          <h3><a class="single-image" href="<%#= x.annex_url %>" title="Acne vulgar"><img src="<%#= x.annex_url %>" alt="Image" style="max-width:100%;"><a></h3>
+        </div>
+      <%#=end%>
+    </div>
+  </div>-->
+
+  <div class="container">
+  <div class="carousel multiple-items">
+    <figure>
+      <a href="#1"><img src="http://lorempixel.com/200/150/sports/1" alt="1"></a>
+      <figcaption>Lor separat existentie es un myth</figcaption>
+    </figure>
+    <figure>
+      <a href="#2"><img src="http://lorempixel.com/200/150/sports/2" alt="2"></a>
+      <figcaption>Li Europan lingues es mems del sam familie ma quande lingues coalesce li grammatica</figcaption>
+    </figure>
+    <figure>
+      <a href="#3"><img src="http://lorempixel.com/200/150/sports/3" alt="3"></a>
+      <figcaption>At solmen va esser necessi lingues differe solmen in li grammatica</figcaption>
+    </figure>
+    <figure>
+      <a href="#4"><img src="http://lorempixel.com/200/150/sports/4" alt="4"></a>
+      <figcaption>Ma quande lingues coalesce li grammatica at solmen va esser necessi lingues differe solmen in li grammatica</figcaption>
+    </figure>
+    <figure>
+      <a href="#5"><img src="http://lorempixel.com/200/150/sports/5" alt="5"></a>
+      <figcaption>Li nov lingua franca omnicos directe al desirabilite refusa continuar payar custosi traductores</figcaption>
+    </figure>
+    <figure>
+      <a href="#6"><img src="http://lorempixel.com/200/150/sports/6" alt="6"></a>
+      <figcaption>Por scientie</figcaption>
+    </figure>
+    <figure>
+      <a href="#7"><img src="http://lorempixel.com/200/150/sports/7" alt="7"></a>
+      <figcaption>On refusa continuar payar custosi traductores lingues differe solmen in li grammatica</figcaption>
+    </figure>
+    <figure>
+      <a href="#8"><img src="http://lorempixel.com/200/150/sports/8" alt="8"></a>
+      <figcaption>Pronunciation e plu sommun paroles</figcaption>
+    </figure>
+    <figure>
+      <a href="#9"><img src="http://lorempixel.com/200/150/sports/9" alt="9"></a>
+      <figcaption>Simplic e regulari quam</figcaption>
+    </figure>
+    <figure>
+      <a href="#10"><img src="http://lorempixel.com/200/150/sports/10" alt="10"></a>
+      <figcaption>Omnicos directe al desirabilite refusa continuar payar custosi traductores</figcaption>
+    </figure>
+  </div><!-- /.carousel -->
+</div><!-- /.container -->
+
+<style>
+  .container {
+  
+  margin: 50px auto 0;
+}
+
+
+
+.slick-prev {
+  left: -30px;
+  top: 42%;
+  
+}
+
+.slick-next {
+  
+  left: auto;
+  right: -30px;
+}
+</style>
+
+
+<script>
+  $(document).ready(function(){
+  
+});
+  // slick configuration
+  $('.multiple-items').slick({
+    infinite: true,
+    slide: 'figure',
+    slidesToScroll: 1,
+    slidesToShow: 3,
+    speed: 750
+  });
+  
+  
+</script>

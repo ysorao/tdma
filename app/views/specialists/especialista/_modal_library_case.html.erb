@@ -1,0 +1,29 @@
+<div class="modal fade library_case" id="library_case" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header modal-header-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle fa-lg"></i></span></button>
+        <h4 class="modal-title panel-primary" id="myModalLabel">Almacenar este analisis en biblioteca</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form">
+          <div class="row">
+			    	<div class="col-md-12">
+			        <h5 class="control">Nombrar este analisis</h5>
+			      </div>
+			      <div class="col-md-10">  	
+			        <input type="text" class="form-control name" placeholder="Ingrese un nombre" ng-model="cCtlr.name_analysis">
+			      </div>
+			    </div>
+          <br>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-3 text-center col-sm-6 col-xs-12">   
+              <button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" ng-click="cCtlr.NewLibraryAnalysis(2)">Almacenar</button>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

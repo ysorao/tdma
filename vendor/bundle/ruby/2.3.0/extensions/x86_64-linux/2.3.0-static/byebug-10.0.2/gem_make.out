@@ -1,0 +1,19 @@
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/byebug-10.0.2/ext/byebug
+/home/rails/.rbenv/versions/2.3.5/bin/ruby -r ./siteconf20190118-4584-1ewm7z7.rb extconf.rb
+creating Makefile
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/byebug-10.0.2/ext/byebug
+make "DESTDIR=" clean
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/byebug-10.0.2/ext/byebug
+make "DESTDIR="
+compiling locker.c
+compiling context.c
+compiling byebug.c
+compiling threads.c
+compiling breakpoint.c
+linking shared-object byebug/byebug.so
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/byebug-10.0.2/ext/byebug
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 byebug.so ./.gem.20190118-4584-1jkgygx/byebug

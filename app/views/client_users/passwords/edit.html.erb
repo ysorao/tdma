@@ -1,0 +1,42 @@
+<div class="container-fluid div_new_pass">
+  <!--<div style="padding-top: 35px;">
+    <%#= link_to new_user_session_path, title: 'Regresar' do %>
+      <span class="glyphicon glyphicon-menu-left"></span>
+    <%#= end %>
+  </div>-->
+  <div class="row">
+    <div class="col-sm-4 col-md-4 col-md-offset-4">
+      <!--<div style="position: fixed;top: 29%;padding-left: 27px;">
+        <h4 style="color:white;">Por seguridad ingrese una nueva contraseña:</h4>
+      </div>-->
+      <div class="account-wall" style="padding:19px 0px 17px 0px">
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+          <%= devise_error_messages! %>
+          <%= f.hidden_field :reset_password_token %>
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <div class="form-group">
+                <label for="" style="color:#eaeef4;">*Contraseña</label>
+                <% if @minimum_password_length %>
+                  <em>(8 caracteres como mínimo que debe incluir al menos una letra minúscula, una letra mayúscula y un número.)</em><br />
+                <% end %>
+                <%= f.password_field :password, autofocus: true, autocomplete: "off", class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <label for="" style="color:#eaeef4;">*Confirmar contraseña</label>
+                <%= f.password_field :password_confirmation, autofocus: true, autocomplete: "off", class: "form-control" %>
+              </div>
+              <%= f.submit "Confirmar e ingresar", class: "form-control btn btn-primary", style: 'height:44px;background-color:#69e6fb;' %>
+            </div>
+          </div>
+        <% end %>
+        <%#= render "users/shared/links" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4 col-md-4 col-md-offset-5">
+      <img src="<%= asset_path("logo_inicio.png") %>" class="user-image" style="width: 40%;" alt="User Image"></a>
+    </div>
+  </div>
+</div>

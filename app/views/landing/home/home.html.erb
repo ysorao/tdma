@@ -1,0 +1,56 @@
+<div class="slide-home relative">
+  <%= render partial: 'top_menu.html.erb'%>
+
+  <!-- Slider Banner -->
+  <div class="slider-banner">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img src="<%= asset_path("landing/banner1.png") %>" class="img-banner">
+          <div class="carousel-caption center-vertical">
+            <img src="<%= asset_path("landing/logopng.png") %>" alt="Telederma en Dermatología">
+            <a class="blue-btn" href="/landing/home/about_us" data-turbolinks='false'>
+              Quiénes somos
+            </a>
+          </div>
+          <img src="<%= asset_path("landing/footer_banner.png") %>" class="footer-banner">
+        </div>
+        <div class="item">
+          <img src="<%= asset_path("landing/banner2.png") %>" class="img-banner">
+          <div class="carousel-caption center-vertical">
+            <h2 class="text-banner">
+              Servicios de <strong>medicina</strong> <br/>
+              a <span>distancia</span> en <br/>
+              <b>dermatología</b>
+            </h2>
+            <a class="blue-btn" href="/landing/home/services" data-turbolinks='false'>
+              Servicios
+            </a>
+          </div>
+          <img src="<%= asset_path("landing/footer_banner.png") %>" class="footer-banner">
+        </div>
+        <div class="item">
+          <img src="<%= asset_path("landing/banner3.png") %>" class="img-banner">
+          <div class="carousel-caption center-vertical">
+            <img src="<%= asset_path("landing/logopng.png") %>" alt="Telederma en Dermatología">
+            <a class="blue-btn" href="/landing/home/sales_contact">
+              Contacto
+            </a>
+          </div>
+          <img src="<%= asset_path("landing/footer_banner.png") %>" class="footer-banner">
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <img src="<%= asset_path("landing/arrow-left.png") %>" class="glyphicon-chevron-left">
+      </a>
+      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <img src="<%= asset_path("landing/arrow-right.png") %>" class="glyphicon-chevron-right">
+      </a>
+    </div>
+  </div>
+  <!-- Fin Slider Banner -->
+
+  <%= render partial: 'social_network.html.erb'%>
+</div>

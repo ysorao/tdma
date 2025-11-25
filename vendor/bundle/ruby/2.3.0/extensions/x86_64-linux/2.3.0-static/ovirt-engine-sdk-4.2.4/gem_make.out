@@ -1,0 +1,42 @@
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/ovirt-engine-sdk-4.2.4/ext/ovirtsdk4c
+/home/rails/.rbenv/versions/2.3.5/bin/ruby -r ./siteconf20190118-4584-7eoybg.rb extconf.rb
+checking for xml2-config... yes
+checking for curl-config... yes
+creating Makefile
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/extensions/x86_64-linux/2.3.0-static/ovirt-engine-sdk-4.2.4/mkmf.log
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/ovirt-engine-sdk-4.2.4/ext/ovirtsdk4c
+make "DESTDIR=" clean
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/ovirt-engine-sdk-4.2.4/ext/ovirtsdk4c
+make "DESTDIR="
+compiling ov_error.c
+compiling ov_http_request.c
+compiling ov_http_client.c
+ov_http_client.c: In function 'ov_http_client_header_task':
+ov_http_client.c:392:33: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+         while (pointer - buffer < length && isspace(*pointer)) {
+                                 ^
+ov_http_client.c: In function 'ov_http_client_send':
+ov_http_client.c:1092:34: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     if (RHASH_SIZE(ptr->pending) < ptr->limit) {
+                                  ^
+ov_http_client.c: In function 'ov_http_client_wait':
+ov_http_client.c:1118:71: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+         while (RARRAY_LEN(ptr->queue) > 0 && RHASH_SIZE(ptr->pending) < ptr->limit) {
+                                                                       ^
+compiling ov_xml_reader.c
+compiling ov_http_response.c
+compiling ovirtsdk4c.c
+compiling ov_module.c
+compiling ov_http_transfer.c
+compiling ov_xml_writer.c
+compiling ov_string.c
+linking shared-object ovirtsdk4c.so
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/ovirt-engine-sdk-4.2.4/ext/ovirtsdk4c
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 ovirtsdk4c.so ./.gem.20190118-4584-ivy5ox

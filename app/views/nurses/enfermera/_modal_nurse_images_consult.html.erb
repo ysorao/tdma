@@ -1,0 +1,168 @@
+<div class="modal fade" id="images_consult" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document" style="width:1400px;margin: auto;">
+    <div class="modal-content">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
+        <div class="modal-header modal-header" style="padding: 3px !important;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle fa-lg"></i></span></button>
+        </div>
+        <div class="modal-body">
+          <div class="carousel-inner" role="listbox" ng-init="total_slide(cCtlr.images.length)" ng-repeat="image in cCtlr.images">
+            <article class="item {{pos == $index ? 'active' : '' }}">
+              <!-- Content -->
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-7">
+                    <h3 class="text-center">{{image.body_area}}</h3>
+                    <div class="text-center img-container{{$index}}" id="imagen_contenedor">
+                      <img ng-src="{{image.photo}}" id="principal" alt = "Thumbnail 2" data-display="{{image.photo}}">
+                    </div>
+                    <br>
+                  </div>
+                  <div class="col-md-5">
+                    <img src="<%= asset_path("cargando.gif") %>" class="loader" width="300px;" height="300px;" style="display: none;">
+                    <div class="fields{{$index}}" style="display: none;">
+                      <h4 class="fields{{$index}}">Nota: Puede dibujar encima de la foto</h4>
+                      <div class="docs-preview" id="prueba" style="margin-top:27px;">
+                        <div class="sigPad" id="area_imagen{{$index}}">
+                          <div class="clearfix sigPad{{index}}" id="area_imagen{{index}}" style="margin-top:27px;">
+                            <canvas></canvas>
+                          </div>
+                        </div>
+                        <br>
+                        <p class="fields{{$index}}" style="display: none;">Comentarios</p>
+                        <!-- Comentarios -->
+                        <textarea rows="4" cols="50" ng-model="cCtlr.commentations" class="fields{{$index}}" style="display: none;"></textarea>
+                        <!-- Url imagen editada -->
+                        <input type="hidden" id="campo{{$index}}"><br>
+                        <img ng-src="{{image.photo}}" id="imagen_hide{{$index}}" width="300px;" style="display: none;">
+                        <!-- BOTON EDITAR -->
+                        <button type="button" class="btn-success fields{{$index}}" id="btn_edit" ng-click="create_image(image.id, $index)">Guardar</button>
+                        <button type="button" class="btn-success fields{{$index}}" ng-click="clean_image($index)" style="display: none;" id="btn_clean">Limpiar</button>
+                      </div>
+                      <div class="docs-data">
+                        <div class="input-group input-group-sm">
+                          <input type="hidden" class="form-control" id="dataX" placeholder="x">    
+                        </div>
+                        <div class="input-group input-group-sm"> 
+                          <input type="hidden" class="form-control" id="dataY" placeholder="y">  
+                        </div>
+                        <div class="input-group input-group-sm">  
+                          <input type="hidden" class="form-control" id="dataWidth" placeholder="width">  
+                        </div>
+                        <div class="input-group input-group-sm">
+                          <input type="hidden" class="form-control" id="dataHeight" placeholder="height">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2" style="padding-left:66px;">
+                  <button type="button" class="btn btn-success" id="edit_image{{$index}}" ng-click="index_image($index)">
+                    <span class="docs-tooltip" data-toggle="tooltip">
+                      Editar imagen
+                    </span>
+                  </button>
+                </div>
+                <div class="row" id="actions{{$index}}" style="display: none;">
+                  
+                  <div class="col-md-9 docs-buttons">
+                    <!-- <h3>Toolbar:</h3> -->
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-primary" data-method="zoom" data-option="0.1" title="Zoom In">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="cropper.zoom(0.1)">
+                          <span class="fa fa-search-plus"></span>
+                        </span>
+                      </button>
+                      <button type="button" class="btn btn-primary" data-method="zoom" data-option="-0.1" title="Zoom Out">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="cropper.zoom(-0.1)">
+                          <span class="fa fa-search-minus"></span>
+                        </span>
+                      </button>
+                    </div>
+                    
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-primary" data-method="move" data-option="-10" data-second-option="0" title="Move Left">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="cropper.move(-10, 0)">
+                          <span class="fa fa-arrow-left"></span>
+                        </span>
+                      </button>
+                      <button type="button" class="btn btn-primary" data-method="move" data-option="10" data-second-option="0" title="Move Right">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="cropper.move(10, 0)">
+                          <span class="fa fa-arrow-right"></span>
+                        </span>
+                      </button>
+                      <button type="button" class="btn btn-primary" data-method="move" data-option="0" data-second-option="-10" title="Move Up">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="cropper.move(0, -10)">
+                          <span class="fa fa-arrow-up"></span>
+                        </span>
+                      </button>
+                      <button type="button" class="btn btn-primary" data-method="move" data-option="0" data-second-option="10" title="Move Down">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="cropper.move(0, 10)">
+                          <span class="fa fa-arrow-down"></span>
+                        </span>
+                      </button>
+                    </div>
+
+                    <div class="btn-group btn-group-crop">
+                      <button type="button" class="btn btn-success" data-method="getCroppedCanvas" data-option="{ &quot;maxWidth&quot;: 800, &quot;maxHeight&quot;: 700 }" id="btn_canvas" onclick=$(".loader").show();>
+                        <span class="docs-tooltip" data-toggle="tooltip">
+                          Seleccionar área
+                        </span>
+                      </button>
+                    </div>
+
+                    <!-- Show the cropped image in modal -->
+                    <div class="modal fade docs-cropped" id="getCroppedCanvasModal" role="dialog" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" tabindex="-1">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="getCroppedCanvasTitle">Cropped</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body"></div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <a class="btn btn-primary" id="download" href="javascript:void(0);" download="cropped.jpg">Download</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- /.modal -->
+                  </div><!-- /.docs-buttons -->
+                  <div class="col-md-3 docs-toggles">
+                    <!-- <h3>Toggles:</h3> -->
+                    <div class="dropdown dropup docs-options">   
+                    </div><!-- /.dropdown -->
+                  </div><!-- /.docs-toggles -->
+                </div>
+              </div>
+            </article>
+          </div> 
+        </div>
+        <div class="modal-footer" style="padding-right: 53%;">
+          <a id="prev" class="btn btn-primary" href="" role="button" data-slide="prev" ng-click="actualSlide('prev')" ng-show="can_come_back() == true">
+            <span class="glyphicon glyphicon-triangle-left"></span>
+            Anterior
+          </a>
+          <a class="btn btn-success" href="" role="button" data-slide="next" ng-click="actualSlide('next')" ng-show="can_continue() == true">
+            Siguiente
+            <span class="glyphicon glyphicon-triangle-right"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+}
+
+.modal-content {
+  height: 100%;
+  border-radius: 0;
+}
+</style>

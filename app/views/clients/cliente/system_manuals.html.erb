@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <br>
+    <br>
+    <div class="col-md-12">
+      <div class="borde"><h4 class="title_app">Manuales y recursos</h4></div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="table table-condensed">
+        <table class="table table-hover custom-table" id="dev-table" style="overflow:auto;width:80%;height:auto;margin-left:50px;">
+          <thead>
+            <tr>
+            	<th class="text-center border_color" scope="col">Nombre documento</th>
+              <th class="text-center border_color" scope="col">Tipo de archivo</th>
+              <th class="text-center border_color" scope="col">Descargar</th>
+            </tr>
+          </thead>
+          <% unless @documents.blank? %>
+            <tbody>
+              <% @documents.each do |document| %>
+                <tr>
+                  <td class="text-center"><%= document.name %></td>
+                  <td class="text-center"><%= document.file_manual.url.split("?")[0].split("/").last.split(".")[1].upcase %></td>
+                  <td class="text-center">
+                    <!--<a href='<%#= dynamic_images(document, 8, document.id) %>' class="btn btn-info btn-sm" target="_blank" download><span class="glyphicon glyphicon-download-alt"></span>-->
+                    <a href='<%= document.file_manual.url %>' class="btn btn-info btn-sm" target="_blank" download><span class="glyphicon glyphicon-download-alt"></span>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          <%else%>
+            <tr>
+              <td colspan="6">
+                <p class="text-center"><img src="<%= asset_path("ventana_vacia_consultas.png") %>" class="user-image" style="width: 40%;" alt="User Image"></p>
+              </td>
+            </tr>
+          <%end%>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

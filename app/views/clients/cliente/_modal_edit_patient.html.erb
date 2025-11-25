@@ -1,0 +1,42 @@
+<div class="modal fade edit_patient" id="edit_patient<%=patient.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header modal-header-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle fa-lg"></i></span></button>
+        <h4 class="modal-title panel-primary" id="myModalLabel">Ingresar correo</h4>
+      </div>
+      <h5><%= patient.patient_informations.last.email.blank? || patient.patient_informations.last.email.nil? ? "Actualmente no tiene correo registrado. Favor ingresarlo" : "Su correo actual es : #{patient.patient_informations.last.email}"%></h5>
+      <%= form_tag('cliente/send_history_clinic', method: 'put', remote: true) do %>
+      <div class="modal-body">
+        <div class="form">
+          <div class="row">
+            <div class="col-md-12">
+              <!--<div class="form-inline text-center">-->
+                <h5 style="color:#377aaf;"><%= "Correo electrónico" %></h5>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-10 text-center">
+                      <%= text_field_tag('email', patient.patient_informations.last.email, placeholder: "Ingrese su correo", class: "form-control", pattern:"[A-Za-z0-9._%+-]{3,}@[A-Za-z0-9._%+-]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})", title: "Email invalido", required: true) %>
+                      <%= hidden_field_tag(:patient_id, patient.id) %>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-10 col-md-offset-3 text-center col-sm-6 col-xs-12">   
+                      <button class="btn btn-danger btn-lg" data-dismiss="modal">Cancelar</button>
+                      <%= button_tag(type: "submit", class:"btn btn-primary btn-lg", :confirm => 'Está seguro de continuar?') do %>
+                        Enviar <span class="glyphicon glyphicon-triangle-right"></span>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>    
+              <!--</div>-->
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

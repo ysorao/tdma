@@ -1,0 +1,65 @@
+<div class="modal fade see_library_formula" id="see_library_formula" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header modal-header-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle fa-lg"></i></span></button>
+        <h4 class="modal-title panel-primary" id="myModalLabel">Biblioteca de formulaciones</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-3 col-md-6">
+              <div id="imaginary_container"> 
+                <div class="input-group stylish-input-group">
+                  <input type="search" class="form-control" placeholder="Ingrese el nombre de la formulación" ng-model="search_formula.$" size="50" >
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-search"></span>    
+                  </span>
+                </div>
+            </div>
+              <br>
+              <div class="panel-group" id="accordion" style="width: 100%; height: 530px; overflow-y: scroll;">
+                <div class="panel panel-default" id="formula{{formula.id}}" ng-repeat="formula in cCtlr.library_form | filter:search_formula:strict">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-parent="#accordion{{formula.id}}">
+                      </span>{{formula.name}}</a>
+                    </h4>
+                  </div>
+                  <div id="collapse" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                      <div class="col-md-10">
+                        <ul>
+                          <li>Nombre genérico mdto: {{formula.formulation.generic_name_medicament}}</li>
+                          <li>Tipo de medicamento: {{formula.formulation.type_medicament}}</li>
+                          <li>Código medicamento: {{formula.formulation.medication_code}}</li>
+                          <li>Forma farmacéutica: {{formula.formulation.pharmaceutical_form}}</li>
+                          <li>Concentración mdto: {{formula.formulation.drug_concentration}}</li>
+                          <li>Unidad medida mdto: {{formula.formulation.unit_measure_medication}}</li>
+                          <li>Número de unidades: {{formula.formulation.number_of_units}}</li>
+                          <li>Formulación: {{formula.formulation.commentations}}</li>
+                          <!--<li>Valor unitario mdto: {{formula.formulation.unit_value_medicament}}</li>
+                          <li>Valor total mdto: {{formula.formulation.total_value_medicament}}</li>-->
+                        </ul>
+                      </div>
+                      <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" ng-click="cCtlr.charge_formula(formula.id)">Cargar</button>
+                        <button type="button" class="btn btn-primary" ng-click="cCtlr.delete_formula(formula.id)" style="margin-top:3px;width:69px;">Borrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    var height_windows = $( window ).height() - 356;
+    $('.scroll_to_terms').css({'height': height_windows});
+  })
+</script>

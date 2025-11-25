@@ -1,0 +1,48 @@
+<div class="modal fade see_library_treatment" id="see_library_treatment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header modal-header-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle fa-lg"></i></span></button>
+        <h4 class="modal-title panel-primary" id="myModalLabel">Biblioteca de tratamientos</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-3 col-md-6">
+              <div id="imaginary_container"> 
+                <div class="input-group stylish-input-group">
+                  <input type="search" class="form-control" placeholder="Ingrese el nombre del tratamiento" ng-model="search_diagnostic.$" size="50" >
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-search"></span>    
+                  </span>
+                </div>
+            </div>
+              <br>
+              <div class="panel-group" id="accordion" style="width: 100%; height: 300px; overflow-y: scroll;">
+                <div class="panel panel-default" id="treatment{{treat.id}}" ng-repeat="treat in cCtlr.library | filter:search_diagnostic:strict">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-parent="#accordion{{treat.id}}">
+                      </span>{{treat.name}}</a>
+                    </h4>
+                  </div>
+                  <div id="collapse" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                      <div class="col-md-10">
+                        <h6 class="title">{{treat.recommended_treatment}}</h6>
+                      </div>
+                      <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" ng-click="cCtlr.charge_treatment(treat.id)">Cargar</button>
+                        <button type="button" class="btn btn-primary" ng-click="cCtlr.delete_treatment(treat.id)"" style="margin-top:3px;width:69px;">Borrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

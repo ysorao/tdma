@@ -1,0 +1,320 @@
+<body class="hold-transition skin-blue sidebar-mini">
+
+<div class="wrapper">
+  <header class="main-header">
+    <!-- Logo -->
+    <div class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><img src="<%= asset_path("icono_blanco.png") %>" style="width:65%;height:87%;" alt="User Image"></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><img src="<%= asset_path("logo_inicio.png") %>" style="width:85px;height:87%;" alt="User Image"></span>
+    </div>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" style="text-decoration: none;">
+        <% if current_user.class.name.to_s == "User" %>
+          <% if request.fullpath == "/specialists/especialista/search_patient" || request.fullpath == "/nurses/enfermera/search_patient" %>
+            &nbsp;<span class="menu_title">Buscar paciente</span>
+          <%elsif request.fullpath == "/specialists/especialista/#{current_user.id}/edit" || request.fullpath == "/nurses/enfermera/#{current_user.id}/edit" %>
+            &nbsp;<span class="menu_title">Mi perfil</span>
+          <%else%>
+            &nbsp;<span class="menu_title" style="font-family: sans-serif;font-size: 17px;">Teleconsultas</span>
+          <%end%>
+        <%else%>
+          <% if request.fullpath == "/clients/cliente/subsidiaries" %>
+            &nbsp;<span class="menu_title">Sedes</span>
+          <%elsif request.fullpath == "/clients/cliente/kits" %>
+            &nbsp;<span class="menu_title">Kits</span>
+          <%elsif request.fullpath == "/clients/cliente/professionals"%>
+            &nbsp;<span class="menu_title">Profesionales</span>
+          <%elsif request.fullpath == "/clients/cliente/search_patient"%>
+            &nbsp;<span class="menu_title">Buscar paciente</span>
+          <%elsif request.fullpath == "/clients/cliente/generate_rips"%>
+            &nbsp;<span class="menu_title">Rips</span>
+          <%elsif request.fullpath == "/clients/cliente/insurances"%>
+            &nbsp;<span class="menu_title">Aseguradoras</span>
+          <%elsif request.fullpath == "/clients/cliente/bills_insurances"%>
+            &nbsp;<span class="menu_title">Facturas</span>
+          <%elsif request.fullpath == "/clients/cliente/users"%>
+            &nbsp;<span class="menu_title">Usuarios</span>
+          <%elsif request.fullpath == "/clients/cliente/#{params[:id]}/edit"%>
+            &nbsp;<span class="menu_title">Mi perfil</span>
+          <%elsif request.fullpath == "/clients/cliente/system_manuals"%>
+            &nbsp;<span class="menu_title">Documentos</span>
+          <%end%>
+        <%end%>
+      </a>
+      
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- FOTO USUARIO -->
+          <% unless current_user.nil? %>
+            <li class="dropdown user user-menu">
+              <a><img src="<%= current_user.photo.url.nil? ? asset_path("avatar.png") : current_user.photo.url %>" class="user-image"></a>
+            </li>
+          <% end %>
+          <% unless current_client_user.nil? %>
+            <li class="dropdown user user-menu">
+              <a><img src="<%= current_client_user.photo.url.nil? ? asset_path("avatar.png") : current_client_user.photo.url %>" class="user-image"></a>
+            </li>
+          <% end %>
+          <!-- Notifications: style can be found in dropdown.less -->
+          <li class="dropdown notifications-menu">
+            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-bell"></span>-->
+              <!--<span class="label label-warning">10</span>-->
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">En construcción...</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <!--<ul class="menu">
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                      page and may cause design problems
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-red"></i> 5 new members joined
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-user text-red"></i> You changed your username
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a href="#">View all</a></li>-->
+            </ul>
+          </li>
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <% unless current_user.nil? %>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="hidden-xs"><%= current_user.name.to_s + ' ' + current_user.surnames.to_s %></span>
+              </a>
+            <%end%>
+            <% unless current_client_user.nil? %>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="hidden-xs"><%= current_client_user.name.to_s + ' ' + current_client_user.surnames.to_s %></span>
+              </a>
+            <%end%>
+            <!-- MENU DESPLEGABLE -->
+            <!--<ul class="dropdown-menu">-->
+              <!-- User image -->
+              <!--<li class="user-header">-->
+                <!--<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
+
+                <!--<p>
+                  Alexander Pierce - Web Developer
+                  <small>Member since Nov. 2012</small>
+                </p>
+              </li>-->
+              <!-- Menu Body -->
+              <!--<li class="user-body">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                  </div>
+                </div>-->
+                <!-- /.row -->
+              <!--</li>-->
+              <!-- Menu Footer-->
+              <!--<li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>-->
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-triangle-bottom"></span>
+              <!--<span class="label label-warning">10</span>-->
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header"><%= link_to "Cerrar sesión", destroy_user_session_path, {method: :delete} %></li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <!--<ul class="menu">
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                      page and may cause design problems
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-red"></i> 5 new members joined
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-user text-red"></i> You changed your username
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"></li>-->
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar" style="z-index: 100;">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <!-- search form -->
+      <!--<form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>-->
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+        <% unless current_user.nil? %>
+          <li><a href=""><span></span></a></li>
+          <% if (current_user.type_professional == User::ESPECIALISTA && current_user.type_specialist == User::DERMATOLOGO)  || current_user.type_professional == User::AUXILIAR %>
+            <li><a href="/specialists/especialista?status=<%=Consultation::PENDIENTE%>&option=1"><img src="<%= asset_path("consultas.png")%>", style="width:20px;"><span> Consultas</span></a></li>
+            <hr class="space">
+          <%end%>
+          <% if (current_user.type_professional == User::ESPECIALISTA && current_user.type_specialist == User::DERMATOLOGO) %>
+            <li><a href="/specialists/especialista/search_patient" data-turbolinks='false'><img src="<%= asset_path("buscar_pacientes.png")%>", style="width:30px;"><span>Buscar paciente</span></a></li>
+            <hr class="space">
+            <li><a href="/specialists/especialista/<%= current_user.id%>/edit"><img src="<%= asset_path("mi_perfil.png")%>"> <span>Mi perfil</span></a></li>
+            <hr class="space">
+          <%elsif current_user.type_professional == User::AUXILIAR%>
+            <li><a href="/clients/cliente/search_patient" data-turbolinks='false'><i class="fa fa-user-circle-o fa-lg"></i> <span>Pacientes</span></a></li>
+          <% elsif (current_user.type_professional == User::ESPECIALISTA && current_user.type_specialist == User::ENFERMERIA)%>
+            <li><a href="/nurses/enfermera?status=<%=Consultation::PENDIENTE%>&option=1"><img src="<%= asset_path("consultas.png")%>", style="width:20px;"><span> Consultas</span></a></li>
+            <hr class="space">
+            <li><a href="/nurses/enfermera/search_patient" data-turbolinks='false'><img src="<%= asset_path("buscar_pacientes.png")%>", style="width:30px;"> <span>Buscar paciente</span></a></li>
+            <hr class="space">
+            <li><a href="/nurses/enfermera/<%= current_user.id%>/edit"><img src="<%= asset_path("mi_perfil.png")%>"> <span>Mi perfil</span></a></li>
+            <hr class="space">
+          <%end%>
+        <%end%> 
+        <% unless current_client_user.nil? %>
+          <% if current_client_user.type_professional == ClientUser::ADMIN_IPS || current_client_user.type_professional == ClientUser::ESE || current_client_user.type_professional == ClientUser::PROFESIONAL_INDEPENDIENTE %>
+            <li><a href=""><span></span></a></li>
+            <hr class="space_ips">
+            <% if current_client_user.role == ClientUser::ADMIN %>
+              <li><a href="/clients/cliente/subsidiaries" data-turbolinks='false'><img src="<%= asset_path("sede.png")%>" style="width:20px;"><span>Sedes / IPS</span></a></li>
+              <hr class="space_ips">
+              <li ><a href="/clients/cliente/kits" data-turbolinks='false'><img src="<%= asset_path("lista_kits.png")%>" style="width:20px;"><span>Listar Kits</span></a></li>
+              <hr class="space_ips">
+              <li><a href="/clients/cliente/professionals" data-turbolinks='false'><img src="<%= asset_path("profesionales.png")%>" style="width:20px;"><span>Profesionales</span></a></li>
+              <hr class="space_ips">
+            <%end%>
+            <li><a href="/clients/cliente/search_patient" data-turbolinks='false'><img src="<%= asset_path("pacientes.png")%>" style="width:20px;"><span>Pacientes</span></a></li>
+            <hr class="space_ips">
+            <li><a href="/clients/cliente/generate_rips"><img src="<%= asset_path("generar_rips.png")%>" style="width:20px;"><span>Generar RIPS</span></a></li>
+            <hr class="space_ips">
+            <% if current_client_user.role == ClientUser::ADMIN %>
+              <li><a href="/clients/cliente/insurances" data-turbolinks='false'><img src="<%= asset_path("listar_eapb.png")%>" style="width:20px;"><span>Mostrar EAPB</span></a></li>
+              <hr class="space_ips">
+              <li><a href="/clients/cliente/bills_insurances" data-turbolinks='false'><img src="<%= asset_path("contratos_eapb.png")%>" style="width:20px;"><span>Contratos EAPB</span></a></li>
+              <hr class="space_ips">
+              <li><a href="/clients/cliente/users" data-turbolinks='false'><img src="<%= asset_path("usuarios.png")%>" style="width:20px;"><span>Usuarios</span></a></li>
+              <hr class="space_ips">
+            <%end%>
+            <hr class="space_ips">
+            <li><a href="/clients/cliente/<%= current_client_user.id%>/edit"><img src="<%= asset_path("mi_perfil.png")%>"> <span>Mi perfil</span></a></li>
+            <hr class="space_ips">
+            <hr class="space_ips">
+            <li><a href="/clients/cliente/system_manuals" data-turbolinks='false'><img src="<%= asset_path("documentos.png")%>" style="width:25px;height:25px;"> <span>Documentos</span></a></li>
+            <hr class="space_ips">
+            <hr class="space_ips">
+            <li><a href="/landing/home/support" target="_blank"><img src="<%= asset_path("mesa_ayuda.png") %>" style="width:25px;height:25px;"> <span>Mesa de ayuda</span></a></li>
+            <hr class="space">
+          <%end%>
+        <%end%>
+      </ul>
+        <div class="<%= current_user.nil? ? "down_div_ips" : "down_div"%>">
+          <a href class="down_color_links" id="derma" data-toggle="modal" data-target="#telederma">Acerca de Telederma</a>
+          <%= render partial: '/layouts/modal_telederma' %>
+          <hr class="down_links">
+          <a href class="down_color_links" id="credits" data-toggle="modal" data-target="#creditos">Créditos</a>
+          <%= render partial: '/layouts/modal_credits' %>
+          <hr class="down_links">
+          <%= link_to "Cerrar sesión", destroy_user_session_path, {method: :delete, class: "down_color_links"} %>
+          <hr class="down_links">
+        </div>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" heigth="1000px">
+    <% if notice %>
+      <div class="alert alert-success" role="alert">
+        <%= notice %>
+      </div>
+    <% end %>
+    <% if alert %>
+      <div class="alert alert-danger" role="alert">
+        <%= alert %>
+      </div>
+    <% end %>
+  <script type="text/javascript"> 
+    $('#derma').click(function() {
+      setTimeout(function(){
+        if ($('.modal-backdrop').is(':visible')) {
+          $('body').removeClass('modal-open'); 
+          $('.modal-backdrop').remove(); 
+        };
+      }, 180);
+    });
+
+    $('#credits').click(function() {
+      setTimeout(function(){
+        if ($('.modal-backdrop').is(':visible')) {
+          $('body').removeClass('modal-open'); 
+          $('.modal-backdrop').remove(); 
+        };
+      }, 180);
+    });
+   
+  </script>

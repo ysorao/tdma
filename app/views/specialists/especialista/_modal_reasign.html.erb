@@ -1,0 +1,46 @@
+<div class="modal fade reasign_specialist" id="reasign_specialist<%=consult%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header modal-header-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle fa-lg"></i></span></button>
+        <h4 class="modal-title panel-primary" id="myModalLabel">Reasignar consulta</h4>
+      </div>
+      <%= form_tag(reasign_consult_specialists_especialista_path, method: 'put') do %>
+      <div class="modal-body">
+        <div class="form">
+          <div class="row">
+            <div class="col-md-12">
+              <!--<div class="form-inline text-center">-->
+                <h5 style="color:#377aaf;"><%= "Nombre del especialista" %></h5>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-10 text-center">
+                      <%= select_tag(:user_specialist, options_for_select(User.where(type_professional: User::ESPECIALISTA, type_specialist: User::DERMATOLOGO, status: User::ACTIVO).collect {|r| [ r.name.to_s + ' ' + r.surnames.to_s, r.id] }), prompt: 'Seleccionar', class: 'form-control', required: true) %>
+                    </div>
+
+                    <% if object == "ConsultationControl" || object == "control_id"%>
+                      <%= hidden_field_tag(:control_id, consult) %>
+                    <%else%>
+                      <%= hidden_field_tag(:consult_id, consult) %>
+                    <%end%>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-10 col-md-offset-3 text-center col-sm-6 col-xs-12">   
+                      <button class="btn btn-danger btn-lg" data-dismiss="modal">Cancelar</button>
+                      <%= button_tag(type: "submit", class:"btn btn-primary btn-lg") do %>
+                        Enviar <span class="glyphicon glyphicon-triangle-right"></span>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>    
+              <!--</div>-->
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

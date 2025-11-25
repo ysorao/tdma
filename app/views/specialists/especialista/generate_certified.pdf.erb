@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Certificado Telederma</title>
+
+<style>
+#nombre {
+	margin:auto;
+	width:630px;
+	height:50px;
+	padding-top:8px;
+	position:relative;
+	bottom:375px;
+	z-index:2;
+}
+
+h1 {
+	width:600px;
+	height:40px;
+	font-size:33px;
+	font-family:"Century Gothic";
+	margin:auto;
+	text-align:center;
+}
+
+#identidad {
+	width:120px;
+	height:20px;
+	position:relative;
+	bottom:365px;
+	left:530px;
+	z-index:2;
+}
+h2 {
+	width:120px;
+	height:16px;
+	font-size:16px;
+	font-family:"Century Gothic";
+	margin:auto;
+	text-align:center;
+}
+</style>
+
+</head>
+
+<body>
+ <div class="certificado">
+	 	<%= wicked_pdf_image_tag "certificado_Telederma.png", alt: "", style: 'object-fit: contain;'%>
+
+		<div id="nombre">
+		  <h1><%= @user.name.to_s + ' ' + @user.surnames.to_s%></h1>
+		</div>
+		<div id="identidad">
+		  <h2><%= @user.number_document%></h2>
+		</div>
+  </div>
+</body>
+</html>

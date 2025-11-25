@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  # 1. Servicio de la Aplicación Rails
+  web:
+    build: .
+    # Reemplaza '/usr/src/app' con la ruta WORKDIR del Dockerfile
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000" # Acceso a la app a través del puerto 3000 del host
+    depends_on:
+      - db
+    environment:
+      # Configura las variables de entorno para que Rails se conecte a la DB
+      RAILS_ENV: production
+      # La URL de la DB debe usar el nombre del servicio (db)
+      DATABASE_URL: postgresql://postgres:misuperclave@db/telederma_production
+
+  # 2. Servicio de la Base de Datos PostgreSQL
+  db:
+    # Usa una versión estable de Postgres (ej. 13)
+    image: postgres:13
+    # Persiste los datos de la DB fuera del contenedor
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      # IMPORTANTE: Cambia 'misuperclave' por tu contraseña real
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: misuperclave
+      POSTGRES_DB: telederma_production
+
+volumes:
+  # Define un volumen para la persistencia de los datos de la DB
+  postgres_data:

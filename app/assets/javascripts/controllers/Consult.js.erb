@@ -1,0 +1,2483 @@
+(function () {
+
+  var module = angular.module("consult-module", ['angularFileUpload']);
+
+  module.controller('ConsultController', ['$http', '$scope', 'FileUploader', function ($http, $scope, FileUploader) {
+    var self = this;
+    var concat = "";
+    this.consult_id = null;
+    this.control_id = null;
+    this.information_patient = null;
+    this.button_treatment = null;
+    this.name_complete = "";
+    this.consults = [{
+        disease_id: "",
+        type_diagnostic: "1",
+    }];
+    this.name_doctor = "";
+    this.recommended_treatment = null;
+    this.exams = [{
+        name_type_exam: "",
+    }];
+    this.formulas = [{
+        medication_code: "",
+        type_medicament: '',
+        generic_name_medicament: '',
+        pharmaceutical_form: '',
+        drug_concentration: '',
+        unit_measure_medication: '',
+        number_of_units: '',
+        commentations: '',
+    }];
+    this.uploader_mipress_progress = 0;
+    this.uploader_mipress_status = 0;
+    this.disease = null;
+    this.specialist_id = null;
+    this.physical_audio = '';
+    this.annex_audio = '';
+    this.messages = [];
+    this.diagnostics = [];
+    this.error = null;
+    this.prueba = null;
+    this.correct_save = false;
+    this.id_patient = null;
+    this.consulta_id = null;
+    this.request_index = 0;
+    this.formula_index = 0;
+    this.evolution = null;
+    this.consult_first_id = null;
+    this.evolution_esp = null;
+    this.consult_id_first = null;
+    this.select_id = null;
+    this.control = 0;
+    this.consulta = 0;
+    this.index = undefined;
+    this.valor = 0;
+    this.images_consult = null;
+    this.images_control = null;
+    this.number_image = 0;
+    this.original_image = null;
+    this.index_principal_image = 0;
+
+
+    this.initialize = function (user_email, user_token, consult_id, control_id) {
+      self.user_email = user_email;
+      self.user_token = user_token;
+      this.consult_id = consult_id;
+      this.control_id = control_id;
+      self.CreateSpecialistResponse();
+      self.get_patient_information();
+      self.evolution_consult();
+      //self.DiagnosticsConsult();
+    }
+    $scope.pos = 0;
+    $scope.size = 0;
+
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-09-07
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Crea la respuesta del especialista temporal
+    */
+    this.CreateSpecialistResponse = function() {
+      var params = {
+        specialist_response: {
+          consultation_id: this.consult_id,
+          consultation_control_id: this.control_id
+        },
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.post("/api/v1/especialista/consult/create_specialist_response", params).then(
+        function(res, status){
+          debugger;
+          $('#specialist_response_id').val(res.data.response);
+          self.specialist_id = res.data.response
+        },
+        function(res, status){
+          debugger;
+          $('#specialist_response_id').val(res.data.response);
+          self.specialist_id = res.data.response
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-10
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Crea el diagnostico de la consulta
+    */
+    this.NewDiagnostic = function(index) {
+      $('#btn_diag'+index).prop('disabled', true);
+      var consult = this.consults[this.consults.length - 1];
+      debugger;
+      var params = {
+        other_diagnostic: {
+          disease_id: self.disease,
+          type_diagnostic: consult.type_diagnostic,
+          specialist_response_id: self.specialist_id
+        },
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.post("/api/v1/especialista/consult", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('.error').hide();
+          self.disease = null;
+
+          if (index < 3) {
+            self.consults.push({
+              disease_id: "",
+              type_diagnostic: "1"
+            });
+          }
+
+          $(".field_diag"+index).prop( "disabled", true);
+          $("#btn_diag"+index).prop("disabled", true);
+          $("#btn_diag"+index).css("background-color", "grey");
+          $("#btn_diag"+index).css("color", "white");
+          $(".request").hide();
+          //self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          debugger;
+          $('#btn_diag'+index).prop('disabled', false);
+          self.error = res.data;
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+    //Convertir texto de primera en mayuscula y demas en minuscula
+    this.convert_string = function(text_area){
+      return text_area.charAt(0).toUpperCase() + text_area.substring(1).toLowerCase()
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-10
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Edita el tratamiento recomendado por el especialista
+    */
+    this.EditConsult = function() {
+
+      recommended = angular.element('#recommend_treatment').val().trim();
+      
+      var params = {
+        consultation_id: this.consult_id,
+        consultation_control_id: this.control_id,
+        recommended_treatment: angular.element('#recommend_treatment').val(), //self.convert_string(recommended),
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      debugger;
+
+      //self.id = self.consult_id == "" ? self.control_id : self.consult_id
+
+      $http.put("/api/v1/especialista/consult/edit_consult", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#treatment_library').prop('disabled', false);
+          $('#save_treatment').prop('disabled', true);
+          $('#save_treatment').css("background-color", "grey");
+          $('#save_treatment').css("color", "white");
+          //self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-10
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista la historia clinica del paciente
+    */
+    this.get_patient_information = function() {
+      var params = {
+        consultation_id: self.consult_id,
+        consultation_control_id: self.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      if (self.consult_id == ""){
+        self.control = Number(self.control_id)
+        //debugger;
+      }else{
+        self.consulta = Number(self.consult_id)
+        //debugger;
+      }
+
+      $http.get("/api/v1/especialista/consult/show_info", {params: params})
+      .then(function(response){
+        debugger;
+        self.information = response.data
+        self.history_clinic = response.data
+        self.name_complete = response.data.patient.name + ' ' + response.data.patient.second_name + ' ' + response.data.patient.last_name + ' ' + response.data.patient.second_surname
+        self.id_patient = response.data.patient_id
+        self.consulta_id = response.data.id
+        self.annex_images = response.data.annex_image
+        self.requests_consult = response.data.request == "" ? 0 : response.data.request
+        self.requests_control = response.data.medical_control == "" ? 0 : response.data.medical_control
+        
+        self.images_consult = false;
+        self.images_control = false;
+        debugger;
+
+        setTimeout(function(){
+          $("#jquery_jplayer_1").jPlayer({
+            ready: function () {
+              $(this).jPlayer("setMedia", {
+                mp3: self.information.medical_consult.physical_audio
+              });
+            },
+
+            cssSelectorAncestor: '#jp_container_1',
+            cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+            loop: false,
+            volume: 7,
+            swfPath: "/jplayer",
+            supplied: 'mp3',
+            preload: "none",
+            wmode: "window",
+            useStateClassSkin: true,
+            autoBlur: false,
+            keyEnabled: true,
+            autoPlay: true,
+            //crossOrigin: self.information.physical_audio.crossOrigin = 'anonymous'
+
+            play: function(){
+              $('.track-name').addClass('active');
+            },
+            pause: function(){
+              $('.track-name').removeClass('active');
+            },
+            ended: function(){
+              $('.track-name').removeClass('active');
+            }
+          });
+
+          $("#jquery_jplayer_2").jPlayer({
+            ready: function () {
+              $(this).jPlayer("setMedia", {
+                mp3: self.information.audio_annex
+              });
+            },
+
+            cssSelectorAncestor: '#jp_container_2',
+            cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+            loop: false,
+            volume: 2,
+            swfPath: "/jplayer",
+            supplied: 'mp3',
+            preload: "none",
+            wmode: "window",
+            useStateClassSkin: true,
+            autoBlur: false,
+            keyEnabled: true,
+            autoPlay: false,
+
+            play: function(){
+              $('.track-name').addClass('active');
+            },
+            pause: function(){
+              $('.track-name').removeClass('active');
+            },
+            ended: function(){
+              $('.track-name').removeClass('active');
+            }
+          });
+
+          $("#jquery_jplayer_5").jPlayer({
+            ready: function () {
+              $(this).jPlayer("setMedia", {
+                mp3: self.information.medical_control[0].audio_clinic
+              });
+            },
+
+            cssSelectorAncestor: '#jp_container_5',
+            cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+            loop: false,
+            volume: 2,
+            swfPath: "/jplayer",
+            supplied: 'mp3',
+            preload: "none",
+            wmode: "window",
+            useStateClassSkin: true,
+            autoBlur: false,
+            keyEnabled: true,
+            autoPlay: false,
+            errorAlerts: true,
+            warningAlerts: true,
+
+            play: function(){
+              $('.track-name').addClass('active');
+            },
+            pause: function(){
+              $('.track-name').removeClass('active');
+            },
+            ended: function(){
+              $('.track-name').removeClass('active');
+            }
+          });
+
+          $("#jquery_jplayer_6").jPlayer({
+            ready: function () {
+              $(this).jPlayer("setMedia", {
+                mp3: self.information.medical_control[0].audio_annex
+              });
+            },
+
+            cssSelectorAncestor: '#jp_container_6',
+            cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+            loop: false,
+            volume: 2,
+            swfPath: "/jplayer",
+            supplied: 'mp3',
+            preload: "none",
+            wmode: "window",
+            useStateClassSkin: true,
+            autoBlur: false,
+            keyEnabled: true,
+            autoPlay: false,
+
+            play: function(){
+              $('.track-name').addClass('active');
+            },
+            pause: function(){
+              $('.track-name').removeClass('active');
+            },
+            ended: function(){
+              $('.track-name').removeClass('active');
+            }
+          });
+          $('.slider-nav').slick({
+            arrows: true,
+            infinite: false,
+            slidesToShow: 2,
+            slidesToScroll: 1,
+          });
+        }, 2000);
+        self.evolution_consult();
+        debugger;
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    //Permite reproducir los audios de los requerimientos de una consulta
+    this.AudioRequestConsult = function(index) {
+      debugger;
+      //AUDIO DEL REQUERIMIENTO
+      //setTimeout(function(){
+        $("#jquery_jplayer"+index).jPlayer({
+          ready: function () {
+            debugger;
+            $(this).jPlayer("setMedia", {
+              mp3: self.requests_consult[0].audio_request
+            });
+          },
+
+          cssSelectorAncestor: '.jp_container'+index,
+          cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+          loop: false,
+          volume: 7,
+          swfPath: "/jplayer",
+          supplied: 'mp3',
+          preload: "none",
+          wmode: "window",
+          useStateClassSkin: true,
+          autoBlur: false,
+          keyEnabled: true,
+          autoPlay: true,
+
+          play: function(){
+            $('.track-name').addClass('active');
+          },
+          pause: function(){
+            $('.track-name').removeClass('active');
+          },
+          ended: function(){
+            $('.track-name').removeClass('active');
+          }
+        });
+      //}, 2000);
+    }
+
+    //Permite reproducir los audios de los requerimientos de un control
+    this.AudioRequestControl = function(index) {
+      debugger;
+      //AUDIO DEL REQUERIMIENTO
+      setTimeout(function(){
+        $("#jplayer"+index).jPlayer({
+          ready: function () {
+            debugger;
+            $(this).jPlayer("setMedia", {
+              mp3: self.requests_control[0].audio_request
+            });
+          },
+
+          cssSelectorAncestor: '.jplayer_container'+index,
+          cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+          loop: false,
+          volume: 7,
+          swfPath: "/jplayer",
+          supplied: 'mp3',
+          preload: "none",
+          wmode: "window",
+          useStateClassSkin: true,
+          autoBlur: false,
+          keyEnabled: true,
+          autoPlay: true,
+
+          play: function(){
+            $('.track-name').addClass('active');
+          },
+          pause: function(){
+            $('.track-name').removeClass('active');
+          },
+          ended: function(){
+            $('.track-name').removeClass('active');
+          }
+        });
+      }, 1000);
+    }
+
+    /* Lista la consultas y sus controles */
+    this.evolution_consult = function() {
+      var params = {
+        consult_id: this.consult_id,
+        control_id: this.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      debugger;
+      $http.get("/api/v1/especialista/consult/evolution_consults", {params: params})
+      .then(function(response){
+        self.evolution = response.data;
+        debugger;
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Teniendo un id de la consulta o control muestra la informacion de la historia clínica */
+    this.show_clinic_info = function() {
+      debugger;
+
+      var res = self.value_consult.replace(/\s+/g, '').split("-");
+      self.val_consult = Number(res[0])
+
+      var index = $("#select_consults option:selected").index()
+      if (res[1] == "consulta"){
+        self.consult_first_id = self.value_consult
+      }else{
+        self.consult_first_id = null
+      }
+
+      var params = {
+        show_id: self.value_consult,
+        consult_first_id: self.consult_first_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+      //$('#consulta_principal').hide();
+      //$('#consulta_control').hide();
+
+      setTimeout(function(){
+        $http.get("/api/v1/especialista/consult/get_consults_control", {params: params})
+        .then(function(response){
+          self.history_clinic = response.data;
+        
+          debugger;
+
+          if(response.data.medical_control == null){
+            debugger;
+            $('#consulta_principal').show();
+            $('#consulta_control').hide();
+            self.images_consult = true
+            debugger;
+           
+            setTimeout(function(){
+              $("#jquery_jplayer_1").jPlayer({
+                ready: function () {
+                  $(this).jPlayer("setMedia", {
+                    mp3: self.history_clinic.medical_consult.physical_audio
+                  });
+                },
+
+                cssSelectorAncestor: '#jp_container_1',
+                cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+                loop: false,
+                volume: 7,
+                swfPath: "/jplayer",
+                supplied: 'mp3',
+                preload: "none",
+                wmode: "window",
+                useStateClassSkin: true,
+                autoBlur: false,
+                keyEnabled: true,
+                autoPlay: true,
+                //crossOrigin: self.information.physical_audio.crossOrigin = 'anonymous'
+
+                play: function(){
+                  $('.track-name').addClass('active');
+                },
+                pause: function(){
+                  $('.track-name').removeClass('active');
+                },
+                ended: function(){
+                  $('.track-name').removeClass('active');
+                }
+              });
+
+              $("#jquery_jplayer_2").jPlayer({
+                ready: function () {
+                  $(this).jPlayer("setMedia", {
+                    mp3: self.history_clinic.medical_consult.annex_audio
+                  });
+                },
+
+                cssSelectorAncestor: '#jp_container_2',
+                cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+                loop: false,
+                volume: 2,
+                swfPath: "/jplayer",
+                supplied: 'mp3',
+                preload: "none",
+                wmode: "window",
+                useStateClassSkin: true,
+                autoBlur: false,
+                keyEnabled: true,
+                autoPlay: false,
+
+                play: function(){
+                  $('.track-name').addClass('active');
+                },
+                pause: function(){
+                  $('.track-name').removeClass('active');
+                },
+                ended: function(){
+                  $('.track-name').removeClass('active');
+                }
+              });
+              debugger;
+              $('.slider-nav2').slick({
+                infinite: false,
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                prevArrow: '<div class="slick-prev arrows-slider arrow-left" style="color:black;"><i class="fa fa-chevron-left"></i></div>',
+                nextArrow: '<div class="slick-next arrows-slider arrow-right" style="color:black;"><i class="fa fa-chevron-right"></i></div>'
+
+              });
+            }, 1000);
+          }else if(response.data.medical_consult == null){
+            debugger;
+            $('#consulta_control').show();
+            $('#consulta_principal').hide();
+            self.images_control = true
+
+            setTimeout(function(){
+              $("#jquery_jplayer_5").jPlayer({
+                ready: function () {
+                  $(this).jPlayer("setMedia", {
+                    mp3: self.history_clinic.medical_control[0].audio_clinic
+                  });
+                },
+
+                cssSelectorAncestor: '#jp_container_5',
+                cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+                loop: false,
+                volume: 2,
+                swfPath: "/jplayer",
+                supplied: 'mp3',
+                preload: "none",
+                wmode: "window",
+                useStateClassSkin: true,
+                autoBlur: false,
+                keyEnabled: true,
+                autoPlay: false,
+                errorAlerts: true,
+                warningAlerts: true,
+
+                play: function(){
+                  $('.track-name').addClass('active');
+                },
+                pause: function(){
+                  $('.track-name').removeClass('active');
+                },
+                ended: function(){
+                  $('.track-name').removeClass('active');
+                }
+              });
+
+              $("#jquery_jplayer_6").jPlayer({
+                ready: function () {
+                  $(this).jPlayer("setMedia", {
+                    mp3: self.history_clinic.medical_control[0].audio_annex
+                  });
+                },
+
+                cssSelectorAncestor: '#jp_container_6',
+                cssSelector: {play: '.jp-play',pause: '.jp-pause'},
+                loop: false,
+                volume: 2,
+                swfPath: "/jplayer",
+                supplied: 'mp3',
+                preload: "none",
+                wmode: "window",
+                useStateClassSkin: true,
+                autoBlur: false,
+                keyEnabled: true,
+                autoPlay: false,
+
+                play: function(){
+                  $('.track-name').addClass('active');
+                },
+                pause: function(){
+                  $('.track-name').removeClass('active');
+                },
+                ended: function(){
+                  $('.track-name').removeClass('active');
+                }
+              });
+              debugger;
+              $('.slider-nav2').slick({
+                infinite: false,
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                prevArrow: '<div class="slick-prev arrows-slider arrow-left" style="color:black;"><i class="fa fa-chevron-left"></i></div>',
+                nextArrow: '<div class="slick-next arrows-slider arrow-right" style="color:black;"><i class="fa fa-chevron-right"></i></div>'
+
+              }); 
+            }, 1000);
+          }
+
+          $('#select_consults option:eq('+index+')').prop('selected', 'selected');
+          debugger;
+        })
+        .catch(function(fallback){
+        });
+      }, 100);
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-11
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite que al hacer click en el boton abre la informacion
+    */
+    this.show_information = function() {
+      if (self.information_patient != null)
+        return true;
+      else
+        return false;
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-10
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Crear un tratamiento para esa consulta en la biblioteca
+    */
+    this.NewTreatment = function() {
+
+      var params = {
+        name: self.name_treatment,
+        specialist_response_id: self.specialist_id,
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      $http.post("/api/v1/especialista/consult/create_library_treatment", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#library_treatment').modal('hide');
+          //self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-10
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Crear un tratamiento para esa consulta en la biblioteca
+    */
+    this.NewLibraryFormula = function() {
+
+      var params = {
+        name: self.name_formula,
+        specialist_response_id: self.specialist_id,
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      $http.post("/api/v1/especialista/consult/create_library_formula", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#library_formula').modal('hide');
+        },
+        function(res, status){
+          //ERROR
+          debugger;
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-10
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Solicitud de examenes por parte del especialista
+    */
+    this.NewTypeExam = function(index) {
+      $('#btn_exam'+index).prop('disabled', true);
+      var exam = this.exams[this.exams.length - 1];
+      var params = {
+        request_exam: {
+          name_type_exam: exam.name_type_exam,
+          specialist_response_id: self.specialist_id,
+        },
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      $http.post("/api/v1/especialista/consult/create_request_exam", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          self.exams.push({
+            name_type_exam: "",
+            specialist_response_id: '',
+          });
+          $('#field'+index).prop('disabled', true);
+          $('#btn_exam'+index).prop('disabled', true);
+          $("#btn_exam"+index).css("background-color", "grey");
+          $("#btn_exam"+index).css("color", "white");
+          //self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          $('#btn_exam'+index).prop('disabled', false);
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-11
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Almacenar formulas de la consulta
+    */
+    this.NewFormula = function(index, flag) {
+      $('#btn_formula'+index).prop('disabled', true);
+      var formula = this.formulas[this.formulas.length - 1];
+      comentario = angular.element('#texto_tres'+index).val().trim()
+      debugger;
+      var params = {
+        formula: {
+          medication_code: formula.medication_code,
+          type_medicament: formula.type_medicament,
+          generic_name_medicament: formula.generic_name_medicament,
+          pharmaceutical_form: formula.pharmaceutical_form,
+          drug_concentration: formula.drug_concentration,
+          unit_measure_medication: formula.unit_measure_medication,
+          number_of_units: formula.number_of_units,
+          commentations: formula.commentations, //self.convert_string(comentario),
+          specialist_response_id: this.specialist_id,
+        },
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      $http.post("/api/v1/especialista/consult/create_formula", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+
+          self.formulas.push({
+            medication_code: "",
+            type_medicament: '',
+            generic_name_medicament: '',
+            pharmaceutical_form: '',
+            drug_concentration: '',
+            unit_measure_medication: '',
+            number_of_units: '',
+            commentations: '',
+            specialist_response_id: '',
+          });
+
+          $('.formulate'+index).prop('disabled', true);
+          $('.plus_formula'+index).prop('disabled', true);
+          $('#btn_formula'+index).prop('disabled', true);
+          $("#btn_formula"+index).css("background-color", "grey");
+          $("#btn_formula"+index).css("color", "white");
+          $('#formula_library'+index).prop('disabled', false);
+          $('#btn_tres'+index).prop('disabled', true);
+          //self.correct_save = false;
+          self.formula_index = index + 1;
+          debugger;
+
+          setTimeout(function(){
+            $('.error').hide();
+          }, 2000);
+        },
+        function(res, status){
+          //ERROR
+          debugger;
+          $('#btn_formula'+index).prop('disabled', false);
+          $('.error').show();
+          self.messages = res.data
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-12
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Adjuntar archivo Mipress
+    */
+    this.uploader_mipress = new FileUploader({url: '/api/v1/especialista/consult/create_formula_mipress', autoUpload: true});
+
+    this.uploader_mipress.onBeforeUploadItem = function(item) {
+      self.uploader_mipress_status = 0;
+
+      var params = {
+        specialist_response_id: self.specialist_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      item.formData.push(params);
+    }
+
+    this.uploader_mipress.onProgressAll = function(progress){
+        self.uploader_mipress_progress = parseInt(progress);
+    }
+
+    this.uploader_mipress.onSuccessItem = function(item, response, status, headers){
+      self.uploader_mipress_progress = 0;
+      self.uploader_mipress_status = 1;
+      debugger;
+
+    }
+
+    this.uploader_mipress.onErrorItem = function(item, response, status, headers){
+      self.uploader_mipress_progress = 0;
+      self.uploader_mipress_status = 2;
+      $('#alert_notification').show(200).delay(5000).hide(200);
+      $('#success_notification').hide();
+      $('#message_error').text(response.error.mipres);
+      // self.reloadUplaoder2();
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-12
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Almacenar proximo control
+    */
+    this.NewControl = function() {
+
+      var params = {
+        response_specialist: {
+          control_recommended: self.control_recommended,
+          consultation_id: this.consult_id,
+          consultation_control_id: this.control_id
+        },
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      $http.post("/api/v1/especialista/consult/create_next_control", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#save_control').prop('disabled', true);
+          //$('#input_control').prop('disabled', true);
+          $('#save_control').css("background-color", "grey");
+          $('#save_control').css("color", "white");
+          //self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-12
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Almacenar requerimiento
+    */
+    this.NewRequest = function() {
+
+      var params = {
+        request: {
+          comment: self.comment,
+          type_request: self.type_request,
+          consultation_id: this.consult_id,
+          consultation_control_id: this.control_id,
+        },
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      $http.post("/api/v1/especialista/consult/create_request", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('.field_req').prop('disabled', true);
+          $('#btn_req').prop('disabled', true);
+          $('#btn_req').css("background-color", "grey");
+          $('#btn_req').css("color", "white");
+          //self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          debugger;
+          $('#message_error').text(res.data.error);
+          self.error = res.data;
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-16
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista toda la información de respuesta del especialista
+    */
+    this.get_specialist_information = function() {
+      var params = {
+        consultation_id: this.consult_id,
+        consultation_control_id: this.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      if (self.consult_id == ""){
+        self.control = Number(self.control_id)
+        debugger;
+      }else{
+        self.consulta = Number(self.consult_id)
+        debugger;
+      }
+
+      $http.get("/api/v1/especialista/consult/get_info_specialist", {params: params})
+      .then(function(response){
+        debugger;
+        self.info_specialist = response.data;
+        self.name_complete = response.data.specialist.name_complete
+        self.diagnosticos = response.data.diagnostics
+        self.form = response.data.formulas
+        self.mipres = response.data.mipres
+        self.request_exams = response.data.request_exams
+        self.specialist_response = response.data.specialist_response
+        self.request = response.data.request
+        self.remission = response.data.remission
+        self.response_info = self.validate_response(response.data)
+        debugger
+
+        self.EvolutionSpecialist();
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    //Permite 
+    this.validate_response = function(info) {
+      if (info.analysis_description == null && info.case_analysis == null && info.diagnostics.length == 0 && info.formulas.length == 0 && info.mipres.length == 0 && info.request_exams.length == 0 && info.treatment == "Ninguno"){
+        return false
+      }else{
+        return true
+      }
+    }
+
+
+    /* Lista la consulta principal y los controles del paciente si existen */
+    this.EvolutionSpecialist = function() {
+      var params = {
+        consult_id: this.consult_id,
+        control_id: this.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+      debugger;
+      $http.get("/api/v1/especialista/consult/evolution_specialist", {params: params})
+      .then(function(response){
+        self.evolution_esp = response.data;
+        debugger;
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Teniendo un id de la consulta o control y buscando en la repsuesta especialista su informacion */
+    this.ShowResponseInfo = function() {
+      var res = self.consult_value.replace(/\s+/g, '').split("-")
+      var index = $("#select_responses option:selected").index()
+      debugger;
+      if (res[1] == "consulta"){
+        self.consult_id_first = self.consult_value
+      }else{
+        self.consult_id_first = null
+      }
+
+      var params = {
+        show_esp_id: self.consult_value,
+        consult_id_first: self.consult_id_first,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      setTimeout(function(){
+        $http.get("/api/v1/especialista/consult/get_response_specialist", {params: params})
+        .then(function(response){
+          debugger;
+          
+            self.info_specialist = response.data.information;
+            //self.name_complete = response.data.information.specialist.name + ' ' + response.data.information.specialist.surnames
+            self.diagnosticos = response.data.information.diagnostics
+            self.form = response.data.information.formulas
+            self.mipres = response.data.information.mipres
+            self.request_exams = response.data.information.request_exams
+            self.specialist_response = response.data.information.specialist_response
+            self.request = response.data.information.request
+            self.remission = response.data.information.remission
+          debugger;
+          //if(self.history_clinic.medical_control == null){
+            //debugger;
+            //$('#consulta_control').hide();
+          //}else if(self.history_clinic.medical_consult == null){
+            //debugger;
+            //$('#consulta_principal').hide();
+          //}
+
+          //debugger;
+          $('#select_responses option:eq('+index+')').prop('selected', 'selected');
+        })
+        .catch(function(fallback){
+        });
+      }, 100);
+    }
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-16
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista el diagnostico principal y sus controles
+    */
+    this.get_diagnostic_controls = function() {
+      var params = {
+        specialist_response_id: self.specialist_id,
+        patient_id: self.id_patient,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_history", {params: params})
+      .then(function(response){
+        debugger;
+        self.diagnostic = response.data.diagnostic;
+        self.medical_controls = response.data.medical_control
+
+      })
+      .catch(function(fallback){
+      });
+    }
+
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-12
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Responder Consulta
+    */
+    this.UpdateResponseConsult = function(bandera, type) {
+
+      var params = {
+        flag: bandera,
+        tipo: type,
+        consultation_id: this.consult_id,
+        consult_control_id: this.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      if($('.button-save').is(":enabled")) {
+        $('#warnning_notification').show(200).delay(5000).hide(200);
+        $('#message_warnning').text("Aviso: Revisar que alguna información no ha sido guardada");
+        debugger;
+      }else{
+        $http.put("/api/v1/especialista/consult/response_consult", params).then(
+          function(res, status){
+            debugger;
+            //SUCCESS
+            $('#success_notification').show(200).delay(5000).hide(200);
+            $('#alert_notification').hide();
+            $('#contenedor').hide();
+            $('#div_oculto').addClass('col-md-6');
+            if (bandera == true) {
+              $('#div_oculto').append("<h3>LA RESPUESTA HA SIDO ENVIADA</h3>");
+              $('#div_oculto > h3').css("padding-left","44px");
+            }else{
+              $('#div_oculto').append("<h3>El PACIENTE ESTA EN REMISIÓN</h3>");
+              $('#div_oculto > h3').css("padding-left","44px");
+            }
+            window.location = res.data.page;
+            debugger;
+          },
+          function(res, status){
+            //ERROR
+            debugger;
+            $('#alert_notification').show(200).delay(5000).hide(200);
+            $('#success_notification').hide();
+            if(type == "1"){
+              $('#message_error').text("No se pudo responder la consulta ya que diagnóstico no tiene información.");
+            }else if(bandera == true){
+              $('#message_error').text("No se pudo responder la consulta ya que requerimiento no tiene información.");
+            }else{
+              $('#message_error').text("No se pudo responder la consulta ya que remisión no tiene información.");
+            }
+          }
+        );
+      }
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-17
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Autocompletar para el diagnostico
+    */
+    this.init_autocomplete_diagnostic = function() {
+      $(".autocomplete_diagnostic").autocomplete({
+        source: "/api/v1/especialista/consult/get_autocomplete_diagnostic.json?consult="+self.consult_id+"&control="+self.control_id,
+        minLength: 3,
+        response: function( event, ui ) {
+          console.log(ui);
+            debugger;
+        },
+        select: function( event, ui ) {
+
+          $scope.$apply(function(){
+            //CODIG PARA ANGULAR
+            //seleccionado ui.item.id
+            self.disease = ui.item.id;
+          });
+        }
+      });
+
+    }
+
+    $scope.$on('onRepeatLast', function(scope, element, attrs) {
+      if (element.data("list") == "diagnostics") {
+        self.init_autocomplete_diagnostic();
+      }
+    });
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-17
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista los library tratamientos
+    */
+    this.library_treatments = function() {
+      var params = {
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_library_treatment", {params: params})
+      .then(function(response){
+        debugger;
+        self.library = response.data;
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-18
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite cargar desde biblioteca el tratamiento
+    */
+    this.charge_treatment = function(treatment_id) {
+      var params = {
+        id: treatment_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_treatment_specialist", {params: params})
+      .then(function(response){
+        debugger;
+        if (response.data.id == parseInt(treatment_id)) {
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#message_success').text("Ha sido cargado correctamente");
+          self.recommended_treatment = response.data.recommended_treatment;
+          $('#save_treatment').prop('disabled', false);
+          $('#save_treatment').css("background-color", "green");
+          $('#save_treatment').css("color", "white");
+        }
+
+      })
+      .catch(function(fallback){
+      });
+    }
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-18
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite borrar el tratamiento que se encuentra la biblioteca del especialista
+    */
+    this.delete_treatment = function(treatment_id) {
+      var params = {
+        id: treatment_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.delete("/api/v1/especialista/consult/delete_library_treatment", {params: params}).then(
+        function(res, status){
+          //SUCCESS
+          debugger;
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#message_success').text(res.data.message);
+          $('#treatment'+treatment_id).hide();
+        },
+        function(res, status){
+          //ERROR
+        }
+      );
+    }
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-18
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista los library formulaciones
+    */
+    this.library_formulas = function() {
+      var params = {
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_library_formula", {params: params})
+      .then(function(response){
+        debugger;
+        self.library_form = response.data;
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-18
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite Cargar desde biblioteca la formula
+    */
+    this.charge_formula = function(formula_id, index) {
+      var params = {
+        id: formula_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_formula_specialist", {params: params})
+      .then(function(response){
+        debugger;
+        if (response.data.id == parseInt(formula_id)) {
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#message_success').text("Ha sido cargado correctamente");
+          self.formulas[self.formula_index].medication_code = response.data.formulation.medication_code;
+          self.formulas[self.formula_index].type_medicament = response.data.formulation.type_medicament;
+          self.formulas[self.formula_index].generic_name_medicament = response.data.formulation.generic_name_medicament;
+          self.formulas[self.formula_index].pharmaceutical_form = response.data.formulation.pharmaceutical_form;
+          self.formulas[self.formula_index].drug_concentration = response.data.formulation.drug_concentration;
+          self.formulas[self.formula_index].unit_measure_medication = response.data.formulation.unit_measure_medication;
+          self.formulas[self.formula_index].unit_value_medicament = response.data.formulation.unit_value_medicament;
+          self.formulas[self.formula_index].total_value_medicament = response.data.formulation.total_value_medicament;
+          self.formulas[self.formula_index].number_of_units = response.data.formulation.number_of_units;
+          self.formulas[self.formula_index].commentations = response.data.formulation.commentations;
+          $('#save_formula').prop('disabled', false);
+          $('#btn_formula'+ self.formula_index).css("background-color", "green");
+          $('#btn_formula'+ self.formula_index).css("color", "white");
+        }
+
+      })
+      .catch(function(fallback){
+      });
+    }
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-18
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite borrar la formula que se encuentra la biblioteca del especialista
+    */
+    this.delete_formula = function(formula_id) {
+      var params = {
+        id: formula_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      var dialog = confirm("Esta seguro de eliminar esta formulación?");
+      if (dialog){
+        $http.delete("/api/v1/especialista/consult/delete_library_treatment", {params: params}).then(
+          function(res, status){
+            //SUCCESS
+            debugger;
+            $('#success_notification').show(200).delay(5000).hide(200);
+            $('#alert_notification').hide();
+            $('#message_success').text(res.data.message);
+            $('#formula'+formula_id).hide();
+          },
+          function(res, status){
+            //ERROR
+          }
+        );
+      }else{
+        return false;
+      }
+
+    }
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-18
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista las imagenes de las lesiones
+    */
+    this.charge_images = function() {
+      var params = {
+        consultation_id: self.consult_id,
+        consult_control_id: self.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+      $http.get("/api/v1/especialista/consult/get_charge_images", {params: params})
+      .then(function(response){
+        //debugger;
+        self.images = response.data;
+        $scope.count = 0;
+        self.index = undefined;
+        self.init_image = $("#select_images option:selected").index()
+        self.father_id = self.
+        debugger;
+        setTimeout(function(){
+          //prepareCanvas();
+          $('#DataDisplay2').click(function () {
+            setTimeout(function(){
+              if ($('.modal-backdrop').is(':visible')) {
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                $('#DataDisplay2').attr("crossorigin", "anonymous");
+              };
+              //$('#viewer2 > img').css({"width": "382px", "height": "509px"});
+            }, 180);
+          });
+
+          $('.small-thumbnail img').click(function () {
+            $('#DataDisplay2').attr("src", $(this).attr("data-display"));
+            $(".sigPad").show();
+            $(".sigPad").signaturePad({ drawOnly:true });
+          });
+
+          if ($( ".fancybox-button " ).hasClass( "fancybox-button" ) != false){
+            $(".fancybox-button").fancybox({
+              prevEffect    : 'none',
+              nextEffect    : 'none',
+              helpers   : {
+                title : {
+                  type: 'inside'
+                }
+              }
+            });
+          }
+        }, 1000);
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-12-17
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista las imagenes de las lesiones editadas
+    */
+    this.edited_images = function() {
+      var params = {
+        consultation_id: self.consult_id,
+        consult_control_id: self.control_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_edit_images", {params: params})
+      .then(function(response){
+        debugger;
+        self.edit_images = response.data;
+        $scope.count = 0;
+        setTimeout(function(){
+          $('#DataDisplay2').click(function () {
+            setTimeout(function(){
+              if ($('.modal-backdrop').is(':visible')) {
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+              };
+              //$('#viewer2 > img').css({"width": "382px", "height": "509px"});
+            }, 180);
+          });
+
+          $('.small-thumbnail img').click(function () {
+            $('#DataDisplay2').attr("src", $(this).attr("data-display"));
+          });
+
+          if ($( ".fancybox-button " ).hasClass( "fancybox-button" ) != false){
+            $(".fancybox-button").fancybox({
+              prevEffect    : 'none',
+              nextEffect    : 'none',
+              helpers   : {
+                title : {
+                  type: 'inside'
+                }
+              }
+            });
+          }
+        }, 1000);
+        self.evolution_consult();
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Teniendo un id de la consulta o control buscar las imagenes */
+    this.ShowResponseImages = function() {
+      var res = self.select_id.replace(/\s+/g, '').split("-")
+      var index = $("#select_images option:selected").index()
+      debugger;
+      self.index = index
+
+      if (res[1] == "consulta"){
+        self.consult_id_first = self.select_id
+      }else{
+        self.consult_id_first = null
+      }
+
+      var params = {
+        consultation_id: self.consult_id_first,
+        consult_control_id: self.select_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      debugger;
+
+      $http.get("/api/v1/especialista/consult/get_edit_images", {params: params})
+      .then(function(response){
+        self.edit_images = response.data;
+        self.number_image = 0;
+        $('#select_images option:eq('+index+')').prop('selected', 'selected');
+        debugger;
+        setTimeout(function(){
+          $('#DataDisplay2').click(function () {
+            setTimeout(function(){
+              if ($('.modal-backdrop').is(':visible')) {
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+              };
+              //$('#viewer2 > img').css({"width": "382px", "height": "509px"});
+            }, 180);
+          });
+
+          $('.small-thumbnail img').click(function () {
+            $('#DataDisplay2').attr("src", $(this).attr("data-display"));
+          });
+
+          if ($( ".fancybox-button " ).hasClass( "fancybox-button" ) != false){
+            $(".fancybox-button").fancybox({
+              prevEffect    : 'none',
+              nextEffect    : 'none',
+              helpers   : {
+                title : {
+                  type: 'inside'
+                }
+              }
+            });
+          }
+        }, 1000);
+      })
+      .catch(function(fallback){     
+      });
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2019-12-04
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista las imagenes dermatoscopicas de su imagen padre
+    */
+    this.DermatoscopyImages = function(image_injury_id, index){
+      if($('div.demo').attr("class") == "slider demo slick-initialized slick-slider"){
+        $('div.demo').slick('unslick');
+        $('div.demo').hide();
+      }
+
+      var params = {
+        father_id: image_injury_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      concat = ""
+
+      $http.get("/api/v1/especialista/consult/dermatoscopy_images", {params: params})
+      .then(function(response){
+        $('div.demo').show();
+        self.dermatoscopy = response.data;
+        $('#images_dermatoscopy'+$scope.pos).show();
+        
+        for (let i = 0; i < response.data.length; i++) {
+          concat += '<div style="margin-left:26px;"><img src="'+response.data[i].photo+'" crossorigin="anonymous" id="dermatoscopy'+i+'" onclick="choose_image('+index+', '+i+', '+response.data[i].id+')" style="width:190px;height:290px;" alt="No cargo la imagen"><p class="text-center" style="width:190px;font-size:19px;"><b>'+(i+1)+' '+String.fromCharCode(i+65)+'</b></p></div>' 
+        }
+
+        // Se adiciona el código a la vista app/views/specialists/especialista/_modal_images_consult.html.erb
+        $('.demo').html(concat);
+
+        //if (self.original_image == null){
+          self.original_image = $('#principal'+index).attr('src');
+        //}
+        self.index_principal_image = index;
+        
+        $('.demo').slick({
+          arrows: true,
+          infinite: true,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          speed: 300,
+        });
+        debugger;
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    //Permite identificar la imagen del modal la cual se esta editando para la seleccion de área
+    $scope.index_image = function(index) {
+      $('#edit_image'+index).prop('disabled', true);
+      $('#edit_image'+index).hide();
+      $('.tozoom').hide();
+      $('.cerrar_dermat'+index).hide();
+      $('div#see_dermat').hide();
+      debugger;
+      $('.contenido_buttons > h4').css("display","none");
+      cargar_visualizador(index);
+    };
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-09-19
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Actualizar analisis de la consulta en la respuesta del especialista
+    */
+    this.UpdateSpecialistConsult = function(tipo) {
+
+      analisis_lesion = angular.element('#texto_uno').val().trim()
+      analisis_caso = angular.element('#texto_dos').val().trim()
+
+      var params = {
+        type: tipo,
+        consultation_id: self.consult_id,
+        consultation_control_id: self.control_id,
+        case_analysis: angular.element('#texto_uno').val(), //self.convert_string(analisis_lesion),
+        analysis_description: angular.element('#texto_dos').val(), //self.convert_string(analisis_caso),
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      debugger;
+
+      self.id = self.consult_id == "" ? self.control_id : self.consult_id
+
+      $http.put("/api/v1/especialista/consult/"+ self.id+"/update_specialist_consultation", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          if (tipo == "1"){
+            $('#edit_injury').prop('disabled', true);
+            $('#edit_injury').css("background-color", "grey");
+            $('#edit_injury').css("color", "white");
+            $('#injury_analysis').prop('disabled', false);
+          }else{
+            $('#edit_case').prop('disabled', true);
+            $('#edit_case').css("background-color", "grey");
+            $('#edit_case').css("color", "white");
+            $('#case_analysis').prop('disabled', false);
+          }
+          //self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2019-04-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Crear un analisis para esa consulta o control en la biblioteca
+    */
+    this.NewLibraryAnalysis = function(tipo) {
+
+      var params = {
+        name: self.name_analysis,
+        specialist_response_id: self.specialist_id,
+        type: tipo,
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+
+      debugger;
+
+      $http.post("/api/v1/especialista/consult/create_library_analysis", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#library_analysis').modal('hide');
+          $('#library_case').modal('hide');
+          $('.name').val("");
+        },
+        function(res, status){
+          //ERROR
+          debugger;
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2019-04-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista los analisis de lesiones de una consulta y control de un especialista
+    */
+    this.LibraryInjuryAnalysis = function() {
+      var params = {
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_library_injury_analysis", {params: params})
+      .then(function(response){
+        debugger;
+        self.library_injury = response.data;
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2019-04-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite cargar desde biblioteca el analisis de la lesión
+    */
+    this.ChargeInjuryAnalysis = function(injury_id) {
+      var params = {
+        id: injury_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_injury_analysis_specialist", {params: params})
+      .then(function(response){
+        debugger;
+        if (response.data.id == parseInt(injury_id)) {
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#message_success').text("Ha sido cargado correctamente");
+          self.case_analysis = response.data.case_analysis;
+          $('#edit_injury').prop('disabled', false);
+          $('#edit_injury').css("background-color", "green");
+          $('#edit_injury').css("color", "white");
+        }
+
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2019-04-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite borrar el analisis de la lesion que se encuentra la biblioteca del especialista
+    */
+    this.DeleteInjuryAnalysis = function(injury_id) {
+      var params = {
+        id: injury_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.delete("/api/v1/especialista/consult/delete_library_injury_analysis", {params: params}).then(
+        function(res, status){
+          //SUCCESS
+          debugger;
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#message_success').text(res.data.message);
+          $('#analysis_injury'+injury_id).hide();
+        },
+        function(res, status){
+          //ERROR
+        }
+      );
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2019-04-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista los casos de analisis de una consulta y control de un especialista
+    */
+    this.LibraryCaseAnalysis = function() {
+      var params = {
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_library_case_analysis", {params: params})
+      .then(function(response){
+        debugger;
+        self.library_case = response.data;
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2019-04-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite cargar desde biblioteca el analisis de caso
+    */
+    this.ChargeCaseAnalysis = function(case_id) {
+      var params = {
+        id: case_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_case_analysis_specialist", {params: params})
+      .then(function(response){
+        debugger;
+        if (response.data.id == parseInt(case_id)) {
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#message_success').text("Ha sido cargado correctamente");
+          self.analysis_description = response.data.analysis_description;
+          $('#edit_case').prop('disabled', false);
+          $('#edit_case').css("background-color", "green");
+          $('#edit_case').css("color", "white");
+        }
+
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2019-04-02
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite borrar el analisis de caso que se encuentra la biblioteca del especialista
+    */
+    this.DeleteCaseAnalysis = function(case_id) {
+      var params = {
+        id: case_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.delete("/api/v1/especialista/consult/delete_library_case_analysis", {params: params}).then(
+        function(res, status){
+          //SUCCESS
+          debugger;
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('#message_success').text(res.data.message);
+          $('#analysis_case'+case_id).hide();
+        },
+        function(res, status){
+          //ERROR
+        }
+      );
+    }
+
+    //EVENTO KEYUP CAMPOS INPUT MANEJO DE COLORES
+    $scope.show_button = function (boton, event, input_id) {
+      if (event.keyCode === 8) {
+      }else{
+        $('#'+boton).prop('disabled', false);
+        $('#'+boton).css("background-color", "green");
+        $('#'+boton).css("color", "white");
+      }
+
+      //Verificar que se haya guardado la informacion (activacion de botones)
+      if(!$('#'+boton).is(":disabled")) {
+        //self.correct_save = true;
+      }else{
+        //self.correct_save = false;
+      }
+      //write_input(input_id)
+      debugger;
+    };
+
+    //EVENTO KEYUP CAMPOS INPUT MENSAJES ERROR
+    $scope.message = function (boton, field, event) {
+      if (event.keyCode === 8) {
+      }else{
+        $('#'+boton).prop('disabled', false);
+        $('#'+boton).css("background-color", "green");
+        $('#'+boton).css("color", "white");
+        $('#'+field).hide();
+      }
+
+      //Verificar que se haya guardado la informacion (activacion de botones)
+      if(!$('#'+boton).is(":disabled")) {
+        //self.correct_save = true;
+      }else{
+        //self.correct_save = false;
+      }
+      debugger;
+    };
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-01
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Editar la foto de la lesión
+    */
+    this.EditImageInjury = function(image_id, index) {
+      var params = {
+        images_injury: {
+          id: image_id,
+          edited_photo: angular.element('#campo'+index).val(),
+          commentations: self.commentations,
+        },
+        user_email: self.user_email,
+        user_token: self.user_token,
+      }
+      debugger;
+
+      self.id = self.consult_id == "" ? self.control_id : self.consult_id
+
+      $http.put("/api/v1/especialista/consult/"+ self.id +"/update_images_injury", params).then(
+        function(res, status){
+          //SUCCESS
+          debugger;
+          $('#message_success').text(res.data.message);
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          $('.box_images').hide();
+          self.charge_images();
+        },
+        function(res, status){
+          //ERROR
+          $('#message_error').text(res.data.error);
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+        }
+      );
+    }
+
+    this.image_index = function(index) {
+      $scope.pos = index;
+      self.number_image = index;
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Metodo: Valida si puede mostrar el botón de regresar
+    *
+    * Parámetros: Ninguno
+    *
+    * Resultado: Permite mostrar las imagenes de la posicion 3 en adelante
+    */
+    $scope.slide_imagenes = function(){
+      if($scope.pos >= 3){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    //Slide inicial
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Metodo: Iguala la variable slides con el array de slides existentes en en tour
+    *
+    * Parámetros: Cantidad de slide en el array
+    *
+    * Resultado: Almacena la cantidad de slides
+    */
+    $scope.total_slide = function(count_slides){
+      $scope.slides = count_slides;
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Metodo: Incrementa o decrementa el slide a visualizar
+    *
+    * Parámetros: Posición de slide
+    *
+    * Resultado: qué resultado me arroja el método
+    */
+    $scope.actualSlide = function(position){
+      if( position == 'next'){
+        $scope.pos += 1;
+        $('.box_images').hide();
+        if($('#field_id').val() != ""){
+          $('#principal'+self.index_principal_image).attr("src", self.original_image);
+          $('.cerrar_dermat'+self.index_principal_image).hide();
+          $('#field_id').val("");
+        }
+        $('#dermat_window'+self.index_principal_image).prop('disabled', false);
+      }else if(position == 'prev'){
+        $scope.pos -= 1;
+        $('.box_images').hide();
+        if($('#field_id').val() != ""){
+          $('#principal'+self.index_principal_image).attr("src", self.original_image);
+          $('.cerrar_dermat'+self.index_principal_image).hide();
+          $('#field_id').val();
+        }
+        $('#dermat_window'+self.index_principal_image).prop('disabled', false);
+      }
+    }
+
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Metodo: Valida si puede mostrar el botón de regresar
+    *
+    * Parámetros: Ninguno
+    *
+    * Resultado: Permite o no mostrar el botón de regresar
+    */
+    $scope.can_come_back = function(){
+      if( $scope.pos > 0){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Metodo: Valida si puede mostrar el botón de siguiente
+    *
+    * Parámetros: Ninguno
+    *
+    * Resultado: Permite o no mostrar el botón de siguiente
+    */
+    $scope.can_continue = function(){
+      drag_image($scope.pos);
+      if($scope.pos < $scope.slides - 1){
+        return true;
+        cargar_visualizador();
+      }else {
+        return false;
+      }
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-27
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Metodo: Valida si puede mostrar el botón de finalizar
+    *
+    * Parámetros: Ninguno
+    *
+    * Resultado: Permite o no mostrar el botón de finalizar
+    */
+    $scope.can_finalize = function(){
+      if( $scope.pos == $scope.slides ){
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-07-18
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Permite abrir archivos en una ventana aparte para poder visualizarlos
+    */
+    $scope.open_file = function(file) {
+      $window.location.href = file;
+    };
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-10-17
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Lista los diagnosticos creados
+    */
+    this.DiagnosticsConsult = function() {
+      var params = {
+        consultation_id: this.consult_id,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.get("/api/v1/especialista/consult/get_diagnostic_consult", {params: params})
+      .then(function(response){
+        self.diagnostics = response.data.diagnostico;
+
+        if (self.diagnostics > 0) {
+          $(".request").hide();
+        }
+      })
+      .catch(function(fallback){
+      });
+    }
+
+    /* Autor: Orlando Guzman
+    *
+    * Fecha creacion: 2018-11-16
+    *
+    * Autor actualizacion:
+    *
+    * Fecha actualizacion:
+    *
+    * Responder Consulta pero en remisión
+    */
+    this.UpdateConsultation = function() {
+
+      var params = {
+        consultation_id: this.consult_id,
+        consultation_control_id: this.control_id,
+        type_remission: self.type_remission,
+        remission_comments: self.remission_comments,
+        user_email: self.user_email,
+        user_token: self.user_token
+      }
+
+      $http.put("/api/v1/especialista/consult/update_remission_consult", params).then(
+        function(res, status){
+          //SUCCESS
+          $('#message_success').text(res.data.message);
+          $('#success_notification').show(200).delay(5000).hide(200);
+          $('#alert_notification').hide();
+          //$('#btn_remission').css("background-color", "white");
+          //$('#btn_remission').css("color", "#337ab7");
+          $('#btn_remission').prop('disabled', true);
+          $('#btn_remission').css("background-color", "grey");
+          $('#btn_remission').css("color", "white");
+          //self.correct_save = false;
+        },
+        function(res, status){
+          //ERROR
+          debugger;
+          $('#alert_notification').show(200).delay(5000).hide(200);
+          $('#success_notification').hide();
+          $('#message_error').text(res.data.error);
+          self.error = res.data.remission;
+        }
+      );
+    }
+
+    //Permite limpiar la imagen cuando se dibuja
+    $scope.clean_image = function(index) {
+      var imagen1 = document.getElementById("imagen_hide"+index);
+      var b = document.getElementsByTagName('canvas');
+      var ctx = b[index].getContext("2d");
+      ctx.drawImage(imagen1,0,0);
+    };
+
+    //Permite guardar la imagen en base64 de la edicion
+    $scope.create_image = function(id, index) {
+      var canvas = document.getElementsByTagName('canvas');
+      $('#campo'+index).val(canvas[index].toDataURL());
+      if ($('#field_id').val() == ""){
+        self.EditImageInjury(id, index);
+      }else{
+        self.EditImageInjury($('#field_id').val(), index)
+      }
+    }
+
+    //Permite manejar el numero de imagenes mostradas en el carousel vertical
+    $scope.sumar = function(count, total) {
+      if(count > total){
+        $scope.count = 0;
+        debugger;
+      }
+      $scope.count += 3;
+      debugger;
+    };
+
+    //Permite reiniciar las imagenes una vez que se haya cerrado el modal de visualización
+    $scope.restart_library = function(){
+      self.edit_images();
+    }
+
+    //Permite reiniciar las imagenes una vez que se haya cerrado el modal de visualización
+    $scope.restart_library_charge = function(){
+      self.charge_images();
+    }
+
+    //Botones para las imagenes del modal movimiento todas direcciones y zoom
+
+    $scope.zoomin = function(){
+      zoomin($scope.pos);
+    }
+
+    $scope.zoomout = function(){
+      zoomout($scope.pos);
+    }
+
+    $scope.left = function(){
+      move_left($scope.pos);
+    }
+
+    $scope.right = function(){
+      move_right($scope.pos);
+    }
+
+    $scope.up = function(){
+      move_up($scope.pos);
+    }
+
+    $scope.down = function(){
+      move_down($scope.pos);
+    }
+    
+    //Convertir el valor de string a entero para el select principal
+    $scope.change_value = function(val){
+      if (val != undefined) {
+        return Number(val.split("-")[0])
+      }else{
+        return "";
+      }
+    }
+
+    this.image_size = function(){
+      $scope.size = $('#principal'+$scope.pos).height();
+      if($scope.size < 300){
+        debugger;
+        return true;
+      }else{
+        debugger;
+        return false;
+      }
+    }
+
+    //Activación de microfono
+    $scope.icon_microfone = function(texto, boton){
+      debugger;
+      microfone(texto, boton);
+    }
+
+    //Al cerrar la imagen dermatoscopica vuelve a la original
+    $scope.principal_image = function(index) {
+      $('#principal'+index).attr("src", self.original_image);
+      $('.cerrar_dermat'+index).hide();
+      $('#field_id').val("");
+      $('.box_images').show();
+      $('#dermat_window'+index).prop('disabled', false);
+    }
+
+    //Permite dividir en varias partes un panel de slider para agregar cada 6 imagenes
+    // $scope.range = function(min, max, step) {
+    //   step = step || 1;
+    //   var input = [];
+    //   for (var i = min; i <= max; i += step) {
+    //       input.push(i);
+    //   }
+    //   return input;
+    // };
+
+    //Permite agregar imagenes cada 6 de ellas
+    // $scope.set_images = function(init_index, number) {
+    //   if (init_index == 0){
+    //     return number >= 0 && number < 6
+    //   }else if (init_index == 1){
+    //     return number >= 6 && number < 12
+    //   }else if (init_index == 2){
+    //     return number >= 12 && number < 18
+    //   }else if (init_index == 3){
+    //     return number >= 18 && number < 24
+    //   }else if (init_index == 4){
+    //     return number >= 24 && number < 30
+    //   }else if (init_index == 5){
+    //     return number >= 30 && number < 36
+    //   }else if (init_index == 6){
+    //     return number >= 36 && number < 42
+    //   }else if (init_index == 7){
+    //     return number >= 42 && number < 48
+    //   }
+    // };
+  }]);
+})();

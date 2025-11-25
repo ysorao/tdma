@@ -1,0 +1,1002 @@
+es:
+  recaptcha:
+    errors:
+      verification_failed: 'reCAPTCHA esta incorrecto, intente de nuevo.'
+      recaptcha_unreachable: 'reCAPTCHA verificación server error, intente de nuevo.'
+  date:
+    abbr_day_names:
+    - Dom
+    - Lun
+    - Mar
+    - Mié
+    - Jue
+    - Vie
+    - Sáb
+    abbr_month_names:
+    - NON
+    - ENE
+    - FEB
+    - MAR
+    - ABR
+    - MAY
+    - JUN
+    - JUL
+    - AGO
+    - SEP
+    - OCT
+    - NOV
+    - DIC
+    day_names:
+    - Domingo
+    - Lunes
+    - Martes
+    - Miércoles
+    - Jueves
+    - Viernes
+    - Sábado
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%A, %d de %B de %Y'
+      short: ! '%d de %b'
+    month_names:
+    - none
+    - Enero
+    - Febrero
+    - Marzo
+    - Abril
+    - Mayo
+    - Junio
+    - Julio
+    - Agosto
+    - Septiembre
+    - Octubre
+    - Noviembre
+    - Diciembre
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: cerca de 1 hora
+        other: cerca de %{count} horas
+      about_x_months:
+        one: cerca de 1 mes
+        other: cerca de %{count} meses
+      about_x_years:
+        one: cerca de 1 año
+        other: cerca de %{count} años
+      almost_x_years:
+        one: casi 1 año
+        other: casi %{count} años
+      half_a_minute: medio minuto
+      less_than_x_minutes:
+        one: menos de 1 minuto
+        other: menos de %{count} minutos
+      less_than_x_seconds:
+        one: menos de 1 segundo
+        other: menos de %{count} segundos
+      over_x_years:
+        one: más de 1 año
+        other: más de %{count} años
+      x_days:
+        one: 1 día
+        other: ! '%{count} días'
+      x_minutes:
+        one: 1 minuto
+        other: ! '%{count} minutos'
+      x_months:
+        one: 1 mes
+        other: ! '%{count} meses'
+      x_seconds:
+        one: 1 segundo
+        other: ! '%{count} segundos'
+    prompts:
+      day: Día
+      hour: Hora
+      minute: Minuto
+      month: Mes
+      second: Segundos
+      year: Año
+  errors: &errors
+    format: ! '%{attribute} %{message}'
+    messages:
+      extension_whitelist_error: "No esta permitido subir archivo %{extension}, formato válido: %{allowed_types}"
+      accepted: debe ser aceptado
+      blank: no puede estar en blanco
+      confirmation: no coincide
+      empty: no puede estar vacío
+      equal_to: debe ser igual a %{count}
+      even: debe ser un número par
+      exclusion: está reservado
+      greater_than: debe ser mayor que %{count}
+      greater_than_or_equal_to: debe ser mayor o igual que %{count}
+      inclusion: no está incluído en la lista
+      invalid: es inválido
+      less_than: debe ser menor que %{count}
+      less_than_or_equal_to: debe ser menor o igual que %{count}
+      not_a_number: no es un número
+      not_an_integer: debe ser un entero
+      odd: debe ser un número impar
+      record_invalid: ! 'La validación falló: %{errors}'
+      taken: ya ha sido tomado
+      too_long:
+        one: debe tener máximo 1 caracter
+        other: debe tener máximo %{count} caracteres
+      too_short:
+        one: debe tener mínimo 1 caracter
+        other: debe tener mínimo %{count} caracteres
+      wrong_length:
+        one: longitud errónea (debe ser de 1 caracter)
+        other: longitud errónea (debe ser de %{count} caracteres)
+    template:
+      body: ! 'Revise que los siguientes campos sean válidos:'
+      header:
+        one: ! '%{model} no pudo guardarse debido a 1 error'
+        other: ! '%{model} no pudo guardarse debido a %{count} errores'
+  helpers:
+    select:
+      prompt: Por favor selecciona
+    submit:
+      create: Crear %{model}
+      submit: Guardar %{model}
+      update: Actualizar %{model}
+  number:
+    currency:
+      format:
+        delimiter: ! ','
+        format: ! '%u%n'
+        precision: 0
+        separator: .
+        significant: false
+        strip_insignificant_zeros: false
+        unit: $
+    format:
+      delimiter: ! ','
+      precision: 2
+      separator: .
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion: mil millones
+          million: millón
+          quadrillion: mil billones
+          thousand: mil
+          trillion: billón
+          unit: ''
+      format:
+        delimiter: ! ','
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ! ','
+    precision:
+      format:
+        delimiter: ! ','
+  support:
+    array:
+      last_word_connector: ! ' y '
+      two_words_connector: ! ' y '
+      words_connector: ! ', '
+  time:
+    am: am
+    formats:
+      default: ! '%a, %d de %b de %Y a las %H:%M:%S %Z'
+      long: ! '%A, %d de %B de %Y a las %I:%M %p'
+      short: ! '%d de %b a las %H:%M hrs'
+    pm: pm
+
+  #Mensajes de error cuando son relaciones a muchos
+  patient_informations:
+    civil_status: no puede estar en blanco
+    age: no puede estar en blanco, debe tener mínimo 1 caracter
+    unit_measure_age: no puede estar en blanco
+    municipality_id: no puede estar en blanco
+    urban_zone: no puede estar en blanco
+    type_user: no puede estar en blanco
+    purpose_consultation: no puede estar en blanco
+    external_cause: no puede estar en blanco
+    terms_conditions: debe aceptar los terminos y condiciones
+
+  hello: "Holasss"
+
+  # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
+  activemodel:
+    errors:
+      <<: *errors
+
+  activerecord:
+    errors:
+      <<: *errors
+    models:
+       user:
+         one: Usuario
+         other: Usuarios
+       client_user:
+         one: Usuario cliente
+         other: Usuarios del cliente
+       admin_user:
+         one: Administrador
+         other: Administradores
+       department:
+         one: Departamento
+         other: Departamentos
+       municipality:
+         one: Municipio
+         other: Municipios
+       insurance:
+          one: Aseguradora
+          other: Aseguradoras
+       patient:
+         one: Paciente
+         other: Pacientes
+       patient_information:
+         one: Información paciente
+         other: Información pacientes
+       consultation:
+         one: Consulta
+         other: Consultas
+       consultation_control:
+         one: Control de la consulta
+         other: Controles de las consultas
+       body_area:
+          one: Área del cuerpo
+          other: Areas del cuerpo
+       injury:
+          one: Lesión
+          other: Lesiones
+       images_injury:
+          one: Imagen lesión
+          other: Imagenes lesiones
+       medical_control:
+          one: Control médico
+          other: Controles médicos
+       disease:
+          one: Enfermedad
+          other: Enfermedades
+       mipres_file:
+          one: Archivo Mipres
+          other: Archivos Mipres
+       formula:
+          one: Formula
+          other: Formulas
+       library_specialist:
+          one: Biblioteca especialista
+          other: Biblioteca especialistas
+       other_diagnostic:
+          one: Otro diagnóstico
+          other: Otros diagnósticos
+       request:
+          one: Requerimiento
+          other: Requerimientos
+       request_image:
+          one: Requerimiento imagen
+          other: Requerimiento Imagenes
+       request_exam:
+          one: Solicitud de examen
+          other: Solicitud de examenes
+       specialist_response:
+          one: Respuesta especialista
+          other: Respuesta especialistas
+       client:
+         one: Cliente
+         other: Clientes
+       contract:
+         one: Contrato
+         other: Contratos
+       bill:
+         one: Factura
+         other: Facturas
+       prepay_card:
+         one: Tarjeta de prepago
+         other: Tarjetas de prepago
+       prepay_card_client:
+         one: Tarjeta de prepago del cliente
+         other: Tarjetas de prepago del cliente
+       kit:
+         one: Kit
+         other: Kits
+       device:
+         one: Dispositivo
+         other: Dispositivos
+       app_version:
+         one: Versión de la aplicación
+         other: Versiones de la aplicación
+       subsidiary:
+         one: Sede
+         other: Sedes
+       bill_insurance:
+         one: Factura aseguradora
+         other: Facturas aseguradoras
+       nurse_control:
+         one: Control enfermería
+         other: Controles enfermería
+       contact:
+         one: Mesa de ayuda WEB
+         other: Mesas de ayuda WEB
+       additional_card:
+         one: Adición contrato
+         other: Adición contratos
+       system_manual:
+         one: Manual del sistema
+         other: Manuales del sistema
+       help_desk:
+         one: Mesa de ayuda APP
+         other: Mesas de ayuda APP
+       history_ticket:
+         one: Historial de ticket
+         other: Historial de tickets
+       traceability_consult:
+         one: Trazabilidad de consulta
+         other: Trazabilidad de consultas
+       traceability_control:
+         one: Trazabilidad de control
+         other: Trazabilidad de controles
+       traceability_client:
+         one: Trazabilidad de cliente
+         other: Trazabilidad de clientes
+       traceability_admin:
+         one: Trazabilidad de administrador
+         other: Trazabilidad de administradores
+       designed_response:
+         one: Respuesta prediseñada
+         other: Respuestas prediseñadas
+    attributes:
+      admin_user:
+        id: Código
+        name: Nombre
+        surnames: Apellidos
+        number_document: Número de documento
+        phone: Teléfono
+        status: Estado
+        email: Email
+        created_at: Creado el
+        updated_at: Actualizado el
+        current_sign_in_at: Inicio de sesión actual
+        last_sign_in_at: Último inicio de sesión
+        role: Rol
+      user:
+        id: Código
+        email: Correo electrónico
+        number_document: Número de documento
+        type_professional: Tipo de profesional
+        professional_card: Tarjeta profesional
+        name: Nombre
+        surnames: Apellidos
+        phone: Teléfono
+        terms_and_conditions: Terminos y condiciones
+        status: Estado
+        digital_signature: Firma digital
+        photo: Foto
+        image_digital: Imagen digital
+        password: Contraseña
+        password_confirmation: Confirmar contraseña
+        created_at: Creado el
+        updated_at: Actualizado el
+        remember_me: Recordarme
+        type_specialist: Tipo de especialista
+        patients_attended: Pacientes atendidos
+      client_user:
+        id: Código
+        email: Correo electrónico
+        number_document: Número de documento
+        type_professional: Tipo de profesional
+        professional_card: Tarjeta profesional
+        name: Nombre
+        surnames: Apellidos
+        phone: Teléfono
+        terms_and_conditions: Terminos y condiciones
+        status: Estado
+        digital_signature: Firma digital
+        client_id: Cliente
+        client: Cliente
+        created_at: Creado el
+        updated_at: Actualizado el
+        remember_me: Recordarme
+        role: Rol
+      department:
+        id: Código
+        name: Nombre
+        municipalities: Municipios
+        created_at: Creado el
+        updated_at: Actualizado el
+      municipality:
+        id: Código
+        name: Nombre
+        code: Código municipio
+        department_id: Departamento
+        department: Departamento
+        code_department: Código departamento
+        created_at: Creado el
+        updated_at: Actualizado el
+      insurance:
+        id: Código
+        name: Nombre
+        patient_informations: Información del paciente
+        created_at: Creado el
+        updated_at: Actualizado el
+      patient:
+        id: Código
+        type_document: Tipo documento
+        type_condition: Tipo condición
+        number_document: Número documento
+        name: Nombre
+        second_name: Segundo nombre
+        last_name: Primer apellido
+        second_surname: Segundo apellido
+        birthdate: Fecha de nacimiento
+        genre: Género
+        insurance_id: Asegurador
+        age: Edad
+        created_at: Creado el
+        updated_at: Actualizado el
+      patient_informations:
+        age: Edad
+        unit_measure_age: Unidad de medida
+        municipality_id: Municipio
+        urban_zone: Zona urbana
+        terms_conditions: ''
+      patient_information:
+        id: Código
+        terms_conditions: Terminos y condiciones
+        unit_measure_age: Unidad de medida
+        age: Edad
+        civil_status: Estado civil
+        occupation: Ocupación
+        phone: Télefono
+        email: Correo electrónico
+        address: Dirección
+        weight: Peso
+        municipality_id: Municipio
+        urban_zone: Zona de residencia
+        companion: Persona acompañante
+        name_companion: Nombre acompañante
+        phone_companion: Celular acompañante
+        responsible: Persona responsable
+        name_responsible: Nombre responsable
+        phone_responsible: Celular responsable
+        relationship: Parentesco
+        type_user: Tipo de usuario
+        authorization_number: Número de autorización
+        code_consultation: Código de la consulta
+        purpose_consultation: Finalidad de la consulta
+        external_cause: Causa externa
+        status: Estado
+        patient_id: Paciente
+        patient: Paciente
+        insurance_id: Asegurado
+        insurance: Asegurado
+        municipality: Municipio
+        created_at: Creado el
+        updated_at: Actualizado el
+      consultation:
+        id: Código
+        evolution_time: Tiempo
+        unit_measurement: Unidad de medida
+        number_injuries: Número de lesiones
+        evolution_injuries: Evolución de las lesiones
+        blood: Sangran
+        exude: Exudan
+        suppurate: Supuran
+        symptom: Síntomas
+        change_symptom: Los síntomas cambian a lo largo del día
+        other_factors_symptom: Otros factores que agravan los síntomas
+        aggravating_factors:
+        personal_history: Antecedentes personales
+        family_background: Antecedentes familiares
+        treatment_received: Tratamiento recibido
+        applied_substances: Sustancias aplicadas
+        treatment_effects: Efectos del tratamiento
+        diagnostic_impression: Impresión diagnóstica
+        description_physical_examination: Descripción examen físico
+        physical_audio: Audio físico
+        annex_description: Descripción anexa
+        audio_annex: Audio anexo
+        image_annex: Imagen anexa
+        date_archived: Fecha archivada
+        status: Estado
+        patient_id: Paciente
+        patient: Paciente
+        patient_information_id: Información paciente
+        patient_information: Información paciente
+        specialist_id: Especialista
+        specialist: Especialista
+        assistant_id: Asistente
+        assistant: Asistente
+        doctor_id: Medico
+        doctor: Medico
+        nurse_id: Enfermería
+        nurse: Enfermería
+        user_assign: Especialista
+        reason_consultation: Motivo de consulta
+        current_illness: Enfermedad actual
+        created_at: Creado el
+        updated_at: Actualizado el
+      consultation_control:
+        status: Estado
+        specialist_id: Especialista
+        specialist: Especialista
+        assistant_id: Asistente
+        assistant: Asistente
+        doctor_id: Médico
+        doctor: Médico
+        assign_id: Asignado por
+        assign: Asignado por
+        recommended_treatment: Tratamiento recomendado
+        diagnostic_impression: Impresión diagnostica
+        type_remission: Tipo de remisión
+        remission_comments: Comentarios de la remisión
+        created_at: Creado el
+        updated_at: Actualizado el
+      body_area:
+        id: Código
+        name: Nombre
+        code: Código area
+        injuries: Lesiones
+        created_at: Creado el
+        updated_at: Actualizado el
+      injury:
+        id: Código
+        name: Nombre
+        consultation_id: Consulta
+        consultation: Consulta
+        body_area_id: Área del cuerpo
+        body_area: Área del cuerpo
+        created_at: Creado el
+        updated_at: Actualizado el
+      images_injury:
+        id: Código
+        photo: Foto
+        description: Descripción
+        injury: Lesión
+        medical_control_id: Control médico
+        medical_control: Control médico
+        image_injury_id: Imagen lesión
+        created_at: Creado el
+        updated_at: Actualizado el
+      medical_control:
+        id: Código
+        doctor_id: Doctor
+        doctor: Doctor
+        control_doctor: Doctor
+        consultation_id: Consulta
+        consultation: Consulta
+        subjetive_improvement: Mejoría subjetiva
+        did_treatment: Hizo el tratamiento y siguió indicaciones
+        tolerated_medications: Toleró los medicamentos
+        audio_clinic: Audio clínico
+        clinic_description: Descripción clínica
+        audio_annex: Audio anexo
+        annex_description: Anexo descripción
+        annex_photo: Anexo foto
+        created_at: Creado el
+        updated_at: Actualizado el
+      nurse_control:
+        subjetive_improvement: Mejoría subjetiva
+        ulcer_length: Longitud de la úlcera
+        ulcer_width: Ancho de la úlcera
+        pain_intensity: Intensidad del dolor
+        tolerated_treatment: Toleró los medicamentos
+        improvement: Mejora
+        consultation_control_id: Control
+        commentation: Comentarios
+        created_at: Creado el
+        updated_at: Actualizado el
+      disease:
+        name: Nombre
+        code: Código
+        created_at: Creado el
+        updated_at: Actualizado el
+      mipres_file:
+        mipres: Mipres
+        consultation_id: Consulta
+        consultation: Consulta
+        created_at: Creado el
+        updated_at: Actualizado el
+      formula:
+        medication_code: Código medicamento
+        type_medicament: Tipo de medicamento
+        generic_name_medicament: Nombre genérico mdto
+        pharmaceutical_form: Forma farmacéutica
+        drug_concentration: Concentración mdto
+        unit_measure_medication: Unidad medida mdto
+        number_of_units: Número de unidades
+        unit_value_medicament: Valor unitario mdto
+        total_value_medicament: Valor total mdto
+        consultation_id: Consulta
+        consultation: Consulta
+        created_at: Creado el
+        updated_at: Actualizado el
+      library_specialist:
+        name: Nombre
+        consultation_id: Consulta
+        consulta: Consulta
+        specialist_id: Especialista
+        specialist: Especialista
+        formula_id: Formula
+        formula: Formula
+        created_at: Creado el
+        updated_at: Actualizado el
+      other_diagnostic:
+        consultation_id: Consulta
+        consultation: Consulta
+        principal_diagnostic: Diagnóstico principal
+        type_diagnostic: Tipo de diagnóstico
+        status: Estado
+        created_at: Creado el
+        updated_at: Actualizado el
+      request:
+        comment: Comentario
+        type_request: Tipo de requerimiento
+        consultation_id: Consulta
+        consultation: Consulta
+        specialist_request: Especialista
+        specialist: Especialista
+        specialist_id: Especialista
+        doctor_request: Doctor
+        doctor: Doctor
+        audio_request: Audio del requerimiento
+        description_request: Descripción del requerimiento
+        status: Estado
+        created_at: Creado el
+        updated_at: Actualizado el
+      request_image:
+        image_request: Imagen del requerimiento
+        request_id: Requerimiento
+        request: Requerimiento 
+        created_at: Creado el
+        updated_at: Actualizado el 
+      request_exam:
+        name_type_exam: Tipo de examen
+        consultation_id: Consulta
+        consultation: Consulta
+        specialist_request_exam: Especialista
+        specialist: Especialista
+        status: Estado
+        created_at: Creado el
+        updated_at: Actualizado el
+      specialist_response:
+        control_recommended: Control recomendado
+        response: Especialista
+        specialist: Especialista
+        specialist_id: Especialista
+        consultation_id: Consulta
+        consultation: Consulta
+        medical_control_id: Control médico
+        medical_control: Control médico
+        created_at: Creado el
+        updated_at: Actualizado el
+      client:
+        id: id
+        status: Estado
+        available_credits: Créditos disponibles
+        total_credits: Créditos cargados
+        consumed_credits: Créditos consumidos
+        email: Correo electrónico
+        identification_number: Número de identificación
+        type_identification: Tipo de identificación
+        business_name: Nombre de la IPS o profesional independiente
+        client_users: Usuarios del cliente
+        code_service_provider: Código del prestador de salud
+        department: Departamento
+        municipality_id: Municipio
+        municipality: Municipio
+        created_at: Creado el
+        updated_at: Actualizado el
+      contract:
+        id: id
+        status: Estado
+        agreement_date: Fecha legalizacion contrato
+        date_init: Fecha inicio
+        date_end: Fecha final
+        contract_number: Número de contrato
+        client_id: Cliente
+        client: Cliente
+        observations: Observaciones
+        prepay_card_clients: Una tarjeta prepagada
+        purchase_date: Fecha de compra
+        created_at: Creado el
+        updated_at: Actualizado el
+      bill:
+        id: id
+        payment_file: Comprobante de pago
+        enabled_payment: Factura verificada
+        bill_file: Factura de venta
+        code: "# factura de venta"
+        date_expedition: Fecha de expedición
+        contract_id: Contrato
+        contract: Contrato
+        created_at: Creado el
+        updated_at: Actualizado el
+      prepay_card:
+        id: id
+        name: Nombre
+        description: Descripción
+        credits: Créditos
+        created_at: Creado el
+        updated_at: Actualizado el
+      prepay_card_client:
+        id: id
+        purchase_date: Fecha de compra
+        prepay_card_id: Tarjeta de prepago
+        prepay_card: Tarjeta de prepago
+        contract_id: Contrato
+        contract: Contrato
+        client_id: Cliente
+        client: Cliente
+        created_at: Creado el
+        updated_at: Actualizado el
+      kit:
+        id: id
+        code: Código
+        subsidiary_id: Sede
+        subsidiary: Sede
+        prepay_card_client_id: Tarjeta de prepago del cliente
+        prepay_card_client: Tarjeta de prepago del cliente
+        device_id: Dispositivo
+        device: Dispositivo
+        contract_id: Contrato
+        contract: Contrato
+        code_verified: Código de verificación
+        is_comodato: ¿Es comodato?
+        init_date: Fecha inicial
+        end_date: Fecha final
+        devices: Un dispositivo
+        created_at: Creado el
+        updated_at: Actualizado el
+      device:
+        id: id
+        imei: Imei
+        delivery_date: Fecha de entrega
+        app_version_id: Versión aplicación
+        cell_brand: Marca
+        system_version: Version sistema operativo
+        observations: Observaciones
+        created_at: Creado el
+        updated_at: Actualizado el
+      app_version:
+        id: id
+        apk_file: Archivo apk
+        version: Versión
+        created_at: Creado el
+        updated_at: Actualizado el
+      subsidiary:
+        id: id
+        name: Nombre
+        code: Código
+        address: Dirección
+        type: Tipo
+        code_sds: Código sds
+        created_at: Creado el
+        updated_at: Actualizado el
+      bill_insurance:
+        id: id
+        bill_number: Número de factura 
+        bill_expedition_date: Fecha de expedición de la factura
+        init_date: Fecha inicial
+        end_date: Fecha final
+        administrator_entity_code: Código de entidad de administrador
+        administrator_entity_name: Nombre de entidad de administrador
+        benefits_plan: Plan de beneficios
+        policy_number: Número de póliza
+        total_value_shared_payment: Pago compartido de valor total
+        commision_value: Valor de comisión
+        total_value_discounts: Descuentos en valor total
+        net_to_pay_contract_entity: Neto para pagar la entidad contractual
+        created_at: Creado el
+        updated_at: Actualizado el
+      contact:
+        id: id
+        name_complete: Nombre completo
+        email: Correo electrónico
+        phone: Celular
+        message: Mensaje
+        type_contact: Tipo
+        response_contact: Respuesta
+        status: Estado
+        admin_user: Administrador
+        admin_user_id: Administrador
+        designed_response: Respuesta prediseñada
+        created_at: Creado el
+        updated_at: Actualizado el
+      additional_card:
+        id: id
+        contract_id: Contrato
+        client_id: Cliente
+        prepay_card_id: Tarjeta prepago
+        contract: Contrato
+        client: Cliente
+        prepay_card: Tarjeta prepago
+        status: Estado
+        end_date: Fecha final
+        created_at: Creado el
+        updated_at: Actualizado el
+      system_manual:
+        id: id
+        name: Nombre
+        file_manual: Archivo
+        type_manual: Tipo
+      help_desk:
+        description: Descripción
+        ticket: Ticket
+        status: Estado
+        name: Médico
+        user: Usuario
+        user_id: Usuario
+        device: Dispositivo
+        device_id: Dispositivo
+        subject: Asunto
+        response_ticket: Respuesta
+        image_user: Imagen enviada por usuario
+        image_admin: Imagen enviada por administrador
+        admin_user: Administrador
+        admin_user_id: Administrador
+      history_ticket:
+        message_create: Creado por
+        message_assign: Asignado a
+        message_response: Respondido por
+        help_desk_id: Mesa de ayuda
+        help_desk: Mesa de ayuda
+      traceability_consult:
+        doctor_id: Médico
+        client: Cliente
+        client_id: Cliente
+        consultation: Consulta
+        consultation_id: Consulta
+        user: Especialista
+        user_id: Especialista
+        assign_consult_id: Asignar consulta
+        reassign_consult_id: Reasignar consulta
+        seach_patient_id: Paciente buscado por el usuario del cliente
+        assign_control: Asignar control
+        reassign_control: Reasignar control
+        seach_patient: Paciente buscado por el usuario del cliente
+        client_user: Usuario del cliente
+        client_user_id: Usuario del cliente
+        shared_clinic_history: Compartir historia clínica
+        print_clinic_history: Imprimir historia clínica
+        response_req_id: Requerimiento respondido por
+        reject_req_id: Requerimiento descartado por
+        view_consult_id: Consulta vista por
+        patient_specialist_id: Paciente buscado por el especialista
+        created_at: Creado el
+        updated_at: Actualizado el
+      traceability_control:
+        doctor_id: Médico
+        consultation_control_id: Control de la consulta
+        consultation_control: Control de la consulta
+        user: Especialista
+        user_id: Especialista
+        assign_control_id: Asignar control
+        reassign_control_id: Reasignar control
+        seach_patient_id: Paciente buscado por el usuario del cliente
+        assign_control: Asignar control
+        reassign_control: Reasignar control
+        seach_patient: Paciente buscado por el usuario del cliente
+        client_user: Usuario del cliente
+        client_user_id: Usuario del cliente
+        shared_clinic_history: Compartir historia clínica
+        print_clinic_history: Imprimir historia clínica
+        response_req_id: Requerimiento respondido por
+        reject_req_id: Requerimiento descartado por
+        view_consult_id: Consulta vista por
+        patient_specialist_id: Paciente buscado por el especialista
+        created_at: Creado el
+        updated_at: Actualizado el
+      traceability_client:
+        client_user: Usuario
+        client_user_id: Usuario
+        create_patient_id: Paciente creado por
+        create_patient: Paciente creado por
+        shared_clinic_history: Compartir historia clínica
+        print_clinic_history: Imprimir historia clínica
+        created_at: Creado el
+        updated_at: Actualizado el
+      traceability_admin:
+        admin_user_id: Administrador
+        create_admin: Crear administrador
+        update_admin: Actualizar administrador
+        delete_admin: Eliminar administrador
+        activate_admin: Activar administrador
+        desactivate_admin: Desactivar administrador
+        user_admin_id: Administrador
+        create_user: Crear usuario
+        delete_user: Eliminar usuario
+        activate_user: Activar usuario
+        desactivate_user: Desactivar usuario
+        user_id: Cambiado a
+        delete_contact: Eliminar contacto
+        create_client: Crear cliente
+        update_client: Actualizar cliente
+        activate_client: Activar cliente
+        desactivate_client: Desactivar cliente
+        client_id: Cambiado a
+        create_user_client: Crear usuario del cliente
+        update_user_client: Actualizar usuario del cliente
+        client_user_id: Cambiado a
+        create_contract: Crear contrato
+        delete_contract: Eliminar contrato
+        contract_id: Cambiado a
+        create_bill: Crear factura
+        update_bill: Actualizar factura
+        delete_bill: Eliminar factura
+        bill_id: Cambiado a
+        create_addition_contract: Crear tarjeta adicional
+        additional_card_id: Cambiado a
+        create_kit: Crear kit
+        delete_kit: Eliminar kit
+        kit_id: Cambiado a
+        create_device: Crear dispositivo
+        update_device: Actualizar dispositivo
+        delete_device: Eliminar dispositivo
+        device_id: Cambiado a
+        create_manual_system: Crear manual del sistema
+        update_manual_system: Actualizar manual del sistema
+        delete_manual_system: Eliminar manual del sistema
+        manual_system_id: Cambiado a
+        assign_help_desk: Asignar mesa de ayuda
+        reassign_help_desk: Reasignar mesa de ayuda
+        response_help_desk: Respuesta de mesa de ayuda
+        help_desk_id: Cambiado a
+        create_prepay_card: Crear tarjeta prepago
+        update_prepay_card: Actualizar tarjeta prepago
+        delete_prepay_card: Eliminar tarjeta prepago
+        prepay_card_id: Cambiado a
+        create_version: Crear versión
+        update_version: Actualizar versión
+        delete_version: Eliminar versión
+        app_version_id: Cambiado a
+        name_complete_admin: Nombre completo
+        document_admin: Número de documento
+        rol: Rol
+        name_complete_user: Nombre completo
+        document_user: Número de documento
+        patients_attended: Pacientes atendidos
+        contract_number: Número del contrato
+        date_init: Fecha inicial
+        date_end: Fecha final
+        code_bill: Código
+        date_expedition: Fecha de expedición
+        code_kit: Código
+        is_comodato: Es comodato?
+        imei: Imei
+        name_card: Nombre tarjeta
+        credits: Créditos
+        assign_contact: Asignar contacto
+        response_contact: Responder contacto
+        contact_id: Cambiado a
+        email: Email
+        phone: Teléfono
+        system_manual_id: Cambiado a
+        name_manual: Nombre
+        file_name: Nombre de archivo
+        assign_consult_id: Asignar consulta
+        reassign_consult_id: Reasignar consulta
+        assign_control_id: Asignar control
+        reassign_control_id: Reasignar control
+        consultation_id: Consulta
+        consultation_control_id: Control
+        created_at: Creado el
+        updated_at: Actualizado el
+      designed_response:
+        title: Título
+        description: Descripción
+        status: Estado
+        created_at: Creado el
+        updated_at: Actualizado el

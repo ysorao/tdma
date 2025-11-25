@@ -1,0 +1,27 @@
+<%= form_tag(form_contact_landing_home_index_path(), method: 'post', class:"form-contact") do %>
+  <div class="form-group">
+    <label>Nombre</label>
+    <%= text_field_tag('name_complete', params[:name_complete], placeholder: "Ingrese su nombre completo", class: "form-control", required: true) %>
+  </div>
+  <div class="form-group">
+    <label>Correo</label>
+    <%= text_field_tag('email', params[:email], placeholder: "Ingrese su correo", class: "form-control", pattern:"[A-Za-z0-9._%+-]{3,}@[A-Za-z0-9._%+-]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})", title: "Email invalido", required: true) %>
+  </div>
+  <div class="form-group">
+    <label>Celular</label>
+    <%= text_field_tag('phone', params[:phone], placeholder: "Ingrese su celular", class: "form-control", required: true) %>
+  </div>
+  <div class="form-group">
+    <label>Mensaje</label>
+    <%= text_area_tag('message', params[:message], rows: 3, class: "form-control", required: true) %>
+  </div>
+  <%= hidden_field_tag(:type, number) %>
+  <div style="margin:0 32px;">
+    <%= flash[:recaptcha_error] %>
+    <%= recaptcha_tags %>
+  </div>
+  <br>
+  <%= button_tag(type: "submit", class:"blue-btn btn-block") do %>
+    Enviar <span class=""></span>
+  <% end %>
+<%end%>

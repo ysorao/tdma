@@ -1,0 +1,99 @@
+<div class="col-md-9 scroll" id="history" style="display: none;padding-left:6px;"> <!-- ng-if="cCtlr.show_information() == true" -->
+  <!--<button ng-click="cCtlr.get_diagnostic_controls()" class="btn btn-primary" style="margin-left:100%;">Historial</button>-->
+  <br>
+  <br>
+  <!-- HISTORIAL DE CONTROLES -->
+  <div class="col-md-12 col-sm-4 title_image" style="width: 96.2%;">
+    <h4 class="text-center">Historial</h4>
+  </div>
+  <br>
+  <br>
+  <br>
+  <!--<div class="container">-->
+    <div class="row">
+      <div class="col-md-5 history_extend">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th class="history_title" style="width: 60%;">Diagnóstico</th>
+              <th class="history_title" >Fecha</th>
+              <th class="history_title" >Estado</th>
+            </tr>
+          </thead>
+          <% unless @consultas.blank? %>
+            <% @consultas.each do |consult| %>
+              <tbody> 
+                  <!--<table class="table table-sm" style="max-width: 84% !important;"">-->
+                    <thead>
+                      <tr>
+                        <% if diagnostic_consult(consult.id).nil? %>
+                          <th class=""><b>Ninguno</b></th>
+                        <%else%>
+                          <th class=""><b><%= diagnostic_consult(consult.id).other_diagnostics.blank? ? 'Ninguno' : Disease.find(diagnostic_consult(consult.id).other_diagnostics.first.disease_id).name %></b></th>
+                        <%end%>
+                        <th class=""><b><%= diagnostic_date(consult.id) %></b></th>
+                        <% if consult.status == Consultation::RESUELTO %> 
+                          <th class="">
+                            <%= link_to new_specialists_especialistum_path(consult_id: consult.id) do %>
+                              <span class="btn btn-success btn-md">Resuelta</span>
+                            <%end%>
+                          </th>
+                        <%elsif consult.status == Consultation::REQUERIMIENTO%>
+                          <th class="">
+                            <%= link_to new_specialists_especialistum_path(consult_id: consult.id) do %>
+                              <span class="btn btn-warning btn-md">Requerimiento</span>
+                            <%end%>
+                          </th>
+                        <%elsif consult.status == Consultation::REMISION%>
+                          <th class="">
+                            <%= link_to new_specialists_especialistum_path(consult_id: consult.id), format: 'js' do %>
+                              <span class="btn btn-danger btn-md">Remisión</span>
+                            <%end%>
+                          </th>
+                        <%end%>
+                      </tr>
+                    </thead>
+                    <% unless @history_control.blank? %>
+                      <tbody>
+                        <% @history_control.each_with_index do |info, i| %>
+                          <% if consult.id == info.consultation_id %>
+                            <tr>
+                              <td class="" style="width:201px;"><%= "Control #{i+1}" %><br>
+                                <p><%= diagnostic_control(info.consultation_control_id).blank? ? 'Ninguno' : Disease.find(diagnostic_control(info.consultation_control_id).first.disease_id).name %></p>
+                              </td>
+                              <td class="text-center" style="width:281px;"><%= info.created_at.strftime("%d/%m/%Y") %></td>
+                              <% if info.consultation_control.status == Consultation::RESUELTO %> 
+                                <td class="" style="width:336px;padding-bottom: 8px;">
+                                  <%= link_to new_specialists_especialistum_path(control_id: info.consultation_control_id) do %>
+                                    <span class="btn btn-success btn-md">Resuelta</span>
+                                  <%end%>
+                                </td>
+                              <%elsif info.consultation_control.status == Consultation::REQUERIMIENTO%>
+                                <td class="" style="width:336px;padding-bottom: 8px;">
+                                  <%= link_to new_specialists_especialistum_path(control_id: info.consultation_control_id) do %>
+                                    <span class="btn btn-warning btn-md">Requerimiento</span>
+                                  <%end%>
+                                </td>
+                              <%elsif info.consultation_control.status == Consultation::REMISION%>
+                                <td class="" style="width:336px;padding-bottom: 8px;">
+                                  <%= link_to new_specialists_especialistum_path(control_id: info.consultation_control_id), format: 'js' do %>
+                                    <span class="btn btn-danger btn-md">Remisión</span>
+                                  <%end%>
+                                </td>
+                              <%end%>
+                            </tr>
+                          <%end%> 
+                        <%end%>                 
+                      </tbody>
+                    <%end%>
+                  <!--</table>-->  
+              </tbody>
+            <%end%>
+          <%else%>
+
+          <%end%>
+        </table>
+      </div>
+    </div>
+  <!--</div>-->
+</div>

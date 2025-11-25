@@ -1,0 +1,42 @@
+<div class="modal fade assign_massive_specialist" id="assign_massive_specialist" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header modal-header-primary">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle fa-lg"></i></span></button>
+        <h4 class="modal-title panel-primary" id="myModalLabel">Asignar consultas</h4>
+      </div>
+      <%= form_tag('especialista/assign_massive', method: 'put') do %>
+      <div class="modal-body">
+        <div class="form">
+          <div class="row">
+            <div class="col-md-12">
+              <!--<div class="form-inline text-center">-->
+                <h5 style="color:#377aaf;"><%= "Nombre del especialista" %></h5>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-10 text-center">
+                      <%= select_tag(:other_user, options_for_select(User.where(type_professional: User::ESPECIALISTA, type_specialist: User::DERMATOLOGO, status: User::ACTIVO).collect {|r| [ r.name.to_s + ' ' + r.surnames.to_s, r.id] }), prompt: 'Seleccionar', class: 'form-control', required: true) %>
+                      <%= hidden_field_tag(:consult_ids, nil, id:"ids") %>
+                      <%= hidden_field_tag(:control_ids, nil, id:"ids_control") %>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-10 col-md-offset-3 text-center col-sm-6 col-xs-12">   
+                      <button class="btn btn-danger btn-lg" data-dismiss="modal">Cancelar</button>
+                      <%= button_tag(type: "submit", class:"btn btn-primary btn-lg") do %>
+                        Enviar <span class="glyphicon glyphicon-triangle-right"></span>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>    
+              <!--</div>-->
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

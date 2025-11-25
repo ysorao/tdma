@@ -1,0 +1,1256 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<!--TiÍTULO-->
+<title>Historia Clínica</title>
+
+<style>
+@font-face {
+  font-family: 'robotoregular';
+  src: url('<%= Rails.root.join('app', 'assets', 'fonts', 'roboto-regular-webfont.woff') %>')
+}
+
+@font-face {
+  font-family: 'robotoregular';
+  src: url('<%= Rails.root.join('app', 'assets', 'fonts', 'roboto-regular-webfont.woff2') %>')
+}
+
+@font-face {
+  font-family: 'robotobold';
+  src: url('<%= Rails.root.join('app', 'assets', 'fonts', 'roboto-bold-webfont.woff') %>')
+}
+@font-face {
+  font-family: 'robotobold';
+  src: url('<%= Rails.root.join('app', 'assets', 'fonts', 'roboto-bold-webfont.woff2') %>')
+}
+
+
+
+body {
+  width:612px;
+  height:auto;
+  background-color:rgba(255,255,255,1.00);
+  margin:auto;
+  font-family: 'robotobold';
+}
+
+/* PÁGINA 1*/
+.pagina1 {
+  width:612px;
+  height:auto;
+  margin-top:60px;
+}
+
+header {
+  width:612px;
+  height:100px;
+  background-color:#FFFFFF;
+  display:block;
+  margin-bottom: 5px;
+}
+
+#imagen_header img {
+  width:612px;
+  height:100px;
+  z-index:1;
+  position:absolute;
+  display:block;
+  background-color:#FFFFFF;
+  margin-bottom: 5px;
+}
+
+#nombre_paciente, #nombre_paciente2 {
+  width:310px;
+  min-height:17px;
+  font-size:9px;
+  background-color:#fff;
+  position:relative;
+  margin-top:50px;
+  left:210px;
+  z-index:2;
+  float:left;
+  border-radius:4px;
+  display:block;
+  padding-top: 5px;
+  padding-left: 10px;
+  text-align: center; 
+}
+
+#nombre_paciente2 {
+  font-size: 8px !important;
+}
+
+/* DATOS PACIENTE */
+
+/* LINEA 1*/
+.datos_paciente {
+  width:590px;
+  height:auto;
+  position:relative;
+  margin:auto;
+  display:block;
+  margin-top: 8px;
+  margin-bottom:5px;
+  border:solid 1px #D8D9DD;
+  border-radius:6px;
+  padding:3px 3px 5px;
+}
+
+label {
+  width:auto;
+  height:auto;
+  font-size:8px;
+  margin:auto;
+  text-align:center;
+  font-family: 'robotobold';
+  color: #5B5B5F;
+}
+
+small {
+  font-size:9px;
+  margin:auto;
+  text-align:center;
+  font-family: 'robotobold';
+  color:#D8D9DD;
+}
+
+.espacio-general {
+  background-color:#FFFFFF;
+  display:inline-block;
+  text-align:left;
+  min-height: 15px !important;
+  vertical-align: middle;
+}
+
+
+#espacio1 {
+  width:22px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio2 {
+  width:27px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio3 {
+  width:50px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio4 {
+  width:195px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align: left;
+}
+
+/* LINEA 2*/
+#espacio5 {
+  width:60px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio6 {
+  width:95px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align: left;
+}
+
+#espacio7 {
+  width:110px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align: left;
+}
+
+#espacio8 {
+  width:98px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+/* LINEA 3*/
+#espacio9 {
+  width:27px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+#espacio10 {
+  width:60px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio11 {
+  width:97px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+#espacio12 {
+  width:163px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align: left;
+}
+
+/* LINEA 4*/
+#espacio13 {
+  width:120px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align: left;
+}
+
+#espacio14 {
+  width:97px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+
+/* DATOS CONSULTA */
+/* LINEA 1 Consultas*/
+.datos_consulta {
+  width:590px;
+  height:auto;
+  position:relative;
+  margin:auto;
+  border:solid 1px #D8D9DD;
+  border-radius:6px;
+  padding:3px 3px 5px;
+  display:block;
+  margin-bottom:5px;
+}
+
+h1 {
+  width:auto;
+  font-size:8px;
+  font-family: 'robotobold'
+  font-weight: bold;
+  display:inline-block;
+  margin-left: 5px;
+}
+
+.linea1_consul {
+  width:400px;
+  margin:auto;
+  display:inline-block;
+}
+
+/* LINEA 2 Consultas*/
+.linea2_consul {
+  width:580px;
+  margin:auto; 
+}
+
+#espacio15 {
+  width:255px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio16 {
+  width:179px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio17 {
+  width:auto;
+  height:auto;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio18 {
+  width:575px;
+  height:auto;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:block;
+  text-align:left;
+}
+
+#espacio19 {
+  width:570px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:block;
+  text-align:left;
+}
+
+/* LINEA 9 img*/
+.linea9_consul_img {
+  width:100%;
+  margin:auto;
+  padding-top:6px;
+  display:block;
+}
+
+.linea9_consul_img .list-img {
+  width:100%;
+  display: block;
+  list-style:none;
+  margin:auto;
+  float: none;
+  text-align: center;
+}
+.linea9_consul_img .list-img div {
+  width:70px;
+  height:75px;
+  border:solid 1px #D8D9DD;
+  border-radius:6px;
+  background-color:#FFFFFF;
+  margin:auto;
+  margin:0px 5px 5px 0px;
+  float: none !important;
+  display: inline-block;
+}
+
+.linea9_consul_img .list-img div img {
+  border-radius:6px;
+  width: 100%;
+  height: 100%;
+}
+
+/* DATOS RESPUESTA */
+/* LINEA 1 Respuesta*/
+.datos_respuesta {
+  width:96.5%;
+  height:auto;
+  margin:auto;
+  margin-bottom:5px;
+  display:block;
+  border:solid 1px #D8D9DD;
+  border-radius:6px;
+  clear: both;
+  padding:3px 3px 5px;
+}
+
+
+/* LINEA 2 Respuesta*/
+.linea2_respu {
+  width:580px;
+  height:auto;
+  margin:auto;
+}
+
+#espacio20 {
+  width:523px;
+  height:auto;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio21 {
+  width:503px;
+  height:auto;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio22 {
+  width:531px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+#espacio23 {
+  width:494px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+/* LINEA 3 Respuesta*/
+.linea3_respu {
+  width:580px;
+  height:auto;
+  margin:auto;
+  padding-bottom: 5px;
+}
+
+/* LINEA 4 Respuesta*/
+.linea4_respu {
+  width:580px;
+  margin:auto;
+}
+
+#espacio24 {
+  width:68px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+/* LINEA 6 Respuesta*/
+.linea6_respu {
+  width:580px;
+  margin:auto;
+}
+
+#espacio25 {
+  width:494px;
+  min-height:15px;
+  background-color:#FFFFFF;
+  margin-bottom:-3px;
+  display:inline-block;
+  text-align:left;
+}
+
+/* LINEA 7 Consultas*/
+.linea7_respu {
+  width:580px;
+  margin:auto;
+}
+
+/* DATOS CONTROL */
+
+/* LINEA 1*/
+.datos_control {
+  width:96.5%;
+  height:auto;
+  position:relative;
+  margin:auto;
+  margin-bottom:5px;
+  display:block;
+  border:solid 1px #D8D9DD;
+  border-radius:6px;
+  clear: both;
+  padding:3px 3px 5px;
+}
+
+.linea2_control {
+  width:580px;
+  margin:auto;
+  margin-top:-5px;
+}
+
+.linea3_control {
+  width:580px;
+  height:auto;
+  margin:auto;
+}
+
+/* DATOS RESPUESTA */
+/* LINEA 1 Respuesta Control*/
+.datos_respuesta_control {
+  width:96.5%;
+  height:auto;
+  position:relative;
+  margin:auto;
+  margin-bottom:5px;
+  display:block;
+  border:solid 1px #D8D9DD;
+  border-radius:6px;
+  clear: both;
+  padding: 3px 3px 5px;
+}
+
+.linea {
+  width:580px;
+  margin:auto;
+}
+
+.linea label, .linea1_consul label, .linea2_consul label, .linea2_respu label {
+  color: #8a8a8b; 
+}
+
+.linea label #espacio1, 
+.linea label #espacio2, 
+.linea label #espacio3, 
+.linea label #espacio4,
+.linea label #espacio5,
+.linea label #espacio6,
+.linea label #espacio7,
+.linea label #espacio8, 
+.linea label #espacio9,
+.linea label #espacio10,
+.linea label #espacio11, 
+.linea label #espacio12,
+.linea label #espacio13,
+.linea label #espacio14,
+.linea label #espacio15,
+.linea1_consul #espacio3,
+.linea1_consul #espacio4,
+.linea2_consul #espacio1,
+.linea2_consul #espacio2,
+.linea2_consul #espacio3,
+.linea2_consul #espacio4,
+.linea2_consul #espacio5,
+.linea2_consul #espacio6,
+.linea2_consul #espacio7,
+.linea2_consul #espacio8,
+.linea2_consul #espacio9,
+.linea2_consul #espacio10,
+.linea2_consul #espacio12,
+.linea2_consul #espacio13,
+.linea2_consul #espacio14,
+.linea2_consul #espacio15,
+.linea2_consul #espacio16,
+.linea2_consul #espacio17,
+.linea2_consul #espacio24,
+.linea2_consul #espacio25,
+.linea2_consul #espacio22,
+.linea2_respu #espacio18,
+.linea2_respu #espacio20,
+.linea2_respu #espacio21,
+.linea2_respu #espacio23,
+.linea3_respu #espacio18,
+.linea3_respu #espacio23 {
+  color: #5B5B5F;
+  font-family: 'robotobold';
+}
+</style>
+
+</head>
+
+<!--HEADER-->
+<body>
+
+<!--HEADER-->
+<body>
+  <!--PÁGINA 1-->
+  <div class="pagina1" style="page-break-inside: avoid;">
+    <header>
+      <% name_complete = @paciente.name.to_s + ' ' + @paciente.second_name.to_s + ' ' + @paciente.last_name.to_s + ' ' + @paciente.second_surname.to_s%>
+      <% if name_complete.length > 35 %>
+        <div id="nombre_paciente2"><%= name_complete %></div>
+      <% else %>
+        <div id="nombre_paciente"><%= name_complete %></div>
+      <%end%>
+      <div id="imagen_header">
+        <%= wicked_pdf_image_tag "header.png", alt: "", style: 'object-fit: contain;'%>
+      </div>
+    </header>
+
+    <!--DATOS PACIENTE-->
+    <div class="datos_paciente">
+      <!--LINEA 1-->
+      <div class="linea">
+        <label>
+          ID:
+          <div id="espacio3"><%= @paciente.number_document %></div>
+          <small> | </small>Tipo de ID: 
+          <div id="espacio12" style="width: 125px"><%= type_document(@paciente)%></div> 
+          <small> | </small>Sexo:
+          <div id="espacio1" style="width: 10px"><%= @paciente.genre == Patient::MASCULINO ? 'M' : 'F'%></div>
+          <small> | </small>Edad: 
+          <div id="espacio3" style="width: 40px"><%= @paciente.patient_informations.last.age %> <%=unit_measure_age(@paciente.patient_informations.last.unit_measure_age)%></div>
+          <small> | </small>Fecha nacimiento: 
+          <div id="espacio3"><%= @paciente.birthdate %></div>
+          <small> | </small>Estado civil: 
+          <div id="espacio3" style="width: 55px"><%= civil_status(@paciente.patient_informations.last) %></div> 
+          
+        </label>
+      </div>
+
+      <!--LINEA 2-->
+      <div class="linea">
+        <label>
+          Departamento: 
+          <div id="espacio6" class="espacio-general"><%= @paciente.patient_informations.last.municipality.department.name %></div> 
+          <small> | </small>Municipio: 
+          <div id="espacio7" class="espacio-general"><%= @paciente.patient_informations.last.municipality.name %></div> 
+          <small> | </small>Residencia:
+          <div id="espacio9"><%= @paciente.patient_informations.last.urban_zone == 1 ? 'Urbana' : 'Rural' %></div>
+          <small> | </small>Dirección: 
+          <div id="espacio12" class="espacio-general" style="width: 145px"><%= @paciente.patient_informations.last.address.blank? ? 'Ninguno' : @paciente.patient_informations.last.address %></div>
+        </label>
+      </div>
+
+       <!--LINEA 3-->
+      <div class="linea">
+        <label>
+          Ocupación: 
+          <div id="espacio11" class="espacio-general"><%= @paciente.patient_informations.last.occupation.blank? ? 'Ninguno' : @paciente.patient_informations.last.occupation%></div> 
+          <small> | </small>Email:
+          <div id="espacio11" class="espacio-general" style="word-break: break-word"><%= @paciente.patient_informations.last.email.blank? ? 'Ninguno' : @paciente.patient_informations.last.email %></div>
+          <small> | </small>Celular:
+          <div id="espacio3"><%= @paciente.patient_informations.last.phone.blank? ? 'Ninguno' : @paciente.patient_informations.last.phone %></div>
+          <small> | </small>Finalidad consulta: 
+          <div id="espacio3" style="width: 35px">No aplica</div>
+          <small> | </small>Autorización:
+          <div id="espacio3"><%= @paciente.patient_informations.last.authorization_number %></div>
+        </label>
+      </div>
+
+      <!--LINEA 4-->
+      <div class="linea">
+        <label>
+          Asegurador: 
+          <div id="espacio15" class="espacio-general" style="font-size: 7px; width: 235px"><%= Insurance.find(@paciente.patient_informations.last.insurance_id).name %></div>
+          <small> | </small>Tipo de usuario:
+          <div id="espacio14" class="espacio-general" style="width: 80px"><%= type_user(@paciente.patient_informations.last) %></div>
+          <small> | </small> Causa externa:
+          <div id="espacio13" class="espacio-general" style="width: 85px"><%= external_cause(@paciente.patient_informations.last) %></div>
+        </label>
+      </div>
+     
+      
+      <!--LINEA 5 Acompañante-->
+      <div class="linea">
+        <label>Persona acompañante
+          <small> | </small>Nombre:
+          <div id="espacio4" style="min-width:200px; width: auto"><%= @paciente.patient_informations.last.name_companion.blank? ? 'Ninguno' : @paciente.patient_informations.last.name_companion%></div>
+          <small> | </small>Celular:
+          <div id="espacio10"><%= @paciente.patient_informations.last.phone_companion.blank? ? 'Ninguno' : @paciente.patient_informations.last.phone_companion%></div>
+        </label>
+      </div>
+
+      <!--LINEA 6 Responsable-->
+      <div class="linea">
+        <label>Persona responsable
+          <small> | </small>Nombre:
+          <div id="espacio4"><%= @paciente.patient_informations.last.name_responsible.blank? ? 'Ninguno' : @paciente.patient_informations.last.name_responsible%></div>
+          <small> | </small>Celular:
+          <div id="espacio10"><%= @paciente.patient_informations.last.phone_responsible.blank? ? 'Ninguno' : @paciente.patient_informations.last.phone_responsible%></div>
+          <small> | </small>Parentesco:
+          <div id="espacio13" style="width: 110px"><%= @paciente.patient_informations.last.relationship.blank? ? 'Ninguno' : @paciente.patient_informations.last.relationship%></div>
+        </label>
+      </div>
+
+      <!-- LINEA 6 -->
+      <div class="linea">
+        <label>
+          Paciente firmó consentimiento informado:
+          <div id="espacio10"><%= @paciente.patient_informations.last.terms_conditions == true ? 'Sí' : 'No'%></div>
+        </label>
+      </div>
+    </div>
+
+  <% @consulta.each do |c| %>
+    <!--DATOS CONSULTA-->
+    <div class="datos_consulta">
+      <!--LINEA 1 Consultas-->
+      <h1 style="margin-bottom: 0">Consulta</h1>
+      <div class="linea1_consul"><small> | </small> 
+        <label>Profesional tratante:
+          <div id="espacio4"><%= c.doctor_id.nil? ? c.nurse.name.to_s + ' ' + c.nurse.surnames.to_s : c.doctor.name.to_s + ' ' + c.doctor.surnames.to_s %></div>
+          <small> | </small> Fecha consulta:
+          <div id="espacio3"><%= c.created_at.strftime("%d/%m/%Y") %></div>
+        </label>
+      </div>
+
+      <% unless c.medical_consultation.nil? %>
+        <!--LINEA 2 Consultas-->
+        <div class="linea2_consul">
+          <label>
+            Peso:
+            <div id="espacio2"><%= c.medical_consultation.weight.nil? ? 'Ninguno' : "#{c.medical_consultation.weight}kg" %></div>
+            <small> | </small>Tiempo de evolución:
+            <div id="espacio1"><%= c.medical_consultation.evolution_time.to_i %></div>
+            <small> | </small>Unidad medida:
+            <div id="espacio2"><%= unit_measure_age(c.medical_consultation.unit_measurement) %></div>
+            <small> | </small>Lesiones iniciales:
+            <div id="espacio10"><%= number_injuries(c.medical_consultation)%></div>
+            <small> | </small> Síntomas:
+            <div id="espacio13" class="espacio-general" style="width: 145px;"><%= symptom(c.medical_consultation)%></div>
+          </label>
+        </div>
+
+        <!--LINEA 3 Consultas-->
+        <div class="linea2_consul">
+          <label>
+            Los síntomas se empeoran:
+            <div id="espacio14" class="espacio-general"><%= change_symptom(c.medical_consultation)%></div>
+            <small> | </small>Evolución de las lesiones:
+            <div id="espacio15" class="espacio-general" style="width: 280px; margin-bottom: 0"><%= evolution_injuries(c.medical_consultation) %></div> 
+          </label>
+        </div>
+
+        <!--LINEA 4 Consultas-->
+        <div class="linea2_consul">
+          <label>
+            Cambios evidentes: Sangran:
+            <div id="espacio1"><%= c.medical_consultation.blood? ? 'Si' : 'No'%></div>
+            Exudan:
+            <div id="espacio1"><%= c.medical_consultation.exude? ? 'Si' : 'No'%></div>
+            Supuran:
+            <div id="espacio1"><%= c.medical_consultation.suppurate? ? 'Si' : 'No'%></div>
+            <small> | </small>Otros factores que agravan: 
+            <div id="espacio15" class="espacio-general" style="width: 230px;"><%= c.medical_consultation.other_factors_symptom%></div>
+          </label>
+        </div>
+
+        <!--LINEA 5 Consultas-->
+        <div class="linea2_consul">
+          <label>Antecedentes relevantes 
+            <small> | </small> Personales:
+            <div id="espacio4" class="espacio-general" style="margin-bottom: 0"><%= c.medical_consultation.personal_history.blank? ? 'Ninguno' : c.medical_consultation.personal_history%></div> 
+            <small> | </small>Familiares:
+            <div id="espacio15" class="espacio-general" style="margin-bottom: 0; width: 190px"><%= c.medical_consultation.family_background.blank? ? 'Ninguno' : c.medical_consultation.family_background%></div>
+          </label>
+        </div>
+
+        <!--LINEA 6 Consultas-->
+        <div class="linea2_consul">
+          <label>Tratamiento recibido:
+            <div id="espacio4" class="espacio-general"><%= c.medical_consultation.treatment_received.blank? ? 'Ninguno' : c.medical_consultation.treatment_received%></div>
+            <small> | </small>Otras sustancias aplicadas:
+            <div id="espacio4" class="espacio-general"><%= c.medical_consultation.applied_substances.blank? ? 'Ninguno' : c.medical_consultation.applied_substances%></div>
+          </label>
+        </div>
+
+        <!--LINEA 7 Consultas-->
+        <div class="linea2_consul">
+          <label>Efectos del tratamiento:
+            <div id="espacio17" class="espacio-general" style="width: 480px"><%= c.medical_consultation.treatment_effects.blank? ? 'Ninguno' : c.medical_consultation.treatment_effects%></div>
+          </label>
+        </div>
+
+        <!--LINEA 8 Consultas-->
+        <div class="linea2_consul">
+          <label>Examen físico: 
+            <div id="espacio17" style="width: 520px" class="espacio-general"><%= c.medical_consultation.description_physical_examination.blank? ? 'Ninguno' : c.medical_consultation.description_physical_examination%></div>
+          </label>
+        </div>
+
+        <!--LINEA 8 Consultas IMAGENES-->
+        <% images = ImagesInjury.includes(:injury).where("injuries.consultation_id = ?", c.id).references(:injury).order(created_at: :asc)%>
+        <div class="linea9_consul_img">
+          <label style="color:  #8a8a8b">Imágenes: <%= images.blank? ? 'Ninguna' : ''%></label>
+          <div>
+            <div class="list-img">
+              <% unless images.blank? %>
+                <% images.take(7).each do |image| %>
+                  <%#= unless dynamic_images(image, 5, nil).nil? %> 
+                  <% unless reduction_image(image.photo).nil? %>
+                    <div><%#= wicked_pdf_image_tag dynamic_images(image, 5, nil).gsub("https", "http"), style:"width: 100%;height: 100%;border-radius:6px;"%>
+                    <%= wicked_pdf_image_tag reduction_image(image.photo), style:"width: 100%;height: 100%;border-radius:6px;" %>
+                    </div>
+                  <%end%>
+                <%end%>
+              <%end%>
+            </div>
+          </div>
+        </div>
+        
+        <div class="linea9_consul_img">
+          <div>
+            <div class="list-img">
+              <% unless images.length < 7 %>
+                <% images.each_with_index do |image, i| %> 
+                  <% if i > 7 %>
+                    <%#= unless dynamic_images(image, 5, nil).nil? %>
+                    <% unless reduction_image(image.photo).nil? %> 
+                      <div><%#= wicked_pdf_image_tag dynamic_images(image, 5, nil).gsub("https", "http"), style:"width: 100%;height: 100%;border-radius:6px;"%>
+                      <%= wicked_pdf_image_tag reduction_image(image.photo), style:"width: 100%;height: 100%;border-radius:6px;" %>
+                      </div>
+                    <%end%>
+                  <%end%>
+                <%end%>
+              <%end%>
+            </div>
+          </div>
+        </div>
+
+        <!--LINEA 9 Consultas-->
+        <div class="linea2_consul">
+          <label>Anexos: 
+            <div id="espacio17" style="width: 520px" class="espacio-general"><%= c.annex_description.blank? && c.annex_images.blank? ? 'Ninguno' : c.annex_description%></div>
+          </label>
+        </div>
+        <!--LINEA 9 Consultas IMAGENES-->
+        <div class="linea9_consul_img">
+          <div>
+            <div class="list-img">
+              <% unless c.annex_images.blank? %>
+                <% c.annex_images.each do |annex| %> 
+                  <%#= unless dynamic_images(annex, 6, nil).nil? %> 
+                  <% unless reduction_image(annex.annex_url).nil? %>
+                    <div>
+                      <%#= wicked_pdf_image_tag dynamic_images(annex, 6, nil).gsub("https", "http"), style:"width: 100%;height: 100%;border-radius:6px;"%>
+                      <%= wicked_pdf_image_tag reduction_image(annex.annex_url), style:"width: 100%;height: 100%;border-radius:6px;" %>
+                      </div>
+                  <%end%>
+                <%end%>
+              <%end%>
+            </div>
+          </div>
+        </div>
+      <%end%>
+    </div>
+
+    <% unless c.specialist_responses.blank? %>
+      <!--DATOS RESPUESTA-->
+      <div class="datos_respuesta">
+        <!--LINEA 1 Respuesta-->
+        <h1 style="margin-bottom: 0">Respuesta consulta</h1>
+        <div class="linea1_consul" style="width: 450px">
+          <small> | </small> 
+          <label>Especialista tratante:
+            <div id="espacio4" class="espacio-general"><%= c.specialist_responses.first.response.name.to_s + c.specialist_responses.first.response.surnames.to_s %></div>
+            <small> | </small> Fecha respuesta:
+            <div id="espacio3" class="espacio-general"><%= c.specialist_responses.first.created_at.strftime("%d/%m/%Y") %></div>
+          </label>
+        </div>
+
+        <!--LINEA 2 Respuesta-->
+        <div class="linea2_respu">
+          <label>Análisis de lesión:
+            <div id="espacio18" class="espacio-general"><%= c.specialist_responses.first.case_analysis.blank? ? 'Ninguno' : c.specialist_responses.first.case_analysis %></div> 
+          </label>
+          <label>Análisis del caso:
+            <div id="espacio18" class="espacio-general"><%= c.specialist_responses.first.analysis_description.blank? ? 'Ninguno' : c.specialist_responses.first.analysis_description %></div>
+          </label>
+        </div>
+
+        <!--LINEA Diagnostico-->
+        <div class="linea2_respu">
+          <label>Diagnóstico principal:
+            <div id="espacio20" class="espacio-general" style="width: 330px"><%= c.specialist_responses.first.other_diagnostics.blank? ? 'Ninguno' : Disease.find(c.specialist_responses.first.other_diagnostics.order(:id).first.disease_id).name%></div>
+          </label>
+          <label> <small> | </small>Tipo diagnóstico:
+            <div id="espacio21" style="width: 80px"><%= c.specialist_responses.first.other_diagnostics.blank? ? 'Ninguno' : type_diagnostic(c.specialist_responses.first.other_diagnostics.first) %></div> 
+          </label>
+        </div>
+
+        <!--LINEA Diagnostico 2-->
+        <% unless c.specialist_responses.first.other_diagnostics.second.blank? %>
+          <div class="linea2_respu">
+            <label>Diagnóstico relacionado:
+              <div id="espacio20" class="espacio-general" style="width: 330px"><%= Disease.find(c.specialist_responses.first.other_diagnostics.order(:id).second.disease_id).name%></div>
+            </label>
+            <label> <small> | </small>Tipo diagnóstico:
+              <div id="espacio21" style="width: 80px"><%= type_diagnostic(c.specialist_responses.first.other_diagnostics.second) %></div> 
+            </label>
+          </div>
+        <%end%>
+        <% unless c.specialist_responses.first.other_diagnostics.third.blank? %>
+          <div class="linea2_respu">
+            <label>Diagnóstico relacionado:
+              <div id="espacio20" class="espacio-general" style="width: 330px"><%= Disease.find(c.specialist_responses.first.other_diagnostics.third.disease_id).name%></div>
+            </label>
+            <label> <small> | </small>Tipo diagnóstico:
+              <div id="espacio21" style="width: 80px"><%= type_diagnostic(c.specialist_responses.first.other_diagnostics.third) %></div> 
+            </label>
+          </div>
+        <%end%>
+        <% unless c.specialist_responses.first.other_diagnostics.fourth.blank? %>
+          <div class="linea2_respu">
+            <label>Diagnóstico relacionado:
+              <div id="espacio20" class="espacio-general" style="width: 330px"><%= Disease.find(c.specialist_responses.first.other_diagnostics.fourth.disease_id).name%></div>
+            </label>
+            <label> <small> | </small>Tipo diagnóstico:
+              <div id="espacio21" style="width: 80px"><%= type_diagnostic(c.specialist_responses.first.other_diagnostics.fourth) %></div> 
+            </label>
+          </div>
+        <%end%>
+        <!--LINEA Solicitud exámenes -->
+        <div class="linea2_respu">
+          <% if c.specialist_responses.first.request_exams.blank? %>
+            <label>Solicitud de exámenes:
+              <label><div id="espacio4" class="espacio-general"><%= "#{'Ninguno'}"%></div></label>
+            </label>
+          <%else%>
+            <% c.specialist_responses.first.request_exams.each do |esp| %>
+              <label>Solicitud de exámenes:
+                <div id="espacio20" class="espacio-general" style="width: 490px"><%= esp.name_type_exam%></div>
+              </label>
+            <%end%>
+          <%end%>
+        </div>
+
+        <!--LINEA Recomendaciones -->
+        <div class="linea2_respu">
+          <label>Recomendaciones:
+            <div id="espacio20" class="espacio-general" style="width: 495px"><%= c.recommended_treatment.blank? ? 'Ninguno' : c.recommended_treatment%></div>
+          </label>
+        </div>
+
+        <!--LINEA Proximo control -->
+        <div class="linea2_respu">
+          <label>Próximo control:
+            <div id="espacio20" class="espacio-general" style="width: 495px"><%= c.specialist_responses.first.control_recommended.blank? ? 'Ninguno' : c.specialist_responses.first.control_recommended%></div>
+          </label>
+        </div>
+
+        <!--LINEA Formulación-->
+        <% c.specialist_responses.first.formulas.each do |fom| %>
+          <h1 style="margin-bottom: 0">Formulación</h1>
+          <div class="linea4_respu linea2_consul">
+            <label>
+              Nombre genérico:
+              <div id="espacio14" class="espacio-general"><%= fom.generic_name_medicament%></div>
+              <small> | </small>Tipo:
+              <div id="espacio3" class="espacio-general"><%= fom.type_medicament%></div>
+              <small> | </small>Código:
+              <div id="espacio3" class="espacio-general"><%= fom.medication_code%></div>
+              <small> | </small>Forma farmacéutica:
+              <div id="espacio24" class="espacio-general" style="margin-bottom: 0"><%= fom.pharmaceutical_form%></div>
+              <small> | </small>Concentración:
+              <div id="espacio2" class="espacio-general" style="width: 35px"><%= fom.drug_concentration%></div>
+            </label>
+          </div>
+
+          <div class="linea4_respu linea2_consul">
+            <label>
+              Unidad de medida:
+              <div id="espacio2" style="width: 35px"><%= fom.unit_measure_medication%></div>
+              <small> | </small>Cantidad:
+              <div id="espacio1"><%= fom.number_of_units%></div>
+              <small> | </small>Formulación :
+              <div id="espacio15" class="espacio-general" style="width: 350px"><%= fom.commentations%></div>
+            </label>
+          </div>
+        <%end%>
+
+        <!--LINEA Requerimiento-->
+        <h1 style="margin-bottom: 0">Requerimiento</h1>
+        <div class="linea4_respu linea2_consul">
+          <% if c.requests.blank? %>
+            <label><div id="espacio4" class="espacio-general"><%= "#{'Ninguno'}"%></div></label>
+          <%else%>
+            <% c.requests.each do |request| %>
+              <label>
+                Tipo de requerimiento: 
+                <div id="espacio4" class="espacio-general" style="width: 245px"><%= type_request(request).blank? ? 'Ninguno' : type_request(request)%></div>
+                <small> | </small>Comentario:
+                <div id="espacio4" class="espacio-general"><%= request.comment.blank? ? 'Ninguno' : request.comment%></div>
+              </label>
+            <%end%>
+          <%end%>
+        </div>
+
+        <!--LINEA Remisión -->
+        <h1 style="margin-bottom: 0px">Remisión</h1>
+        <div class="linea4_respu linea2_consul">
+          <% if c.type_remission.blank? && c.remission_comments.blank?%>
+            <label><div id="espacio4" class="espacio-general"><%= "#{'Ninguno'}"%></div></label>
+          <%else%>
+            <label>
+              Motivo de remisión: 
+              <div id="espacio4" class="espacio-general" style="width: 245px;"><%= c.type_remission.blank? ? 'Ninguno' : type_remission(c)%></div>
+              <small> | </small>Comentario:
+              <div id="espacio4" class="espacio-general"><%= c.remission_comments.blank? ? 'Ninguno' : c.remission_comments%></div>
+            </label>
+          <%end%>
+        </div>
+      </div>
+    <%end%>
+    <% unless c.consultation_controls.blank? %>
+      <!--PÁGINA 2-->
+      <% c.consultation_controls.order(created_at: :asc).each do |control| %>
+        <!--DATOS CONTROL-->
+        <div class="datos_control">
+          <!--LINEA 1 Controles-->
+          <h1>Control</h1>
+          <div class="linea1_consul">
+            <small> | </small> 
+            <label>Profesional tratante:
+              <div id="espacio4"><%= control.doctor_id.nil? ? control.nurse_control.name.to_s + control.nurse_control.surnames.to_s : control.doctor_control.name.to_s + control.doctor_control.surnames.to_s %></div>
+              <small> | </small> Fecha consulta:
+              <div id="espacio3"><%= control.created_at.strftime("%d/%m/%Y") %></div>
+            </label>
+          </div>
+
+          <!--LINEA 2 Controles-->
+          <div class="linea2_control linea2_consul">
+            <label>Mejoría:
+              <div id="espacio2"><%= control.medical_control.subjetive_improvement %></div>
+              <small> | </small>Hizo el tratamiento:
+              <div id="espacio2"><%= control.medical_control.did_treatment? ? 'Si' : 'No'%></div>
+              <small> | </small>Toleró los medicamentos:
+              <div id="espacio14"><%= tolerated_medications(control)%></div>
+            </label>
+          </div>
+
+          <!--LINEA 3 Controles-->
+          <div class="linea3_control linea2_consul">
+            <label>Examen físico:
+              <div id="espacio17" class="espacio-general" style="width: 520px;"><%= control.medical_control.clinic_description.blank? ? 'Ninguno' : control.medical_control.clinic_description%></div>
+            </label>
+          </div>
+
+          <div class="linea3_control linea2_consul">
+            <label>Imágenes: <%= images.blank? ? 'Ninguna' : ''%></label>
+          </div>
+
+          <!--LINEA 8 Controles IMAGENES-->
+          <% images = ImagesInjury.includes(:injury).where("injuries.consultation_control_id = ?", control.id).references(:injury).order(created_at: :asc)%>
+          <div class="linea9_consul_img">
+            <div>
+              <div class="list-img">
+                <% unless images.blank? %>
+                  <% images.take(7).each do |image| %> 
+                    <%#= unless dynamic_images(image, 5, nil).nil? %>
+                    <% unless reduction_image(image.photo).nil? %>
+                      <div>
+                        <%#= wicked_pdf_image_tag dynamic_images(image, 5, nil).gsub("https", "http"), style:"width: 100%;height: 100%;border-radius:6px;"%>
+                        <%= wicked_pdf_image_tag reduction_image(image.photo), style:"width: 100%;height: 100%;border-radius:6px;"%>
+                      </div>
+                    <%end%>
+                  <%end%>
+                <%end%>
+              </div>
+            </div>
+          </div>
+
+          <div class="linea9_consul_img">
+            <div> 
+              <% unless images.length < 7 %>   
+                <% images.each_with_index do |image, i| %> 
+                  <% if i > 7 %>
+                    <%#= unless dynamic_images(image, 5, nil).nil? %>
+                    <% unless reduction_image(image.photo).nil? %> 
+                      <div>
+                        <%#= wicked_pdf_image_tag dynamic_images(image, 5, nil).gsub("https", "http"), style:"width: 100%;height: 100%;border-radius:6px;"%>
+                      <%= wicked_pdf_image_tag reduction_image(image.photo), style:"width: 100%;height: 100%;border-radius:6px;"%>   
+                      </div>
+                    <%end%>
+                  <%end%>
+                <%end%>    
+              <%end%>
+            </div>
+          </div>
+
+          <div class="linea2_consul">
+            <label>Anexos: 
+              <div id="espacio17" style="width: 520px" class="espacio-general"><%= control.medical_control.annex_description.blank? && control.annex_images.blank? ? 'Ninguno' : control.medical_control.annex_description%></div>
+            </label>
+          </div>
+
+          <!--LINEA 4 Controles IMAGENES-->
+          <div class="linea9_consul_img">
+            <div>
+              <div class="list-img">
+                <% unless control.annex_images.blank? %>
+                  <% control.annex_images.each do |annex| %> 
+                    <%#= unless dynamic_images(annex, 6, nil).nil? %>
+                    <% unless reduction_image(annex.annex_url).nil? %>
+                      <div>
+                        <%#= wicked_pdf_image_tag dynamic_images(annex, 6, nil).gsub("https", "http"), style:"width: 100%;height: 100%;border-radius:6px;"%>
+                        <%= wicked_pdf_image_tag reduction_image(annex.annex_url), style:"width: 100%;height: 100%;border-radius:6px;"%>   
+                      </div>
+                    <%end%>
+                  <%end%>
+                <%end%>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <% unless control.specialist_responses.first.nil? %>
+          <%#= unless control.specialist_responses.first.other_diagnostics.blank? %>
+            <!--DATOS RESPUESTA CONTROL-->
+            <div class="datos_respuesta_control linea2_consul">
+              <!--LINEA 1 Respuesta--> 
+              <h1 style="width: 85px;margin-bottom: 0">Respuesta control</h1>
+              <div class="linea1_consul" style="width: 480px">
+                <small> | </small> 
+                <label>Especialista tratante:
+                  <div id="espacio4" style="width: 250px"><%= control.specialist_responses.first.response.name.to_s + c.specialist_responses.first.response.surnames.to_s %></div>
+                  <small> | </small> Fecha respuesta:
+                  <div id="espacio3"><%= control.specialist_responses.first.created_at.strftime("%d/%m/%Y") %></div>
+                  <%#= control.specialist_responses.first.control_recommended.blank? ? 'Ninguno' : control.specialist_responses.first.control_recommended%>
+                </label>
+              </div>
+
+              <!--LINEA 2 Respuesta-->
+              <div class="linea2_respu linea2_consul">
+                <label>Análisis de la lesión:
+                  <div id="espacio18" class="espacio-general"><%= control.specialist_responses.first.case_analysis.blank? ? 'Ninguno' : control.specialist_responses.first.case_analysis %></div>
+                </label>
+                <label>Análisis del caso:
+                  <div id="espacio18" class="espacio-general"><%= control.specialist_responses.first.analysis_description.blank? ? 'Ninguno' : control.specialist_responses.first.analysis_description %></div>
+                </label>
+              </div>
+
+              <!--LINEA Diagnostico-->
+              <div class="linea2_respu">
+                <label>Diagnóstico principal:
+                  <div id="espacio20" class="espacio-general" style="width: 330px"><%= control.specialist_responses.first.other_diagnostics.blank? ? 'Ninguno' : Disease.find(control.specialist_responses.first.other_diagnostics.first.disease_id).name%></div>
+                </label>
+                <label> <small> | </small>Tipo diagnóstico:
+                  <div id="espacio21" style="width: 80px"><%= control.specialist_responses.first.other_diagnostics.blank? ? 'Ninguno' : type_diagnostic(control.specialist_responses.first.other_diagnostics.first) %></div> 
+                </label>
+              </div>
+
+              <!--LINEA Diagnostico-->
+              <% unless control.specialist_responses.first.other_diagnostics.second.blank? %>
+                <div class="linea2_respu">
+                  <label>Diagnóstico relacionado:
+                    <div id="espacio20" class="espacio-general" style="width: 330px"><%= Disease.find(control.specialist_responses.first.other_diagnostics.second.disease_id).name%></div>
+                  </label>
+                  <label> <small> | </small>Tipo diagnóstico:
+                    <div id="espacio21" style="width: 80px"><%= type_diagnostic(control.specialist_responses.first.other_diagnostics.second) %></div> 
+                  </label>
+                </div>
+              <%end%>
+              <% unless control.specialist_responses.first.other_diagnostics.third.blank? %>
+                <div class="linea2_respu">
+                  <label>Diagnóstico relacionado:
+                    <div id="espacio20" class="espacio-general" style="width: 330px"><%= Disease.find(control.specialist_responses.first.other_diagnostics.third.disease_id).name%></div>
+                  </label>
+                  <label> <small> | </small>Tipo diagnóstico:
+                    <div id="espacio21" style="width: 80px"><%= type_diagnostic(control.specialist_responses.first.other_diagnostics.third) %></div> 
+                  </label>
+                </div>
+              <%end%>
+
+              <!--LINEA 3 Respuesta-->
+              <div class="linea2_respu linea2_consul">
+                <% if control.specialist_responses.first.request_exams.blank? %>
+                  <label>Solicitud de exámenes:
+                    <div id="espacio4" class="espacio-general"><%= "#{'Ninguno'}"%></div>
+                  </label>
+                <%else%>
+                  <% control.specialist_responses.first.request_exams.each do |esp| %>
+                    <label>Solicitud de exámenes:
+                      <div id="espacio20" class="espacio-general" style="width: 490px;margin-bottom: 0"><%= esp.name_type_exam%></div>
+                    </label> 
+                  <%end%>
+                <%end%>
+              </div>
+
+              <!--LINEA Recomendaciones -->
+              <div class="linea2_respu">
+                <label>Recomendaciones:
+                  <div id="espacio20" class="espacio-general" style="width: 495px"><%= control.recommended_treatment.blank? ? 'Ninguno' : control.recommended_treatment%></div>
+                </label>
+              </div>
+
+              <!--LINEA Proximo control -->
+              <div class="linea2_respu">
+                <label>Próximo control:
+                  <div id="espacio20" class="espacio-general" style="width: 495px"><%= control.specialist_responses.first.control_recommended.blank? ? 'Ninguno' : control.specialist_responses.first.control_recommended %></div>
+                </label>
+              </div>
+
+              <% control.specialist_responses.first.formulas.each do |fom| %>
+                <!--LINEA Formulación-->
+                <h1 style="margin-bottom: 0">Formulación</h1>
+                <div class="linea4_respu linea2_consul">
+                  <label>
+                    Nombre genérico:
+                    <div id="espacio14" class="espacio-general"><%= fom.generic_name_medicament%></div>
+                    <small> | </small>Tipo:
+                    <div id="espacio3" class="espacio-general"><%= fom.type_medicament%></div>
+                    <small> | </small>Código:
+                    <div id="espacio3" class="espacio-general"><%= fom.medication_code%></div>
+                    <small> | </small>Forma farmacéutica:
+                    <div id="espacio24" class="espacio-general" style="margin-bottom: 0"><%= fom.pharmaceutical_form%></div>
+                    <small> | </small>Concentración:
+                    <div id="espacio2" class="espacio-general" style="width: 35px"><%= fom.drug_concentration%></div>
+                  </label>
+                </div>
+
+                <div class="linea4_respu linea2_consul">
+                  <label>
+                    Unidad de medida:
+                    <div id="espacio2" style="width: 35px"><%= fom.unit_measure_medication%></div>
+                    <small> | </small>Cantidad:
+                    <div id="espacio1"><%= fom.number_of_units%></div>
+                    <small> | </small>Formulación :
+                    <div id="espacio15" class="espacio-general" style="width: 350px"><%= fom.commentations%></div>
+                  </label>
+                </div>
+              <%end%>
+
+              <!--LINEA Requerimiento-->
+              <h1 style="margin-bottom: 0">Requerimiento </h1>
+              <div class="linea4_respu linea2_consul">
+                <% if control.requests.blank?%>
+                  <label><div id="espacio4" class="espacio-general"><%= "#{'Ninguno'}"%></div></label>
+                <%else%>
+                  <% control.requests.each do |request| %>
+                    <label>
+                      Tipo de requerimiento: 
+                      <div id="espacio4" class="espacio-general" style="width: 245px"><%= type_request(request).blank? ? 'Ninguno' : type_request(request)%></div>
+                      <small> | </small>Comentario:
+                      <div id="espacio4" class="espacio-general"><%= request.comment.blank? ? 'Ninguno' : request.comment%></div>
+                    </label>
+                  <%end%>
+                <%end%>
+              </div>
+
+              <!--LINEA Remisión -->
+              <h1 style="margin-bottom: 0px">Remisión</h1>
+              <div class="linea4_respu linea2_consul">
+                <% if control.type_remission.blank? && control.remission_comments.blank?%>
+                  <label><div id="espacio4" class="espacio-general"><%= "#{'Ninguno'}"%></div></label>
+                <%else%>
+                  <label>
+                    Motivo de remisión: 
+                    <div id="espacio4" class="espacio-general" style="width: 245px;"><%= control.type_remission.blank? ? 'Ninguno' :  type_remission(control)%></div>
+                    <small> | </small>Comentario:
+                    <div id="espacio4" class="espacio-general"><%= control.remission_comments.blank? ? 'Ninguno' : control.remission_comments%></div>
+                  </label>
+                <%end%>
+              </div>
+            </div>
+          <%#=end%>
+        <%end%>
+      <%end%>
+    <%end%>
+  <%end%>
+  <!--FINAL PG2-->
+  </div>
+</body>
+</html>

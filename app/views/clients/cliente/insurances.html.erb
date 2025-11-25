@@ -1,0 +1,71 @@
+<div style="padding-top: 1px;" ng-controller="AdminIpsController as cCtlr" ng-init="cCtlr.initialize('<%= current_client_user.email %>', '<%= current_client_user.authentication_token %>', '<%= current_client_user.client_id%>')">
+  <div class="container">
+    <div class="row">
+      <br>
+      <br>
+      <div class="col-md-12">
+        <div class="borde"><h4 class="title_app">Lista de EAPB</h4></div>
+        <br>
+      </div>
+      <div class="col-md-12">
+        <div class="table table-condensed">
+          <table class="table table-hover custom-table" id="dev-table">
+            <thead>
+              <tr>
+              	<th class="text-center border_color" scope="col"></th>
+                <th class="text-center border_color" scope="col">Nombre</th>
+                <th class="text-center border_color" scope="col">Código</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="aseguradora in cCtlr.insurances", style="border-bottom: 1px solid #00000036;">
+              	<td  align="center">
+                  <input type="checkbox" ng-model="aseguradora.selected" ng-click="cCtlr.SelectedInsurances(aseguradora.id)"/>
+                </td>
+                <td class="text-center">{{aseguradora.insurance_name}}</td>
+                <td class="text-center">{{aseguradora.code}}</td>
+              </tr>
+              <tr ng-show="{{cCtlr.insurances == ''}}">
+                <td colspan="6">
+                  <h3 class="text-center">ACTUALMENTE ESTA SECCION ESTA VACÍA</h3>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="col-md-12">
+        <button type="button" class="btn btn-primary" ng-click="cCtlr.DeleteInsurance()">Eliminar seleccionados</button>
+      </div>
+    </div>
+    <br>
+    <br>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="borde"><h4 class="title_app">Formulario</h4></div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <!-- Nombre -->
+      <div class="col-md-6">  
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">Nombre aseguradora</h5>
+        </div>
+        <input type="text" class="form-control autocomplete_insurance" placeholder="Ingrese la aseguradora" ng-model="cCtlr.insurance_id">
+        <p class="error" ng-show="cCtlr.name == ''">{{cCtlr.errors.name}} </p>
+        <br>
+        <button type="button" class="btn btn-primary" ng-click="cCtlr.NewInsurance()" style="background-color: #2f91eb;">Añadir aseguradora</button>
+      </div>
+    </div>
+  </div>
+  <!-- Mensajes sistema -->
+  <%= render partial: '/specialists/especialista/messages_system.html.erb'%>
+</div>

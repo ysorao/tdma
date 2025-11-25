@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-6">
+    <div class="row">
+      <div class="borde"><h4 class="style_title">Editar perfil</h4></div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-3 col-md-12">
+        <div id="imaginary_container">
+          <%= form_for @account, url: {controller: '/nurses/enfermera', action: 'edit_profile'}, html: {method: "put"} do |f| %>
+            <% if @account.errors.any? %>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>No se puede actualizar este usuario por que: </strong>
+                    <ul>
+                      <% @account.errors.full_messages.each do |msg| %>
+                      <li>
+                        <%= msg %>
+                      </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <div class="row">
+            <div class="form-group">
+                <!-- , class: "imgRedonda"-->
+                <% if @account.photo? %>
+                  <%= image_tag(@account.photo_url, class:"imgRedonda") %>
+                <%end%>
+                <%= f.file_field :photo, class: "form-control"%>
+                <%= f.hidden_field :photo_cache, value: @account.photo_url %>
+              </div>  
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Nombre(s)</h4>
+                </div>
+                <%= f.text_field :name, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Apellidos(s)</h4>
+                </div>
+                <%= f.text_field :surnames, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Identificación</h4>
+                </div>
+                <%= f.text_field :number_document, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Tarjeta profesional</h4>
+                </div>
+                <%= f.text_field :professional_card, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Celular</h4>
+                </div>
+                <%= f.text_field :phone, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Correo electrónico</h4>
+                </div>
+                <%= f.text_field :email, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Contraseña</h4>
+                </div>
+                <%= f.text_field :password, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Confirmar contraseña</h4>
+                </div>
+                <%= f.text_field :password_confirmation, class: "form-control", required: true%>
+              </div>
+              <%= f.hidden_field :id %>
+              <div class="form-group">
+                <%= button_tag(type: "submit", class:"btn btn-primary btn-md") do %>
+                  Guardar <span class=""></span>
+                <% end %>
+              </div> 
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

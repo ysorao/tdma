@@ -1,0 +1,398 @@
+<div class="col-md-9 scroll" id="response_specialist" style="display: none;padding-left:6px;"> <!-- ng-if="cCtlr.show_information() == true" -->
+  <!--<button ng-click="cCtlr.get_specialist_information()" class="btn btn-primary" style="margin-left:70%;">Respuesta</button>-->
+  <br>
+  <br>
+  <!-- DATOS BASICO DEL PACIENTE -->
+  <div class="col-md-12 col-sm-4 title_response">
+    <h4 class="text-center">Respuesta</h4>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <p class="field_response"><label class="color_response">Especialista:</label>         {{cCtlr.info_specialist.specialist.name_complete}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <p class="field_response"><label class="color_response">Tarjeta profesional:</label>         {{cCtlr.info_specialist.specialist.professional_card}}</p>
+    </div>
+  </div>
+  <div class="row" ng-if="cCtlr.info_specialist.date != null">
+    <div class="col-md-6 col-sm-4">
+      <p class="field_response"><label class="color_response">Fecha:</label>         {{cCtlr.info_specialist.date}}</p>
+    </div>
+    <div class="col-md-5">
+      <p class="field_response"><label class="color_response">Hora:</label> {{cCtlr.info_specialist.hour}} </p>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12 col-sm-4"> 
+      <hr class="line_response">   
+    </div>
+  </div>
+
+  <div class="row">
+    <!--<h4 class="btn btn-primary form-control" style="background-color:#2f91eb">{{cCtlr.info_specialist.control}}</h4> -->
+    <!-- Lista desplegable para la consulta y sus controles -->
+    <div class="col-md-12">
+      <h4 ng-show="cCtlr.evolution_esp.length == 1 || cCtlr.evolution_esp == null" class="btn btn-primary form-control" style="background-color:#2f91eb">Sin control</h4>
+      <select id="select_responses" class="btn btn-primary form-control" style="font-size:17px;" ng-model="cCtlr.consult_value" ng-change="cCtlr.ShowResponseInfo()" ng-show="cCtlr.evolution_esp.length > 1">
+        <option ng-repeat="option in cCtlr.evolution_esp" ng-value="option.value" ng-init='option.value == (cCtlr.consult_id == "" ? cCtlr.consult_value = (cCtlr.control+"-control") : cCtlr.consult_value = (cCtlr.consulta+"-consulta"))'>{{$index == 0 ? 'Consulta - ' + option.created_at : 'Control - ' + option.created_at}}</option>
+      </select>   
+    </div>     
+  </div>
+  <br>
+  <!-- CONSULTA DEL PACIENTE -->
+  <div class="row" ng-if='cCtlr.info_specialist.status == "Resuelto" || cCtlr.info_specialist.status == "Evaluando" || (cCtlr.info_specialist.status != "Remitida" && cCtlr.response_info == true)'>
+    <div class="col-md-12 col-sm-4" style="padding: 0px 31px 100px 29px;">
+      <!-- Análisis -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Análisis de la lesión:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <p ng-if="cCtlr.info_specialist.case_analysis != null">{{cCtlr.info_specialist.case_analysis}}</p>
+          <p ng-if="cCtlr.info_specialist.case_analysis == null">Ninguno</p>
+        </div>
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Análisis de caso:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <p ng-if="cCtlr.info_specialist.analysis_description != null">{{cCtlr.info_specialist.analysis_description}}</p>
+          <p ng-if="cCtlr.info_specialist.analysis_description == null">Ninguno</p>
+        </div>
+      </div>
+      <!-- Diagnóstico -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field" ng-if="cCtlr.diagnosticos.length == 0">
+          <label class="color-title">Diagnóstico:</label>
+          <p class="text_field">Ninguno</p>
+        </div>
+        <div class="col-md-12 col-sm-4" ng-repeat="diag in cCtlr.diagnosticos">
+          <label class="color-title">{{$index == 0 ? "Diagnóstico principal:" : "Diagnóstico relacionado:" }}</label>
+          <ol>
+            <li class="text_field">{{diag.disease}}</li>
+            <li class="text_field">{{diag.type_diagnostic}}</li>
+           <br>
+          </ol>
+        </div> 
+      </div>
+      <!-- Solicitud de examenes -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Solicitud de examenes:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <p ng-if="cCtlr.request_exams.length == 0">Ninguno</p>
+          <ul style="list-style-type: disc" ng-repeat="exam in cCtlr.request_exams">
+            <li>{{exam.name_type_exam}}</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Formulación -->
+      <!--<div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Formulación:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <p ng-if="cCtlr.form.length == 0">Ninguno</p>
+          <ul style="list-style-type: disc" ng-repeat="formula in cCtlr.form">
+            <li ng-if="formula.medication_code != null"><p><b>Código medicamento:</b> {{formula.medication_code}}<p></li>
+            <li ng-if="formula.medicament_id != null"><p><b>Tipo de medicamento:</b> {{formula.medicament_id}}</p></li>
+            <li ng-if="formula.generic_name_medicament != null"><p><b>Nombre genérico:</b> {{formula.generic_name_medicament}}</p></li>
+            <li ng-if="formula.pharmaceutical_form != null"><p><b>Forma farmacéutica:</b> {{formula.pharmaceutical_form}}</p></li>
+            <li ng-if="formula.drug_concentration != null"><p><b>Concentración:</b> {{formula.drug_concentration}}</p></li>
+            <li ng-if="formula.unit_measure_medication != null"><p><b>Unidad medida:</b> {{formula.unit_measure_medication}}</p></li>
+            <li ng-if="formula.number_of_units != null"><p><b>Número de unidades:</b> {{formula.number_of_units}}</p></li>-->
+            <!--<li><p>{{formula.unit_value_medicament}}</p></li>
+            <li><p>{{formula.total_value_medicament}}</p></li>-->
+            <!--<li ng-if="formula.commentations != null"><p><b>Formulación:</b> {{formula.commentations}}</p></li>
+          </ul>
+        </div>
+      </div>-->
+      <!-- Tratamiento -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Recomendaciones de manejo:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.info_specialist.treatment}}
+        </div>
+      </div>
+      <!-- Mipress -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Mipres:</label>
+          <p class="text_field" ng-if="cCtlr.mipres.length == 0">Ninguno</p>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <ul ng-repeat="file in cCtlr.mipres">
+            <li><a href="{{file.mipres}}" target="_blank" download>{{file.mipres.substring(file.mipres.lastIndexOf('/')+1)}} </a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Próximo control -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Próximo control:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.specialist_response}}
+        </div>
+      </div>
+      <!-- REQUERIMIENTOS SI EXISTEN -->
+      <div class="row" ng-if='cCtlr.request.length > 0'>
+        <div ng-repeat="request in cCtlr.request">
+          <div class="row">
+            <div class="col-md-12 col-sm-4"> 
+              <hr class="line_response">   
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-sm-4">
+              <label class="color-title">Requerimiento #{{$index + 1}}.</h4></label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-sm-4">
+              <p class="field_response"><label class="color_response">Especialista:</label>         {{request.specialist.name_complete}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-sm-4">
+              <p class="field_response"><label class="color_response">Tarjeta profesional:</label>  {{request.specialist.professional_card}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-4">
+              <p class="field_response"><label class="color_response">Fecha:</label>         {{request.date}}</p>
+            </div>
+            <div class="col-md-5">
+              <p class="field_response"><label class="color_response">Hora:</label> {{request.hour}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-sm-4"> 
+              <hr class="line_response">   
+            </div>
+          </div>
+          <div class="row title_field">
+            <div class="col-md-12 col-sm-4 color_field">
+              <label class="color-title">Tipo de requerimiento:</label>
+            </div>
+            <div class="col-md-12 col-sm-4 text_field">
+              <p>{{request.type_request}}</p>
+            </div>
+              <div class="col-md-12 col-sm-4 color_field">
+              <label class="color-title">Comentario:</label>
+            </div>
+            <div class="col-md-12 col-sm-4 text_field">
+              <p ng-if="request.comment != null">{{request.comment}}</p>
+              <p ng-if="request.comment == null">Ninguno</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- REQUERIMIENTO -->
+  <div class="row" ng-if='cCtlr.info_specialist.status == "Requerimiento" && cCtlr.response_info == false'>
+    <div class="col-md-12 col-sm-4" style="padding: 0px 31px 100px 29px;">
+      <div ng-repeat="request in cCtlr.request">
+        <div class="row">
+          <div class="col-md-12 col-sm-4"> 
+            <hr class="line_response">   
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="color-title">Requerimiento #{{$index + 1}}.</h4></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <p class="field_response"><label class="color_response">Especialista:</label>         {{request.specialist.name_complete}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <p class="field_response"><label class="color_response">Tarjeta profesional:</label>  {{request.specialist.professional_card}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-4">
+            <p class="field_response"><label class="color_response">Fecha:</label>         {{request.date}}</p>
+          </div>
+          <div class="col-md-5">
+            <p class="field_response"><label class="color_response">Hora:</label> {{request.hour}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4"> 
+            <hr class="line_response">   
+          </div>
+        </div>
+        <div class="row title_field">
+          <div class="col-md-12 col-sm-4 color_field">
+            <label class="color-title">Tipo de requerimiento:</label>
+          </div>
+          <div class="col-md-12 col-sm-4 text_field">
+            <p>{{request.type_request}}</p>
+          </div>
+            <div class="col-md-12 col-sm-4 color_field">
+            <label class="color-title">Comentario:</label>
+          </div>
+          <div class="col-md-12 col-sm-4 text_field">
+            <p ng-if="request.comment != null">{{request.comment}}</p>
+            <p ng-if="request.comment == null">Ninguno</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REMITIDO -->
+  <div class="row" ng-if='cCtlr.info_specialist.status == "Remitida" && cCtlr.response_info == false'>
+    <div class="col-md-12 col-sm-4">
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Remisión:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+        <div>
+          <label class="color_response">Motivo de remisión:</label>
+          {{cCtlr.remission.type_remission}}</p>
+        </div>
+        <div>
+          <label class="color_response">Comentarios:</label>
+          <p>{{cCtlr.remission.remission_comments}}</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REMISION SI EXISTE -->
+  <div class="row" ng-if='cCtlr.info_specialist.status == "Remitida" && cCtlr.response_info == true'>
+    <div class="col-md-12 col-sm-4" style="padding: 0px 31px 100px 29px;">
+      <!-- Análisis -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Análisis de la lesión:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <p ng-if="cCtlr.info_specialist.case_analysis != null">{{cCtlr.info_specialist.case_analysis}}</p>
+          <p ng-if="cCtlr.info_specialist.case_analysis == null">Ninguno</p>
+        </div>
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Análisis de caso:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <p ng-if="cCtlr.info_specialist.analysis_description != null">{{cCtlr.info_specialist.analysis_description}}</p>
+          <p ng-if="cCtlr.info_specialist.analysis_description == null">Ninguno</p>
+        </div>
+      </div>
+      <!-- Diagnóstico -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field" ng-if="cCtlr.diagnosticos.length == 0">
+          <label class="color-title">Diagnóstico:</label>
+          <p class="text_field">Ninguno</p>
+        </div>
+        <div class="col-md-12 col-sm-4" ng-repeat="diag in cCtlr.diagnosticos">
+          <label class="color-title">{{$index == 0 ? "Diagnóstico principal:" : "Diagnóstico relacionado:" }}</label>
+          <ol>
+            <li class="text_field">{{diag.disease}}</li>
+            <li class="text_field">{{diag.type_diagnostic}}</li>
+           <br>
+          </ol>
+        </div> 
+      </div>
+      <!-- Solicitud de examenes -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Solicitud de examenes:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <p ng-if="cCtlr.request_exams.length == 0">Ninguno</p>
+          <ul style="list-style-type: disc" ng-repeat="exam in cCtlr.request_exams">
+            <li>{{exam.name_type_exam}}</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Formulación -->
+      <!--<div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Formulación:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <p ng-if="cCtlr.form.length == 0">Ninguno</p>
+          <ul style="list-style-type: disc" ng-repeat="formula in cCtlr.form">
+            <li ng-if="formula.medication_code != null"><p><b>Código medicamento:</b> {{formula.medication_code}}<p></li>
+            <li ng-if="formula.medicament_id != null"><p><b>Tipo de medicamento:</b> {{formula.medicament_id}}</p></li>
+            <li ng-if="formula.generic_name_medicament != null"><p><b>Nombre genérico:</b> {{formula.generic_name_medicament}}</p></li>
+            <li ng-if="formula.pharmaceutical_form != null"><p><b>Forma farmacéutica:</b> {{formula.pharmaceutical_form}}</p></li>
+            <li ng-if="formula.drug_concentration != null"><p><b>Concentración:</b> {{formula.drug_concentration}}</p></li>
+            <li ng-if="formula.unit_measure_medication != null"><p><b>Unidad medida:</b> {{formula.unit_measure_medication}}</p></li>
+            <li ng-if="formula.number_of_units != null"><p><b>Número de unidades:</b> {{formula.number_of_units}}</p></li>-->
+            <!--<li><p>{{formula.unit_value_medicament}}</p></li>
+            <li><p>{{formula.total_value_medicament}}</p></li>-->
+            <!--<li ng-if="formula.commentations != null"><p><b>Formulación:</b> {{formula.commentations}}</p></li>
+          </ul>
+        </div>
+      </div>-->
+      <!-- Tratamiento -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Recomendaciones de manejo:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.info_specialist.treatment}}
+        </div>
+      </div>
+      <!-- Mipress -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Mipres:</label>
+          <p class="text_field" ng-if="cCtlr.mipres.length == 0">Ninguno</p>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          <ul ng-repeat="file in cCtlr.mipres">
+            <li><a href="{{file.mipres}}" target="_blank" download>{{file.mipres.substring(file.mipres.lastIndexOf('/')+1)}} </a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Próximo control -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Próximo control:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.specialist_response}}
+        </div>
+      </div>
+      <!-- REMITIDA SI EXISTEN -->
+      <div class="row">
+        <div class="col-md-12 col-sm-4">
+          <div class="row title_field">
+            <div class="col-md-12 col-sm-4 color_field">
+              <label class="color-title">Remisión:</label>
+            </div>
+            <div class="col-md-12 col-sm-4 text_field">
+              <div>
+                <label class="color_response">Motivo de remisión:</label>
+                {{cCtlr.remission.type_remission}}</p>
+              </div>
+              <div>
+                <label class="color_response">Comentarios:</label>
+                <p>{{cCtlr.remission.remission_comments}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

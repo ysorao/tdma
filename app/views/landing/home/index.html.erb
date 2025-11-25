@@ -1,0 +1,45 @@
+<div class="bg-page-initial">
+  <div class="center-vertical">
+    <!-- Logo grande -->
+    <div class="big-logo">
+      <img src='<%= asset_path("landing/telederma-big.png") %>' class="">
+    </div>
+    <!-- Fin Logo grande -->
+    <h2 class="white-title">
+      Telederma presta servicios de dermatología a distancia resolviendo los   problemas de oportunidad y acceso a la salud.
+    </h2>
+    <br/>
+    <!-- Menu principal -->
+    <div class="container">
+      <div class="btn-group btn-group-justified btn-menu-home" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <%= link_to 'Información', home_landing_home_index_path(), class:"btn btn-default boton_color" %>
+        </div>
+        <div class="btn-group" role="group">
+          <%= link_to 'IPS', new_client_user_session_path(), class:"btn btn-default boton_color"%>
+        </div>
+        <div class="btn-group" role="group">
+          <%= link_to 'Especialistas', new_user_session_path(), class:"btn btn-default boton_color"%>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Menu principal -->
+    <!-- Copyright --> 
+      <p class="copyright-page-initial text-center">
+        Todos los Derechos Reservados | TeleDerma© - 2020
+      </p>
+      <!--<span class="copyright-page-initial" style="text-align:right;padding-right: 6%" id="siteseal"></span>--> 
+    </div>
+    <!-- Fin Copyright -->
+  </div>
+</div>
+<!--<style>
+  span img {
+    width: 10%;
+  }
+</style>
+<script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=rzX7BzB4nXm76eRnmT4fISpiluadBlgrgDmUkGeaBDxwNGHOxmwOttQLhRpG"></script>-->
+
+
+
+

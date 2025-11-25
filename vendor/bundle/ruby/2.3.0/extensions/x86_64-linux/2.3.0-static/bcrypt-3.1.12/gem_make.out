@@ -1,0 +1,19 @@
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/bcrypt-3.1.12/ext/mri
+/home/rails/.rbenv/versions/2.3.5/bin/ruby -r ./siteconf20190118-4584-1an9yua.rb extconf.rb
+creating Makefile
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/bcrypt-3.1.12/ext/mri
+make "DESTDIR=" clean
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/bcrypt-3.1.12/ext/mri
+make "DESTDIR="
+compiling wrapper.c
+compiling crypt_gensalt.c
+compiling crypt.c
+compiling crypt_blowfish.c
+compiling bcrypt_ext.c
+linking shared-object bcrypt_ext.so
+
+current directory: /home/rails/telederma/current/vendor/bundle/ruby/2.3.0/gems/bcrypt-3.1.12/ext/mri
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 bcrypt_ext.so ./.gem.20190118-4584-1nuyszs

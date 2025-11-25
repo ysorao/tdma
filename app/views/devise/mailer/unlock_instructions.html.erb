@@ -1,0 +1,11 @@
+<p>Hola <%= @resource.email %>!</p>
+
+<p><%= t('devise.mailer.unlock_instructions.account')%></p>
+
+<p>Haga clic en el enlace de abajo para desbloquear su cuenta:</p>
+
+<% if @resource.class.name.to_s == "User"%>
+  <p><%= link_to 'Desbloquear cuenta', user_unlock_url(id: @resource, unlock_token: @token) %></p>
+<%elsif @resource.class.name.to_s == "ClientUser"%>
+  <p><%= link_to 'Desbloquear cuenta', client_user_unlock_url(id: @resource, unlock_token: @token) %></p>
+<%end%>

@@ -1,0 +1,8 @@
+<div class='fields'>
+  <div class='field'>
+    <label for="">Aseguradora</label>
+    <%= f.select :insurance_id, Insurance.all.order('name ASC').collect {|p| [p.name, p.id]}, {include_blank: 'Seleccione'}, class:"form-control" %>
+    <%= f.hidden_field :_destroy %>
+    <%= link_to "Eliminar", '', onClick: "removeField(this); return false;" %>
+  </div>
+</div>

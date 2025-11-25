@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="row">
+    <br>
+    <br>
+    <div class="col-md-12">
+      <div class="borde"><h4 class="title_app">Profesionales de la salud</h4></div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="table table-condensed">
+        <table class="table table-hover custom-table" id="dev-table">
+          <thead>
+            <tr>
+            	<th class="text-center border_color" scope="col">Nombre del profesional</th>
+              <th class="text-center border_color" scope="col">Tipo de profesional</th>
+              <th class="text-center border_color" abbr="" scope="col">Identificación</th>
+              <th class="text-center border_color" scope="col">Sede IPS</th>
+              <th class="text-center border_color" scope="col">Activar o desactivar profesional</th>
+              <th class="border_color" scope="col">Ver</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @professionals.order(:user_id).each do |profesional| %>
+              <tr>
+                <td class="text-center"><%= profesional.user.name.to_s  + ' ' + profesional.user.surnames.to_s%></td>
+              	<td class="text-center"><%= type_prof(profesional.user.type_professional)%></td>
+                <td class="text-center"><%= profesional.user.number_document%></td>
+                <td class="text-center"><%= profesional.user.subsidiary_id.nil? ? 'No tiene asignada' : profesional.user.subsidiary.name%></td>
+                <td class="text-center">
+                  <div class="row"> 
+                    <div class="col-md-3">
+                      <%= form_tag(update_status_clients_cliente_index_path, method: 'put', remote: true, style:"margin-left: 73px;") do %>
+                        <%= hidden_field_tag(:id, nil, id:"id_switch#{profesional.user_id}") %>
+                        <%= hidden_field_tag(:status, nil, id:"status_switch#{profesional.user_id}") %>
+                        <%= button_tag(type: "submit", id: "idBoton") do %>
+                          <% if Contract.where(client_id: profesional.client_id).detect{|w| w.status == Contract::ACTIVO} %>
+                            <% if profesional.user.status == 1 %>
+                              <span class="toggle-switch active" id="switch<%= profesional.user_id%>" onclick="move_switch(<%= profesional.user_id%>)">
+                                <span class="toggle-knob"></span>
+                              </span>
+                            <%else%>
+                              <span class="toggle-switch" id="switch<%= profesional.user_id%>" onclick="move_switch(<%= profesional.user_id%>)">
+                                <span class="toggle-knob"></span>
+                              </span>
+                            <%end%>
+                          <%else%>
+                            <span class="toggle-switch" id="switch<%= profesional.user_id%>">
+                              <span class="toggle-knob"></span>
+                            </span>
+                          <% end %>
+                        <%end%>
+                      <% end %>                
+                    </div>
+                    <div class="col-md-4" style="margin-left: 46px;">
+                      <% if profesional.user.status == 1 %>
+                        <h4 id="status<%=profesional.user_id%>" style="color:green">Activado</h4>
+                      <%else%>
+                        <h4 id="status<%=profesional.user_id%>" style="color:red">Desactivado</h4>
+                      <%end%>
+                    </div>
+                  </div>
+                </td>
+                <td><a href="/clients/cliente/<%= profesional.user.id%>/show_professional" data-turbolinks='false'"><i class="fa fa-user fa-lg"></i><span>Ver</span></a></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <%#= link_to "Crear profesional", new_professional_clients_cliente_index_path, method: :get, class: "btn btn-primary", style:"background-color: #2f91eb;" %>
+    </div>
+  </div>
+</div>
+
+<script>
+//Permite el funcionamiento del activar o desactivar profesional
+function move_switch(id){
+  var toggler = document.querySelector('#switch'+id);
+  toggler.classList.toggle('active');
+  
+  if (toggler.classList[1] == 'active'){
+    $('#status'+id).text("Activado");
+    $('#status'+id).css("color", "green");
+    $('#id_switch'+id).val(id);
+    $('#status_switch'+id).val(1);
+  }else{
+    $('#status'+id).text("Desactivado");
+    $('#status'+id).css("color", "red");
+    $('#id_switch'+id).val(id);
+    $('#status_switch'+id).val(0);
+  }
+}
+</script>

@@ -1,0 +1,115 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-6">
+    <div class="row">
+      <div class="borde"><h4 class="style_title">Crear profesional</h4></div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-3 col-md-12">
+        <div id="imaginary_container">
+          <%= form_for @professional, url: {controller: 'cliente', action: 'create_professional'}, html: {method: "post"} do |f| %>
+            <% if @professional.errors.any? %>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>No se puede guardar este usuario por que: </strong>
+                    <ul>
+                      <% @professional.errors.full_messages.each do |msg| %>
+                      <li>
+                        <%= msg %>
+                      </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <div class="row"> 
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h5 class="control">*Nombre(s)</h5>
+                </div>
+                <%= f.text_field :name, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h5 class="control">*Apellidos(s)</h5>
+                </div>
+                <%= f.text_field :surnames, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h5 class="control">*Identificación</h5>
+                </div>
+                <%= f.text_field :number_document, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h5 class="control">*Tipo de profesional</h5>
+                </div>
+                <%= f.select :type_professional, options_for_select([['Médico', 1], ['Enfermera', 2], ['Auxiliar', 3], ['Especialista', 4]], selected: @professional.type_professional), {include_blank: 'Seleccione un opción'}, onchange: 'show_hide_type_specialist();', class:'form-control', required: true%>
+              </div>
+              <div class="form-group" id="type_specialist" style="<%= @professional.type_professional == User::ESPECIALISTA ? '' : 'display: none'%>">
+                <div class="col-md-12 secondary_title">
+                  <h5 class="control">*Tipo de especialista</h5>
+                </div>
+                <%= f.select :type_specialist, options_for_select([['Dermatólogo', 1], ['Enfermera', 2]]), {include_blank: 'Seleccione un opción'}, class:'form-control', required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h5 class="control">*Tarjeta profesional</h5>
+                </div>
+                <%= f.text_field :professional_card, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h5 class="control">*Celular</h5>
+                </div>
+                <%= f.text_field :phone, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h5 class="control">*Correo electrónico</h5>
+                </div>
+                <%= f.text_field :email, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h5 class="control">*Contraseña</h5>
+                </div>
+                <%= f.text_field :password, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h5 class="control">*Confirmar contraseña</h5>
+                </div>
+                <%= f.text_field :password_confirmation, class: "form-control", required: true%>
+              </div>
+              <%= f.hidden_field :id %>
+              <div class="form-group">
+                <%= button_tag(type: "submit", class:"btn btn-primary btn-md") do %>
+                  Guardar cambios <span class=""></span>
+                <% end %>
+                <%= link_to professionals_clients_cliente_index_path, title: 'Regresar' do %>
+                  <span class="glyphicon glyphicon-menu-left"></span>
+                <% end %>
+              </div> 
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function show_hide_type_specialist(){
+    var a = $('#user_type_professional').find(":selected").val();
+    if (a == 4){
+      $('#type_specialist').show();
+    }else{
+      $('#type_specialist').hide();
+    }
+  }
+</script>

@@ -1,0 +1,57 @@
+<div id="responder">
+  <%= form_tag(response_update_admin_contact_index_path(), method: 'put') do %>
+    <div class="seccion3">
+      <div class="barra_superior3"><%= "Responder contacto" %></div>
+       
+      <li class="campo" id="nombre">
+        <label><h2 class="titulo">Nombre completo:</h2></label>
+        <div class="area_texto3"><%= @contact.name_complete.to_s %></div>
+      </li> 
+      
+      <li class="campo" id="email">
+        <label><h2 class="titulo">Email:</h2></label>
+        <div class="area_texto3"><%= @contact.email %></div>
+      </li>    
+      
+      <li class="campo" id="asunto">
+        <label><h2 class="titulo">Teléfono:</h2></label>
+        <div class="area_texto3"><%= @contact.phone %></div>
+      </li>    
+      
+      <li class="campo" id="asunto">
+        <label><h2 class="titulo">Mensaje:</h2></label>
+        <div class="area_texto_descrip"><%= @contact.message %></div>
+      </li>
+       
+       <li class="campo" id="asunto">
+        <label><h2 class="titulo">Tipo de contacto:</h2>
+        <div class="area_texto3"><%= @contact.type_contact == Contact::VENTAS ? 'Ventas' : 'Soporte'%></div>
+      </li>
+      <li class="lista"> 
+        <label><h2 id="name_esp">Título</h2></label>
+        <%= select_tag(:designed_title, options_for_select(DesignedResponse.where(status: DesignedResponse::ACTIVO).uniq(&:title).collect {|r| [r.title, r.title] }), prompt: 'Seleccione', id: 'title', onChange: 'change_designed_general("title", "description", "Seleccione un título")', class: 'select_espe', required: true) %>    
+      </li>
+      <li class="lista"> 
+        <label><h2 id="name_esp">Descripción</h2></label>
+        <%= select_tag(:designed_description, options_from_collection_for_select([], 'id', 'name'), prompt: 'Seleccione', id: 'description', onChange: '$("#response_contact").val($("#description option:selected").text())', class: 'select_espe', required: true) %>    
+      </li>
+      <li class="campo" id="asunto">
+        <label><h2 class="titulo">Respuesta:</h2></label>
+      </li>
+      <%= hidden_field_tag(:contact_id, params[:id]) %>
+      <div class="texto_area">
+        <%= text_area_tag :response_contact, @contact.response_contact, name: 'contact[response_contact]', placeholder: "Respuesta", class: 'texto_area', rows: 5, cols: 60, required: true %>
+      </div>
+      <%= hidden_field_tag(:id, @contact.id, name: 'contact[id]') %>
+    </div> <!--CIERRA LA SECCIÓN-->
+    <br>
+    <div class="botones3">
+      <%= button_tag(type: "submit", class:"btn btn-primary btn-lg") do %>
+         Enviar
+        <% end %>
+      <a class="boton_cancelar3" href="/admin/contacts">
+         Cancelar
+       </a>
+    </div>
+  <%end%> 
+</div>

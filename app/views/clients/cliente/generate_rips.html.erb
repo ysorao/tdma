@@ -1,0 +1,115 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-6">
+    <div class="row">
+      <div class="borde"><h4 class="style_title">Generar RIPS</h4></div>
+    </div>
+    <br>
+    <!-- Buscador EAPB -->
+    <div class="row">
+      <div class="col-md-12 secondary_title">
+        <h4 class="control">EAPB</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3 col-md-12">
+        <div id="imaginary_container">
+          <%= form_tag(generate_rips_clients_cliente_index_path(format: "csv"), method: 'get') do %>
+            <div class="row">   
+              <div class="col-md-12 form-group"> 
+                <%#= select_tag(:search_eapb, options_for_select(IpsInsurance.where(client_id: current_client_user.client_id).order(id: :asc).collect {|u| [u.insurance.name, u.id]}), prompt: "Seleccione una aseguradora", id: "insurance", class:'form-control', required: true) %>
+                <%= text_field_tag('search_eapb', params[:search_eapb], placeholder: "Ingrese la EAPB", class: "form-control", id:"insurance", onClick:"autocomplete_insurance('insurance')", required: true) %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <p>Desde</p>
+                <%= text_field_tag('init_date', params[:init_date], placeholder: "dd / mm / aa", class: "form-control picker", required: true) %> 
+              </div>
+              <div class="col-md-4 form-group"> 
+                <p>Hasta</p>
+                <%= text_field_tag('end_date', params[:end_date], placeholder: "dd / mm / aa", class: "form-control picker", required: true) %> 
+              </div>
+              <div class="col-md-4">
+                <p>.</p>
+                <%= button_tag(type: "submit", class:"btn btn-primary btn-md") do %>
+                  Descargar <span class="glyphicon glyphicon-download-alt"></span>
+                <% end %>
+              </div>
+              <br>
+              <br>
+            </div>
+            <div class="row">
+              <% unless defined?(flag).nil?%>
+                <% if flag == true %>
+                  <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <p class="text-center"><strong style="color:white;">Debe agregar una factura de la aseguradora para poder generar rips.</strong></p>
+                    </div>
+                  </div>
+                <%end%>
+              <%end%>
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="col-md-offset-1 col-md-10">
+    <div class="row">
+      <div class="col-md-12">
+        <p style="color:#578ab6;">Resultados de busqueda</p>
+        <div class="panel panel-default">
+          <table class="table table-hover" id="dev-table">
+            <thead>
+              <tr>
+                <th class="text-center border_color">
+                  Nombre
+                </th>
+                <th class="text-center border_color">
+                  Número de documento  
+                </th>
+                <th class="text-center border_color">
+                  Fecha
+                </th>
+                <th class="text-center border_color">
+                  Hora
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            <% @patient.each do |paciente| %>
+              <tr>
+                <td class="text-center"><%= paciente.name + ' ' + paciente.second_name.to_s + ' ' + paciente.last_name.to_s + ' ' + paciente.second_surname.to_s%></td>
+                <td class="text-center"><%= paciente.number_document%></td>
+                <td class="text-center"><%= paciente.created_at%></td>
+                <td class="text-center"><%= paciente.created_at%></td>
+              </tr>
+            <%end%>
+              <% if @patient.blank? %>
+                <tr>
+                  <td colspan="6">
+                    <h3 class="text-center">ACTUALMENTE ESTA SECCION ESTA VACÍA</h3>
+                  </td>
+                </tr>
+              <%end%>
+            </tbody>
+          </table>
+        </div>
+        <%#= link_to("Generar RIP", generate_rips_clients_cliente_index_path(format: "csv"), method: :get, data: { confirm: 'Estás seguro de generar el RIP?' }, class:"") do %>
+          <!--<i class="fa fa-share-alt fa-2x"></i>-->
+        <%#= end %>
+        <%#= link_to "Generar RIP", generate_rips_clients_cliente_index_path(format: "csv")%>
+      </div>
+    </div> 
+  </div>
+</div>
+<script type="text/javascript">
+  $('.picker').datepicker({
+    language: 'es',
+    format: "dd/mm/yyyy",
+    startDate: Date.today,
+    autoclose: true
+  });
+</script>

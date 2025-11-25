@@ -1,0 +1,33 @@
+<div class="col-md-12 line" id="request" style="display: none;padding-left: 20px;"> 
+  <!-- Requerimiento -->
+  <div class="row">
+  	<div class="col-md-12 secondary_title">
+      <h4 class="control text-center">Requerimiento</h4>
+    </div>
+  </div>
+  <div class="row">
+    <label class="control texto_color" for="Name">Tipo de requerimiento</label>
+    <select class="form-control field_req" ng-model="cCtlr.type_request" ng-click="show_button('btn_req', $event)" ng-init="cCtlr.type_request='1'">
+      <option value="1">- No fue posible responder la teleconsulta: Imágenes desenfocadas e insuficientes para el diagnóstico. Por favor repetirlas.</option>
+      <option value="2">- No fue posible responder la teleconsulta: No hay imágenes con acercamiento de la lesión. Por favor adicionar imágenes con zoom.</option>
+  		<option value="3">- No fue posible responder la teleconsulta: Se requieren imágenes perpendiculares de la lesión. Por favor adicionarlas.</option>
+  		<option value="4">- No fue posible responder la teleconsulta: Examen físico incompleto. Por favor describir mejor el tipo de lesión, distribucción y localización.</option>
+      <option value="5">- Otro.</option>
+		</select>
+  </div>
+  <br>
+  <div class="row">
+  	<div>
+      <label class="control texto_color" for="Name">Comentario</label>
+    </div>
+    <div>  	
+      <textarea class="form-control field_req" placeholder="Ingrese las recomendaciones para responder al requerimiento" ng-model="cCtlr.comment" rows="4" cols="10"></textarea>
+    </div>
+    <br>
+    <p class="text-right"><button type="button" class="btn button-save" ng-click="cCtlr.NewRequest()" id="btn_req" ng-disabled="checked5 || cCtlr.type_request == '' || cCtlr.type_request == null || cCtlr.comment == null">Guardar</button></p>
+  </div>
+  <br>
+  <div class="row"> 	
+    <button type="button" class="btn btn-primary form-control" style="background-color: rgb(0, 128, 0); color: rgb(255, 255, 255);" ng-click="cCtlr.UpdateResponseConsult(true, 2)">Responder consulta</button>
+  </div>
+</div>

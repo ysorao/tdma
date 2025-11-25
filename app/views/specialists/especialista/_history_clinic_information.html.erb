@@ -1,0 +1,707 @@
+<div class="col-md-9 scroll" id="clinic" style="padding-left:6px;" ng-cloak> <!-- ng-if="cCtlr.show_information() == true" -->
+  <!--<button ng-click="cCtlr.get_patient_information()" class="btn btn-primary">Historia clínica</button>-->
+  <br>
+  <br>
+  <!-- DATOS BASICO DEL PACIENTE -->
+  <div class="col-md-12 col-sm-4 historic_title">
+    <h4 class="text-center">Historia clínica</h4>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-md-12 col-sm-4" ng-if="cCtlr.history_clinic.medical_consult.consultation_id == cCtlr.consult_id || cCtlr.history_clinic.medical_consult.bandera == 'ok'">
+      <label class="clinic_title label_info">Médico:<p class="form_fields"> {{cCtlr.history_clinic.medical_consult.name_complete}}</p></label>
+    </div>
+    <div class="col-md-12 col-sm-4" ng-repeat="control in cCtlr.history_clinic.medical_control" ng-if="control.consultation_control_id == cCtlr.control_id || control.bandera == 'no'">
+      <label class="clinic_title label_info">Médico:<p class="form_fields"> {{control.name_complete}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title label_info">Nombre paciente:<p class="form_fields"> {{cCtlr.name_complete}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title label_info">Edad: <p class="form_fields">{{cCtlr.information.patient_information.age}} {{cCtlr.information.patient_information.unit_measure_age}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title label_info">Tipo de identificación: <p class="form_fields">{{cCtlr.information.patient.type_document}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title label_info" ng-if='cCtlr.information.patient.type_condition != null'>Tipo de condición: <p class="form_fields">{{cCtlr.information.patient.type_condition}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title label_info">Identificación: <p class="form_fields">{{cCtlr.information.patient.number_document}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title label_info">Fecha: <p class="form_fields">{{cCtlr.information.patient.created_web}} - Hora: {{cCtlr.information.patient.hour_at}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title label_info">Sexo: <p class="form_fields">{{cCtlr.information.patient.genre}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title label_info">Ocupación: <p class="form_fields">{{cCtlr.information.patient_information.occupation}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="clinic_title label_info">Zona de residencia: <p class="form_fields">{{cCtlr.information.patient_information.urban_zone}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="label_info">Departamento: <p class="form_fields"> {{cCtlr.information.patient_information.department_id}}</p></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <label class="label_info">Municipio: <p class="form_fields"> {{cCtlr.information.patient_information.municipality_id}}</p></label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <a class="see_more" id="show_info" onClick="muestra_oculta('contenido_patient')">Ver más</a>
+      <hr class="separator">
+    </div>
+  </div>
+
+  <!-- CONTIENE LA INFORMACION DEL PACIENTE -->
+  <div class="row">
+    <div class="col-md-11 col-sm-4">
+      <div id="contenido_patient">
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Paciente firmó consentimiento informado: <p class="form_fields">Sí</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Asegurador: <p class="form_fields">{{cCtlr.information.patient_information.insurance_id}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Estado civil: <p class="form_fields"> {{cCtlr.information.patient_information.civil_status}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Edad: <p class="form_fields"> {{cCtlr.information.patient_information.age}} {{cCtlr.information.patient_information.unit_measure_age}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Fecha nacimiento: <p class="form_fields"> {{cCtlr.information.patient.birthdate}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Sexo: <p class="form_fields"> {{cCtlr.information.patient.genre}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Ocupación: <p class="form_fields"> {{cCtlr.information.patient_information.occupation}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Celular: <p class="form_fields"> {{cCtlr.information.patient_information.phone}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Email: <p class="form_fields"> {{cCtlr.information.patient_information.email}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Dirección: <p class="form_fields"> {{cCtlr.information.patient_information.address}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Departamento: <p class="form_fields"> {{cCtlr.information.patient_information.department_id}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Municipio: <p class="form_fields"> {{cCtlr.information.patient_information.municipality_id}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Zona residencia: <p class="form_fields"> {{cCtlr.information.patient_information.urban_zone}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4" ng-if='cCtlr.information.patient_information.companion == false'>
+            <label class="label_info">Persona acompañante: <p class="form_fields">No reporta</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4" ng-if="cCtlr.information.patient_information.companion == true">
+            <label class="label_info">Nombre acompañante: <p class="form_fields">{{cCtlr.information.patient_information.name_companion == "" ? 'No reporta' : cCtlr.information.patient_information.name_companion}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4" ng-if="cCtlr.information.patient_information.companion == true">
+            <label class="label_info">Celular acompañante: <p class="form_fields">{{cCtlr.information.patient_information.phone_companion == "" ? 'No reporta' : cCtlr.information.patient_information.phone_companion}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4" ng-if='cCtlr.information.patient_information.responsible == false'>
+            <label class="label_info">Persona responsable: <p class="form_fields">No reporta</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4" ng-if="cCtlr.information.patient_information.responsible == true">
+            <label class="label_info">Nombre responsable: <p class="form_fields">{{cCtlr.information.patient_information.name_responsible == "" ? 'No reporta' : cCtlr.information.patient_information.name_responsible}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4" ng-if="cCtlr.information.patient_information.responsible == true">
+            <label class="label_info">Celular responsable: <p class="form_fields">{{cCtlr.information.patient_information.phone_responsible == "" ? 'No reporta' : cCtlr.information.patient_information.phone_responsible}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4" ng-if="cCtlr.information.patient_information.responsible == true">
+            <label class="label_info">Parentesco: <p class="form_fields">{{cCtlr.information.patient_information.relationship == "" ? 'No reporta' : cCtlr.information.patient_information.relationship}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Tipo de usuario: <p class="form_fields">{{cCtlr.information.patient_information.type_user}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Numero de autorización: <p class="form_fields"> {{cCtlr.information.patient_information.authorization_number}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Finalidad de la consulta: <p style="font-weight: normal;"> {{cCtlr.information.patient_information.purpose_consultation}}</p></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-4">
+            <label class="label_info">Causa externa: <p class="form_fields"> {{cCtlr.information.patient_information.external_cause}}</p></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista desplegable para la consulta y sus controles -->
+  <div class="row">
+    <div class="col-md-12 col-sm-4">
+      <h4 ng-show="cCtlr.evolution.length == 1 || cCtlr.evolution == null" class="btn btn-primary form-control" style="background-color:#2f91eb">Sin control</h4>
+      <select id="select_consults" class="btn btn-primary form-control" style="font-size:17px;" ng-model="cCtlr.value_consult" ng-change="cCtlr.show_clinic_info()" ng-show="cCtlr.evolution.length > 1">
+        <option ng-repeat="option in cCtlr.evolution" ng-value="option.value" ng-init='option.value == (cCtlr.consult_id == "" ? cCtlr.value_consult = (cCtlr.control+"-control") : cCtlr.value_consult = (cCtlr.consulta+"-consulta"))'>{{$index == 0 ? 'Consulta - ' + option.created_at : 'Control - ' + option.created_at}}</option>
+      </select>
+    </div>
+  </div>
+  <br>
+
+  <!-- CONSULTA DEL PACIENTE -->
+  <div class="row" id="consulta_principal" ng-if="cCtlr.history_clinic.medical_consult.consultation_id == cCtlr.consult_id || cCtlr.history_clinic.medical_consult.consultation_id == change_value(cCtlr.value_consult)">
+    <!-- Requerimientos -->
+    <div class="col-md-12 col-sm-4" style="padding: 0px 31px 0px 29px;">
+      <label class="color-title" style="color:#13579a;">Historia clínica del paciente</label>
+      <div class="row" ng-if='cCtlr.requests_consult.length > 0'>
+        <div class="col-md-12 col-sm-4" ng-repeat="request in cCtlr.requests_consult">
+          <div class="row title_field" ng-if='request.doctor_id != null || request.nurse_id != null'>
+            <div class="col-md-12 col-sm-4 color_field">
+              <label class="color-title">Resolver requerimiento(s):</label>
+            </div>
+            <ul>
+              <br>
+              <h4>#{{$index + 1}}.</h4>
+              <li><b>Fecha:</b> {{request.date_update}} - <b>Hora:</b>{{request.hour_update}}</li>
+              <li><b>Medico:</b> {{request.doctor.name_complete}}</li>
+              <li ng-if='request.description_request != null'><b>Historia clínica:</b> {{request.description_request}}</li>
+              <!--<li ng-if='request.audio_request != null'><b>Audio:</b>
+                <div id="jquery_jplayer{{$index}}"></div>
+                <div class="jp_container{{$index}}" ng-show="request.audio_request != null">
+                  <div class="track-name">Audio</div>
+                  <div class="jp-play" ng-click="cCtlr.AudioRequestConsult($index)"></div>
+                  <div class="jp-pause"></div>
+                </div>
+              </li>-->
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-4" ng-repeat="request in cCtlr.requests_consult">
+          <div class="row title_field" ng-if="request.reason != null">
+            <div class="col-md-12 col-sm-4 color_field">
+              <label class="color-title">Descartar requerimiento:</label>
+            </div>
+            <ul>
+              <br>
+              <li><b>Razón:</b> {{request.reason_result}}</li>
+              <li ng-if='request.other_reason != ""'><b>Otra razón:</b> {{request.other_reason}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-4" style="padding: 0px 31px 100px 29px;">
+      <!--<h4 style="color:#2164a2">Historia clínica del paciente</h4>-->
+      <!-- Tiempo evolucion -->
+      <!-- numero de lesiones -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Peso:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.weight}} Kg
+        </div>
+      </div>
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Tiempo evolución:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.evolution_time}} {{cCtlr.history_clinic.medical_consult.unit_measurement}}
+        </div>
+      </div>
+      <!-- numero de lesiones -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Número de lesiones iniciales:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.number_injuries}}
+        </div>
+      </div>
+      <!-- Evolucion de lesiones -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Evolución de las lesiones:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.evolution_injuries}}
+        </div>
+      </div>
+      <!-- Cambios evidentes -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Cambios evidentes:</label>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-2 col-sm-4">
+            <label class="color-title">Sangran:</label>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <p class="info_color">{{cCtlr.history_clinic.medical_consult.blood}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-2 col-sm-4">
+            <label class="color-title">Exudan:</label>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <p class="info_color">{{cCtlr.history_clinic.medical_consult.exude}}</p>
+          </div>
+        </div>
+        <div class="row change_title">
+          <div class="col-md-2 col-sm-4">
+            <label class="color-title">Supuran:</label>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <p class="info_color">{{cCtlr.history_clinic.medical_consult.suppurate}}</p>
+          </div>
+        </div>
+      </div>
+      <!-- Sintomas -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Síntomas:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.symptom}}
+        </div>
+      </div>
+      <!-- Los sintomas cambian a lo largo del día -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Los síntomas cambian a lo largo del día:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.change_symptom}}
+        </div>
+      </div>
+      <!-- Otros factores que agravan los síntomas -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Otros factores que agravan los síntomas:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.other_factors_symptom == "" ? 'Ninguno' : cCtlr.history_clinic.medical_consult.other_factors_symptom}}
+        </div>
+      </div>
+      <!-- Antecedentes relevantes -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Antecedentes relevantes:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          Personales: {{cCtlr.history_clinic.medical_consult.personal_history == "" ? 'Ninguno' : cCtlr.history_clinic.medical_consult.personal_history}}
+        </div>
+        <br>
+        <div class="col-md-12 col-sm-4 text_field">
+          Familiares: {{cCtlr.history_clinic.medical_consult.family_background == "" ? 'Ninguno' : cCtlr.history_clinic.medical_consult.family_background}}
+        </div>
+      </div>
+      <!-- Tratamiento recibido -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Tratamiento recibido:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.treatment_received}}
+        </div>
+      </div>
+      <!-- Otras sustancias aplicadas -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Otras sustancias aplicadas:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.aggravating_factors == "" ? 'Ninguna' : cCtlr.history_clinic.medical_consult.aggravating_factors}}
+        </div>
+      </div>
+      <!-- Efectos del tratamiento recibido -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Efectos del tratamiento recibido:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.treatment_effects}}
+        </div>
+      </div>
+      <!-- Motivo de la consulta -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Motivo de la consulta:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.reason_consultation}}
+        </div>
+      </div>
+      <!-- Enfermedad actual -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Enfermedad actual:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.current_illness}}
+        </div>
+      </div>
+      <!-- Examen físico -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Examen físico:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.description_physical_examination}}
+          <!--<div id="jquery_jplayer_1"></div>
+          <div id="jp_container_1" ng-show="cCtlr.history_clinic.medical_consult.physical_audio != null">
+            <div class="track-name">Audio físico</div>
+            <div class="jp-play"></div>
+            <div class="jp-pause"></div>
+          </div>-->
+        </div>
+      </div>
+      <!-- Anexos -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Anexos:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{(cCtlr.history_clinic.medical_consult.annex_description == "" && cCtlr.history_clinic.medical_consult.audio_annex == null) ? 'Ninguno' : cCtlr.history_clinic.medical_consult.annex_description}}
+          <!--<div id="jquery_jplayer_2"></div>
+          <div id="jp_container_2" ng-show='cCtlr.history_clinic.medical_consult.audio_annex != null'>
+            <div class="track-name">Audio anexo</div>
+            <div class="jp-play"></div>
+            <div class="jp-pause"></div>
+          </div>-->
+        </div>
+
+        <div class="col-md-12 col-sm-4 color_field" ng-show="cCtlr.images_consult == false">
+          <br>
+          <% unless @annex_images2.blank? %>
+            <ul class="slider-nav padding-right-40">
+              <% @annex_images2.each do |x| %>
+                <li>
+                  <!--<a class="single-image" href='<%#= "#{dynamic_images(x, 1, nil)}" %>' title=""><img class="img-responsive" src="<%#= "#{dynamic_images(x, 1, nil)}" %>" alt="Image" style="max-width:100%"></a>-->
+                  <a class="single-image" href='<%= "#{x.annex_url.url}" %>' title=""><img class="img-responsive" src="<%= "#{x.annex_url.url}" %>" alt="Image" style="max-width:100%"></a>
+                </li>
+              <%end%>
+            </ul>
+          <%end%>
+        </div>
+
+        <div class="col-md-12 col-sm-4 color_field" ng-show="cCtlr.images_consult == true">
+          <br>
+          <ul class="slider-nav2 padding-right-40" ng-repeat="image in cCtlr.history_clinic.medical_consult.images_consult"> 
+            <li>
+              <a class="single-image" href="{{image.annex_url}}" title=""><img class="img-responsive" ng-src="{{image.annex_url}}" alt="Image" style="max-width:100%"></a>   
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Impresion diagnostica -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Impresión diagnóstica:</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{cCtlr.history_clinic.medical_consult.diagnostic_impression}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- cCtlr.history_clinic.medical_control != "" || -->
+  <!-- CONSULTA DEL CONTROL DEL PACIENTE -->
+  <div class="row" id="consulta_control" ng-repeat="control in cCtlr.history_clinic.medical_control" ng-if='control.consultation_control_id == cCtlr.control_id || control.consultation_control_id == cCtlr.control_id || (control.consultation_control_id == cCtlr.val_consult && cCtlr.value_consult != null)'>
+    <!-- Requerimientos -->
+    <div class="col-md-12 col-sm-4" style="padding: 0px 31px 0px 29px;">
+      <label class="color-title" style="color:#13579a;">Control del paciente</label>
+      <div class="row" ng-if='cCtlr.requests_control.length > 0'>
+        <div class="col-md-12 col-sm-4" ng-repeat="req in cCtlr.requests_control">
+          <div class="row title_field" ng-repeat="request in req.consultation_control.request">
+            <div class="col-md-12 col-sm-4 color_field">
+              <label class="color-title">Resolver requerimiento(s):</label>
+            </div> 
+            <ul>
+              <br>
+              <h4>#{{$index + 1}}.</h4>
+              <li><b>Fecha:</b> {{request.date_update}} - <b>Hora:</b> {{request.hour_update}}</li>
+              <li><b>Medico:</b> {{request.doctor.name_complete}}</li>
+              <li ng-if='request.description_request != null'><b>Historia clínica:</b> {{request.description_request}}</li>
+              <!--<li ng-if='request.audio_request != null'><b>Audio:</b>
+                <div id="jquery_jplayer{{$index}}"></div>
+                <div class="jp_container{{$index}}" ng-show="request.audio_request != null">
+                  <div class="track-name">Audio</div>
+                  <div class="jp-play" ng-click="cCtlr.AudioRequestControl($index)"></div>
+                  <div class="jp-pause"></div>
+                </div>-->
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-4" ng-repeat="req in cCtlr.requests_control">
+          <div class="row title_field" ng-repeat="request in req.consultation_control.request">
+            <div class="row title_field" ng-if='request.reason != null'>
+              <div class="col-md-12 col-sm-4 color_field">
+                <label class="color-title">Descartar requerimiento:</label>
+              </div>
+              <ul>
+                <br>
+                <li><b>Razón:</b> {{request.reason_result}}</li>
+                <li ng-if='request.other_reason != ""'><b>Otra razón:</b> {{request.other_reason}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>   
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-4" style="padding: 0px 31px 100px 29px;">
+      <!--<h4 style="color:#2164a2">Historia clínica del paciente</h4>-->
+      <!-- Mejoría subjetiva -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Mejoría subjetiva</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{control.subjetive_improvement}}
+        </div>
+      </div>
+      <!-- Hizo tratamiento -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Hizo el tratamiento y siguió las indicaciones</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{control.did_treatment == true ? 'Sí' : 'No'}}
+        </div>
+      </div>
+      <!-- Toleró medicamentos -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Toleró los medicamentos</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{control.tolerated_medications}}
+        </div>
+      </div>
+      <!-- Descripción clínica -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Examen físico</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{(control.clinic_description == "" && control.audio_clinic == null) ? 'Ninguno' : control.clinic_description}}
+          <!--<div id="jquery_jplayer_5"></div>
+          <div id="jp_container_5" ng-show='control.audio_clinic != null'>
+            <div class="track-name">Audio clínico</div>
+            <div class="jp-play"></div>
+            <div class="jp-pause"></div>
+          </div>-->
+        </div>
+      </div>
+      <!-- Anexos -->
+      <div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Anexos del control</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field">
+          {{(control.annex_description == "" && control.audio_annex == null) ? 'Ninguno' : control.annex_description}}
+          <!--<div id="jquery_jplayer_6"></div>
+          <div id="jp_container_6" ng-show="control.audio_annex != null">
+            <div class="track-name">Audio anexo</div>
+            <div class="jp-play"></div>
+            <div class="jp-pause"></div>
+          </div>-->
+        </div>
+
+        <div class="col-md-12 col-sm-4 color_field" ng-show="cCtlr.images_control == false">
+          <br>
+          <% unless @annex_images.blank? %>
+            <ul class="slider-nav padding-right-40">
+              <% @annex_images.each do |x| %>
+                <li>
+                  <!--<a class="single-image" href="<%#= dynamic_images(x, 1, nil) %>" title=""><img class="img-responsive" src="<%#= dynamic_images(x, 1, nil) %>" alt="Image" style="max-width:100%"></a>-->
+                  <a class="single-image" href="<%= x.annex_url.url %>" title=""><img class="img-responsive" src="<%= x.annex_url.url %>" alt="Image" style="max-width:100%"></a>
+                </li>
+              <%end%>
+            </ul>
+          <%end%>
+        </div>
+
+        <div class="col-md-12 col-sm-4 color_field" ng-show="cCtlr.images_control == true">
+          <br>
+          <ul class="slider-nav2 padding-right-40" ng-repeat="image in cCtlr.history_clinic.medical_control[0].images_control"> 
+            <li>
+              <a class="single-image" href="{{image.annex_url}}" title=""><img class="img-responsive" ng-src="{{image.annex_url}}" alt="Image" style="max-width:100%"></a>   
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <!-- Impresion diagnostica -->
+      <!--<div class="row title_field">
+        <div class="col-md-12 col-sm-4 color_field">
+          <label class="color-title">Foto anexo</label>
+        </div>
+        <div class="col-md-12 col-sm-4 text_field" ng-if="cCtlr.history_clinic.medical_control.annex_photo == null">
+          Ninguno
+        </div>
+        <div class="col-md-12 col-sm-4 text_field" ng-if='cCtlr.history_clinic.medical_control != ""'>
+          <a class="single-image" href="{{cCtlr.history_clinic.medical_control.annex_photo}}" title=""><img src="{{cCtlr.history_clinic.medical_control.annex_photo}}" alt="Image" style="max-width:50%"></a>
+        </div>
+      </div>-->
+    </div>
+  </div>
+</div>
+
+<style>
+.main {
+  font-family:Arial;
+  width:500px;
+  display:block;
+  margin:0 auto;
+}
+
+.arrows-slider {
+    font-size: 20px !important;
+    z-index: 999999;
+    line-height: 0 !important;
+    position: absolute !important;
+    top: 50% !important;
+    display: block !important;
+    width: 20px !important;
+    height: 20px !important;
+    padding: 0 !important;
+    -webkit-transform: translate(0, -50%) !important;
+    -ms-transform: translate(0, -50%) !important;
+    transform: translate(0, -50%) !important;
+    cursor: pointer !important;
+    border: none !important;
+    outline: none !important;
+  }
+  .arrow-left{
+    left:0;
+  }
+  .arrow-right{
+    right:0;
+  }
+
+  .padding-right-40{
+    padding-right: 40px;
+  }
+
+  .single-image .img-responsive{
+    padding: 0 5px;
+  }
+
+</style>
+
+<script>
+  
+  $( document ).ready(function() {  
+  });
+
+  $(".single-image").fancybox({
+    openEffect : "elastic",   //'fade', 'elastic'
+    closeEffect : "elastic",
+    type : "image",
+    openSpeed:'normal', //ms, slow, normal, fast (default 250ms)
+    closeSpeed:'normal',
+    helpers : {
+      title : {
+         type : 'inside' //'float', 'inside', 'outside' or 'over'
+      },
+      overlay : {
+        closeClick : true  // if true, se cierra al hacer click fuera de la imagen
+      }
+    },
+    padding:11
+  });
+  
+
+  //Permite hacer la funcionalidad del ver mas...
+  function muestra_oculta(id){
+    if (document.getElementById){ //se obtiene el id
+      var el = document.getElementById(id); //se define la variable "el" igual a nuestro div
+      el.style.display = (el.style.display == 'none') ? 'block' : 'none'; //damos un atributo display:none que oculta el div
+      if ($('#contenido_patient').css('display') == 'none') {
+        $('#show_info').text("Ver más");
+      }else{
+        $('#show_info').text("Ver menos");
+      }
+    }
+  }
+    window.onload = function(){/*hace que se cargue la función lo que predetermina que div estará oculto hasta llamar a la función nuevamente*/
+      muestra_oculta('contenido_patient');/* "contenido_a_mostrar" es el nombre que le dimos al DIV */
+      //$('.test').slick();
+    }
+</script>

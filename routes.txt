@@ -1,0 +1,579 @@
+In '/home/rails/teledermaweb/public/':
++ sitemap.xml.gz                                           6 links /  399 Bytes
+Sitemap stats: 6 links / 1 sitemaps / 0m00s
+
+Pinging with URL 'https://telederma.gov.co/sitemap.xml.gz':
+Ping failed for Google: #<OpenURI::HTTPError: 404 Sitemaps ping is deprecated. See https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping.> (URL http://www.google.com/webmasters/tools/ping?sitemap=https%3A%2F%2Ftelederma.gov.co%2Fsitemap.xml.gz)
+Ping failed for Bing: #<OpenURI::HTTPError: 410 Gone> (URL http://www.bing.com/ping?sitemap=https%3A%2F%2Ftelederma.gov.co%2Fsitemap.xml.gz)
+                                                          Prefix Verb       URI Pattern                                                               Controller#Action
+                                         new_client_user_session GET        /client_users/sign_in(.:format)                                           client_users/sessions#new
+                                             client_user_session POST       /client_users/sign_in(.:format)                                           client_users/sessions#create
+                                     destroy_client_user_session DELETE     /client_users/sign_out(.:format)                                          client_users/sessions#destroy
+                                        new_client_user_password GET        /client_users/password/new(.:format)                                      client_users/passwords#new
+                                       edit_client_user_password GET        /client_users/password/edit(.:format)                                     client_users/passwords#edit
+                                            client_user_password PATCH      /client_users/password(.:format)                                          client_users/passwords#update
+                                                                 PUT        /client_users/password(.:format)                                          client_users/passwords#update
+                                                                 POST       /client_users/password(.:format)                                          client_users/passwords#create
+                                 cancel_client_user_registration GET        /client_users/cancel(.:format)                                            client_users/registrations#cancel
+                                    new_client_user_registration GET        /client_users/sign_up(.:format)                                           client_users/registrations#new
+                                   edit_client_user_registration GET        /client_users/edit(.:format)                                              client_users/registrations#edit
+                                        client_user_registration PATCH      /client_users(.:format)                                                   client_users/registrations#update
+                                                                 PUT        /client_users(.:format)                                                   client_users/registrations#update
+                                                                 DELETE     /client_users(.:format)                                                   client_users/registrations#destroy
+                                                                 POST       /client_users(.:format)                                                   client_users/registrations#create
+                                          new_client_user_unlock GET        /client_users/unlock/new(.:format)                                        client_users/unlocks#new
+                                              client_user_unlock GET        /client_users/unlock(.:format)                                            client_users/unlocks#show
+                                                                 POST       /client_users/unlock(.:format)                                            client_users/unlocks#create
+                                                new_user_session GET        /users/sign_in(.:format)                                                  users/sessions#new
+                                                    user_session POST       /users/sign_in(.:format)                                                  users/sessions#create
+                                            destroy_user_session DELETE     /users/sign_out(.:format)                                                 users/sessions#destroy
+                                               new_user_password GET        /users/password/new(.:format)                                             users/passwords#new
+                                              edit_user_password GET        /users/password/edit(.:format)                                            users/passwords#edit
+                                                   user_password PATCH      /users/password(.:format)                                                 users/passwords#update
+                                                                 PUT        /users/password(.:format)                                                 users/passwords#update
+                                                                 POST       /users/password(.:format)                                                 users/passwords#create
+                                        cancel_user_registration GET        /users/cancel(.:format)                                                   users/registrations#cancel
+                                           new_user_registration GET        /users/sign_up(.:format)                                                  users/registrations#new
+                                          edit_user_registration GET        /users/edit(.:format)                                                     users/registrations#edit
+                                               user_registration PATCH      /users(.:format)                                                          users/registrations#update
+                                                                 PUT        /users(.:format)                                                          users/registrations#update
+                                                                 DELETE     /users(.:format)                                                          users/registrations#destroy
+                                                                 POST       /users(.:format)                                                          users/registrations#create
+                                                 new_user_unlock GET        /users/unlock/new(.:format)                                               users/unlocks#new
+                                                     user_unlock GET        /users/unlock(.:format)                                                   users/unlocks#show
+                                                                 POST       /users/unlock(.:format)                                                   users/unlocks#create
+                                          new_admin_user_session GET        /admin/login(.:format)                                                    active_admin/devise/sessions#new
+                                              admin_user_session POST       /admin/login(.:format)                                                    active_admin/devise/sessions#create
+                                      destroy_admin_user_session DELETE|GET /admin/logout(.:format)                                                   active_admin/devise/sessions#destroy
+                                         new_admin_user_password GET        /admin/password/new(.:format)                                             active_admin/devise/passwords#new
+                                        edit_admin_user_password GET        /admin/password/edit(.:format)                                            active_admin/devise/passwords#edit
+                                             admin_user_password PATCH      /admin/password(.:format)                                                 active_admin/devise/passwords#update
+                                                                 PUT        /admin/password(.:format)                                                 active_admin/devise/passwords#update
+                                                                 POST       /admin/password(.:format)                                                 active_admin/devise/passwords#create
+                                                      admin_root GET        /admin(.:format)                                                          admin/dashboard#index
+                                     batch_action_admin_requests POST       /admin/requests/batch_action(.:format)                                    admin/requests#batch_action
+                                                  admin_requests GET        /admin/requests(.:format)                                                 admin/requests#index
+                        batch_action_admin_consultation_controls POST       /admin/consultation_controls/batch_action(.:format)                       admin/consultation_controls#batch_action
+                                     admin_consultation_controls GET        /admin/consultation_controls(.:format)                                    admin/consultation_controls#index
+                                                                 POST       /admin/consultation_controls(.:format)                                    admin/consultation_controls#create
+                                      admin_consultation_control GET        /admin/consultation_controls/:id(.:format)                                admin/consultation_controls#show
+                                                                 PATCH      /admin/consultation_controls/:id(.:format)                                admin/consultation_controls#update
+                                                                 PUT        /admin/consultation_controls/:id(.:format)                                admin/consultation_controls#update
+                                         inactivate_admin_client PUT        /admin/clients/:id/inactivate(.:format)                                   admin/clients#inactivate
+                                           activate_admin_client PUT        /admin/clients/:id/activate(.:format)                                     admin/clients#activate
+                                      batch_action_admin_clients POST       /admin/clients/batch_action(.:format)                                     admin/clients#batch_action
+                                                   admin_clients GET        /admin/clients(.:format)                                                  admin/clients#index
+                                                                 POST       /admin/clients(.:format)                                                  admin/clients#create
+                                                new_admin_client GET        /admin/clients/new(.:format)                                              admin/clients#new
+                                               edit_admin_client GET        /admin/clients/:id/edit(.:format)                                         admin/clients#edit
+                                                    admin_client GET        /admin/clients/:id(.:format)                                              admin/clients#show
+                                                                 PATCH      /admin/clients/:id(.:format)                                              admin/clients#update
+                                                                 PUT        /admin/clients/:id(.:format)                                              admin/clients#update
+                                  activate_admin_additional_card PUT        /admin/additional_cards/:id/activate(.:format)                            admin/additional_cards#activate
+                             batch_action_admin_additional_cards POST       /admin/additional_cards/batch_action(.:format)                            admin/additional_cards#batch_action
+                                          admin_additional_cards GET        /admin/additional_cards(.:format)                                         admin/additional_cards#index
+                                                                 POST       /admin/additional_cards(.:format)                                         admin/additional_cards#create
+                                       new_admin_additional_card GET        /admin/additional_cards/new(.:format)                                     admin/additional_cards#new
+                                           admin_additional_card GET        /admin/additional_cards/:id(.:format)                                     admin/additional_cards#show
+                                                                 PATCH      /admin/additional_cards/:id(.:format)                                     admin/additional_cards#update
+                                                                 PUT        /admin/additional_cards/:id(.:format)                                     admin/additional_cards#update
+                                     batch_action_admin_injuries POST       /admin/injuries/batch_action(.:format)                                    admin/injuries#batch_action
+                                                  admin_injuries GET        /admin/injuries(.:format)                                                 admin/injuries#index
+                                         batch_action_admin_kits POST       /admin/kits/batch_action(.:format)                                        admin/kits#batch_action
+                                                      admin_kits GET        /admin/kits(.:format)                                                     admin/kits#index
+                                                                 POST       /admin/kits(.:format)                                                     admin/kits#create
+                                                   new_admin_kit GET        /admin/kits/new(.:format)                                                 admin/kits#new
+                                                       admin_kit GET        /admin/kits/:id(.:format)                                                 admin/kits#show
+                                                                 PATCH      /admin/kits/:id(.:format)                                                 admin/kits#update
+                                                                 PUT        /admin/kits/:id(.:format)                                                 admin/kits#update
+                                                                 DELETE     /admin/kits/:id(.:format)                                                 admin/kits#destroy
+                     assign_specialist_admin_traceability_admins GET        /admin/traceability_admins/assign_specialist(.:format)                    admin/traceability_admins#assign_specialist
+                          batch_action_admin_traceability_admins POST       /admin/traceability_admins/batch_action(.:format)                         admin/traceability_admins#batch_action
+                                       admin_traceability_admins GET        /admin/traceability_admins(.:format)                                      admin/traceability_admins#index
+                                                                 POST       /admin/traceability_admins(.:format)                                      admin/traceability_admins#create
+                                        admin_traceability_admin PATCH      /admin/traceability_admins/:id(.:format)                                  admin/traceability_admins#update
+                                                                 PUT        /admin/traceability_admins/:id(.:format)                                  admin/traceability_admins#update
+                                   assign_admin_admin_help_desks GET        /admin/help_desks/assign_admin(.:format)                                  admin/help_desks#assign_admin
+                                  response_form_admin_help_desks GET        /admin/help_desks/response_form(.:format)                                 admin/help_desks#response_form
+                                 history_ticket_admin_help_desks GET        /admin/help_desks/history_ticket(.:format)                                admin/help_desks#history_ticket
+                                   batch_action_admin_help_desks POST       /admin/help_desks/batch_action(.:format)                                  admin/help_desks#batch_action
+                                                admin_help_desks GET        /admin/help_desks(.:format)                                               admin/help_desks#index
+                                                                 POST       /admin/help_desks(.:format)                                               admin/help_desks#create
+                                                 admin_help_desk GET        /admin/help_desks/:id(.:format)                                           admin/help_desks#show
+                                                                 PATCH      /admin/help_desks/:id(.:format)                                           admin/help_desks#update
+                                                                 PUT        /admin/help_desks/:id(.:format)                                           admin/help_desks#update
+                                   assign_contact_admin_contacts GET        /admin/contacts/assign_contact(.:format)                                  admin/contacts#assign_contact
+                                    response_form_admin_contacts GET        /admin/contacts/response_form(.:format)                                   admin/contacts#response_form
+                                     batch_action_admin_contacts POST       /admin/contacts/batch_action(.:format)                                    admin/contacts#batch_action
+                                                  admin_contacts GET        /admin/contacts(.:format)                                                 admin/contacts#index
+                                                                 POST       /admin/contacts(.:format)                                                 admin/contacts#create
+                                                   admin_contact GET        /admin/contacts/:id(.:format)                                             admin/contacts#show
+                                                                 PATCH      /admin/contacts/:id(.:format)                                             admin/contacts#update
+                                                                 PUT        /admin/contacts/:id(.:format)                                             admin/contacts#update
+                               batch_action_admin_request_images POST       /admin/request_images/batch_action(.:format)                              admin/request_images#batch_action
+                                            admin_request_images GET        /admin/request_images(.:format)                                           admin/request_images#index
+                         batch_action_admin_specialist_responses POST       /admin/specialist_responses/batch_action(.:format)                        admin/specialist_responses#batch_action
+                                      admin_specialist_responses GET        /admin/specialist_responses(.:format)                                     admin/specialist_responses#index
+                                       admin_specialist_response GET        /admin/specialist_responses/:id(.:format)                                 admin/specialist_responses#show
+                             batch_action_admin_medical_controls POST       /admin/medical_controls/batch_action(.:format)                            admin/medical_controls#batch_action
+                                          admin_medical_controls GET        /admin/medical_controls(.:format)                                         admin/medical_controls#index
+                              batch_action_admin_images_injuries POST       /admin/images_injuries/batch_action(.:format)                             admin/images_injuries#batch_action
+                                           admin_images_injuries GET        /admin/images_injuries(.:format)                                          admin/images_injuries#index
+                                                                 POST       /admin/images_injuries(.:format)                                          admin/images_injuries#create
+                                         new_admin_images_injury GET        /admin/images_injuries/new(.:format)                                      admin/images_injuries#new
+                                        edit_admin_images_injury GET        /admin/images_injuries/:id/edit(.:format)                                 admin/images_injuries#edit
+                                             admin_images_injury GET        /admin/images_injuries/:id(.:format)                                      admin/images_injuries#show
+                                                                 PATCH      /admin/images_injuries/:id(.:format)                                      admin/images_injuries#update
+                                                                 PUT        /admin/images_injuries/:id(.:format)                                      admin/images_injuries#update
+                                                                 DELETE     /admin/images_injuries/:id(.:format)                                      admin/images_injuries#destroy
+                                        batch_action_admin_bills POST       /admin/bills/batch_action(.:format)                                       admin/bills#batch_action
+                                                     admin_bills GET        /admin/bills(.:format)                                                    admin/bills#index
+                                                                 POST       /admin/bills(.:format)                                                    admin/bills#create
+                                                  new_admin_bill GET        /admin/bills/new(.:format)                                                admin/bills#new
+                                                 edit_admin_bill GET        /admin/bills/:id/edit(.:format)                                           admin/bills#edit
+                                                      admin_bill GET        /admin/bills/:id(.:format)                                                admin/bills#show
+                                                                 PATCH      /admin/bills/:id(.:format)                                                admin/bills#update
+                                                                 PUT        /admin/bills/:id(.:format)                                                admin/bills#update
+                                                                 DELETE     /admin/bills/:id(.:format)                                                admin/bills#destroy
+                               batch_action_admin_municipalities POST       /admin/municipalities/batch_action(.:format)                              admin/municipalities#batch_action
+                                            admin_municipalities GET        /admin/municipalities(.:format)                                           admin/municipalities#index
+                                                                 POST       /admin/municipalities(.:format)                                           admin/municipalities#create
+                                              admin_municipality GET        /admin/municipalities/:id(.:format)                                       admin/municipalities#show
+                                                                 PATCH      /admin/municipalities/:id(.:format)                                       admin/municipalities#update
+                                                                 PUT        /admin/municipalities/:id(.:format)                                       admin/municipalities#update
+                                             activate_admin_user PUT        /admin/users/:id/activate(.:format)                                       admin/users#activate
+                                           inactivate_admin_user PUT        /admin/users/:id/inactivate(.:format)                                     admin/users#inactivate
+                                        batch_action_admin_users POST       /admin/users/batch_action(.:format)                                       admin/users#batch_action
+                                                     admin_users GET        /admin/users(.:format)                                                    admin/users#index
+                                                                 POST       /admin/users(.:format)                                                    admin/users#create
+                                                  new_admin_user GET        /admin/users/new(.:format)                                                admin/users#new
+                                                      admin_user PATCH      /admin/users/:id(.:format)                                                admin/users#update
+                                                                 PUT        /admin/users/:id(.:format)                                                admin/users#update
+                                                                 DELETE     /admin/users/:id(.:format)                                                admin/users#destroy
+                                  batch_action_admin_departments POST       /admin/departments/batch_action(.:format)                                 admin/departments#batch_action
+                                               admin_departments GET        /admin/departments(.:format)                                              admin/departments#index
+                                                                 POST       /admin/departments(.:format)                                              admin/departments#create
+                                                admin_department GET        /admin/departments/:id(.:format)                                          admin/departments#show
+                                                                 PATCH      /admin/departments/:id(.:format)                                          admin/departments#update
+                                                                 PUT        /admin/departments/:id(.:format)                                          admin/departments#update
+                         batch_action_admin_traceability_clients POST       /admin/traceability_clients/batch_action(.:format)                        admin/traceability_clients#batch_action
+                                      admin_traceability_clients GET        /admin/traceability_clients(.:format)                                     admin/traceability_clients#index
+                                                                 POST       /admin/traceability_clients(.:format)                                     admin/traceability_clients#create
+                                       admin_traceability_client PATCH      /admin/traceability_clients/:id(.:format)                                 admin/traceability_clients#update
+                                                                 PUT        /admin/traceability_clients/:id(.:format)                                 admin/traceability_clients#update
+                                       activate_admin_admin_user PUT        /admin/admin_users/:id/activate(.:format)                                 admin/admin_users#activate
+                                     inactivate_admin_admin_user PUT        /admin/admin_users/:id/inactivate(.:format)                               admin/admin_users#inactivate
+                                  batch_action_admin_admin_users POST       /admin/admin_users/batch_action(.:format)                                 admin/admin_users#batch_action
+                                               admin_admin_users GET        /admin/admin_users(.:format)                                              admin/admin_users#index
+                                                                 POST       /admin/admin_users(.:format)                                              admin/admin_users#create
+                                            new_admin_admin_user GET        /admin/admin_users/new(.:format)                                          admin/admin_users#new
+                                           edit_admin_admin_user GET        /admin/admin_users/:id/edit(.:format)                                     admin/admin_users#edit
+                                                admin_admin_user GET        /admin/admin_users/:id(.:format)                                          admin/admin_users#show
+                                                                 PATCH      /admin/admin_users/:id(.:format)                                          admin/admin_users#update
+                                                                 PUT        /admin/admin_users/:id(.:format)                                          admin/admin_users#update
+                                                                 DELETE     /admin/admin_users/:id(.:format)                                          admin/admin_users#destroy
+                                     batch_action_admin_patients POST       /admin/patients/batch_action(.:format)                                    admin/patients#batch_action
+                                                  admin_patients GET        /admin/patients(.:format)                                                 admin/patients#index
+                                                                 POST       /admin/patients(.:format)                                                 admin/patients#create
+                                               new_admin_patient GET        /admin/patients/new(.:format)                                             admin/patients#new
+                                              edit_admin_patient GET        /admin/patients/:id/edit(.:format)                                        admin/patients#edit
+                                                   admin_patient GET        /admin/patients/:id(.:format)                                             admin/patients#show
+                                                                 PATCH      /admin/patients/:id(.:format)                                             admin/patients#update
+                                                                 PUT        /admin/patients/:id(.:format)                                             admin/patients#update
+                                                                 DELETE     /admin/patients/:id(.:format)                                             admin/patients#destroy
+                                 batch_action_admin_app_versions POST       /admin/app_versions/batch_action(.:format)                                admin/app_versions#batch_action
+                                              admin_app_versions GET        /admin/app_versions(.:format)                                             admin/app_versions#index
+                                                                 POST       /admin/app_versions(.:format)                                             admin/app_versions#create
+                                           new_admin_app_version GET        /admin/app_versions/new(.:format)                                         admin/app_versions#new
+                                          edit_admin_app_version GET        /admin/app_versions/:id/edit(.:format)                                    admin/app_versions#edit
+                                               admin_app_version GET        /admin/app_versions/:id(.:format)                                         admin/app_versions#show
+                                                                 PATCH      /admin/app_versions/:id(.:format)                                         admin/app_versions#update
+                                                                 PUT        /admin/app_versions/:id(.:format)                                         admin/app_versions#update
+                                                                 DELETE     /admin/app_versions/:id(.:format)                                         admin/app_versions#destroy
+                                    batch_action_admin_contracts POST       /admin/contracts/batch_action(.:format)                                   admin/contracts#batch_action
+                                                 admin_contracts GET        /admin/contracts(.:format)                                                admin/contracts#index
+                                                                 POST       /admin/contracts(.:format)                                                admin/contracts#create
+                                              new_admin_contract GET        /admin/contracts/new(.:format)                                            admin/contracts#new
+                                                  admin_contract GET        /admin/contracts/:id(.:format)                                            admin/contracts#show
+                                                                 PATCH      /admin/contracts/:id(.:format)                                            admin/contracts#update
+                                                                 PUT        /admin/contracts/:id(.:format)                                            admin/contracts#update
+                                                                 DELETE     /admin/contracts/:id(.:format)                                            admin/contracts#destroy
+                                 batch_action_admin_prepay_cards POST       /admin/prepay_cards/batch_action(.:format)                                admin/prepay_cards#batch_action
+                                              admin_prepay_cards GET        /admin/prepay_cards(.:format)                                             admin/prepay_cards#index
+                                                                 POST       /admin/prepay_cards(.:format)                                             admin/prepay_cards#create
+                                           new_admin_prepay_card GET        /admin/prepay_cards/new(.:format)                                         admin/prepay_cards#new
+                                          edit_admin_prepay_card GET        /admin/prepay_cards/:id/edit(.:format)                                    admin/prepay_cards#edit
+                                               admin_prepay_card GET        /admin/prepay_cards/:id(.:format)                                         admin/prepay_cards#show
+                                                                 PATCH      /admin/prepay_cards/:id(.:format)                                         admin/prepay_cards#update
+                                                                 PUT        /admin/prepay_cards/:id(.:format)                                         admin/prepay_cards#update
+                                                                 DELETE     /admin/prepay_cards/:id(.:format)                                         admin/prepay_cards#destroy
+                                   batch_action_admin_insurances POST       /admin/insurances/batch_action(.:format)                                  admin/insurances#batch_action
+                                                admin_insurances GET        /admin/insurances(.:format)                                               admin/insurances#index
+                                                                 POST       /admin/insurances(.:format)                                               admin/insurances#create
+                                                 admin_insurance GET        /admin/insurances/:id(.:format)                                           admin/insurances#show
+                                                                 PATCH      /admin/insurances/:id(.:format)                                           admin/insurances#update
+                                                                 PUT        /admin/insurances/:id(.:format)                                           admin/insurances#update
+                        batch_action_admin_traceability_consults POST       /admin/traceability_consults/batch_action(.:format)                       admin/traceability_consults#batch_action
+                                     admin_traceability_consults GET        /admin/traceability_consults(.:format)                                    admin/traceability_consults#index
+                                                                 POST       /admin/traceability_consults(.:format)                                    admin/traceability_consults#create
+                                      admin_traceability_consult PATCH      /admin/traceability_consults/:id(.:format)                                admin/traceability_consults#update
+                                                                 PUT        /admin/traceability_consults/:id(.:format)                                admin/traceability_consults#update
+                                 batch_action_admin_mipres_files POST       /admin/mipres_files/batch_action(.:format)                                admin/mipres_files#batch_action
+                                              admin_mipres_files GET        /admin/mipres_files(.:format)                                             admin/mipres_files#index
+                                   batch_action_admin_body_areas POST       /admin/body_areas/batch_action(.:format)                                  admin/body_areas#batch_action
+                                                admin_body_areas GET        /admin/body_areas(.:format)                                               admin/body_areas#index
+                                                                 POST       /admin/body_areas(.:format)                                               admin/body_areas#create
+                                                 admin_body_area GET        /admin/body_areas/:id(.:format)                                           admin/body_areas#show
+                                                                 PATCH      /admin/body_areas/:id(.:format)                                           admin/body_areas#update
+                                                                 PUT        /admin/body_areas/:id(.:format)                                           admin/body_areas#update
+                                activate_admin_designed_response PUT        /admin/designed_responses/:id/activate(.:format)                          admin/designed_responses#activate
+                              inactivate_admin_designed_response PUT        /admin/designed_responses/:id/inactivate(.:format)                        admin/designed_responses#inactivate
+                           batch_action_admin_designed_responses POST       /admin/designed_responses/batch_action(.:format)                          admin/designed_responses#batch_action
+                                        admin_designed_responses GET        /admin/designed_responses(.:format)                                       admin/designed_responses#index
+                                                                 POST       /admin/designed_responses(.:format)                                       admin/designed_responses#create
+                                     new_admin_designed_response GET        /admin/designed_responses/new(.:format)                                   admin/designed_responses#new
+                                    edit_admin_designed_response GET        /admin/designed_responses/:id/edit(.:format)                              admin/designed_responses#edit
+                                         admin_designed_response GET        /admin/designed_responses/:id(.:format)                                   admin/designed_responses#show
+                                                                 PATCH      /admin/designed_responses/:id(.:format)                                   admin/designed_responses#update
+                                                                 PUT        /admin/designed_responses/:id(.:format)                                   admin/designed_responses#update
+                                                                 DELETE     /admin/designed_responses/:id(.:format)                                   admin/designed_responses#destroy
+                            batch_action_admin_other_diagnostics POST       /admin/other_diagnostics/batch_action(.:format)                           admin/other_diagnostics#batch_action
+                                         admin_other_diagnostics GET        /admin/other_diagnostics(.:format)                                        admin/other_diagnostics#index
+                          batch_action_admin_prepay_card_clients POST       /admin/prepay_card_clients/batch_action(.:format)                         admin/prepay_card_clients#batch_action
+                                       admin_prepay_card_clients GET        /admin/prepay_card_clients(.:format)                                      admin/prepay_card_clients#index
+                                                                 POST       /admin/prepay_card_clients(.:format)                                      admin/prepay_card_clients#create
+                                    new_admin_prepay_card_client GET        /admin/prepay_card_clients/new(.:format)                                  admin/prepay_card_clients#new
+                                   edit_admin_prepay_card_client GET        /admin/prepay_card_clients/:id/edit(.:format)                             admin/prepay_card_clients#edit
+                                        admin_prepay_card_client GET        /admin/prepay_card_clients/:id(.:format)                                  admin/prepay_card_clients#show
+                                                                 PATCH      /admin/prepay_card_clients/:id(.:format)                                  admin/prepay_card_clients#update
+                                                                 PUT        /admin/prepay_card_clients/:id(.:format)                                  admin/prepay_card_clients#update
+                                                                 DELETE     /admin/prepay_card_clients/:id(.:format)                                  admin/prepay_card_clients#destroy
+                                      activate_admin_client_user PUT        /admin/client_users/:id/activate(.:format)                                admin/client_users#activate
+                                    inactivate_admin_client_user PUT        /admin/client_users/:id/inactivate(.:format)                              admin/client_users#inactivate
+                                 batch_action_admin_client_users POST       /admin/client_users/batch_action(.:format)                                admin/client_users#batch_action
+                                              admin_client_users GET        /admin/client_users(.:format)                                             admin/client_users#index
+                                                                 POST       /admin/client_users(.:format)                                             admin/client_users#create
+                                           new_admin_client_user GET        /admin/client_users/new(.:format)                                         admin/client_users#new
+                                          edit_admin_client_user GET        /admin/client_users/:id/edit(.:format)                                    admin/client_users#edit
+                                               admin_client_user GET        /admin/client_users/:id(.:format)                                         admin/client_users#show
+                                                                 PATCH      /admin/client_users/:id(.:format)                                         admin/client_users#update
+                                                                 PUT        /admin/client_users/:id(.:format)                                         admin/client_users#update
+                        batch_action_admin_traceability_controls POST       /admin/traceability_controls/batch_action(.:format)                       admin/traceability_controls#batch_action
+                                     admin_traceability_controls GET        /admin/traceability_controls(.:format)                                    admin/traceability_controls#index
+                                                                 POST       /admin/traceability_controls(.:format)                                    admin/traceability_controls#create
+                                      admin_traceability_control PATCH      /admin/traceability_controls/:id(.:format)                                admin/traceability_controls#update
+                                                                 PUT        /admin/traceability_controls/:id(.:format)                                admin/traceability_controls#update
+                                     batch_action_admin_diseases POST       /admin/diseases/batch_action(.:format)                                    admin/diseases#batch_action
+                                                  admin_diseases GET        /admin/diseases(.:format)                                                 admin/diseases#index
+                                                                 POST       /admin/diseases(.:format)                                                 admin/diseases#create
+                                                   admin_disease GET        /admin/diseases/:id(.:format)                                             admin/diseases#show
+                                                                 PATCH      /admin/diseases/:id(.:format)                                             admin/diseases#update
+                                                                 PUT        /admin/diseases/:id(.:format)                                             admin/diseases#update
+                                  indicators_admin_consultations GET        /admin/consultations/indicators(.:format)                                 admin/consultations#indicators
+                                batch_action_admin_consultations POST       /admin/consultations/batch_action(.:format)                               admin/consultations#batch_action
+                                             admin_consultations GET        /admin/consultations(.:format)                                            admin/consultations#index
+                                                                 POST       /admin/consultations(.:format)                                            admin/consultations#create
+                                              admin_consultation GET        /admin/consultations/:id(.:format)                                        admin/consultations#show
+                                                                 PATCH      /admin/consultations/:id(.:format)                                        admin/consultations#update
+                                                                 PUT        /admin/consultations/:id(.:format)                                        admin/consultations#update
+                              batch_action_admin_history_tickets POST       /admin/history_tickets/batch_action(.:format)                             admin/history_tickets#batch_action
+                                           admin_history_tickets GET        /admin/history_tickets(.:format)                                          admin/history_tickets#index
+                                                                 POST       /admin/history_tickets(.:format)                                          admin/history_tickets#create
+                                        new_admin_history_ticket GET        /admin/history_tickets/new(.:format)                                      admin/history_tickets#new
+                                       edit_admin_history_ticket GET        /admin/history_tickets/:id/edit(.:format)                                 admin/history_tickets#edit
+                                            admin_history_ticket GET        /admin/history_tickets/:id(.:format)                                      admin/history_tickets#show
+                                                                 PATCH      /admin/history_tickets/:id(.:format)                                      admin/history_tickets#update
+                                                                 PUT        /admin/history_tickets/:id(.:format)                                      admin/history_tickets#update
+                                                                 DELETE     /admin/history_tickets/:id(.:format)                                      admin/history_tickets#destroy
+                                      batch_action_admin_devices POST       /admin/devices/batch_action(.:format)                                     admin/devices#batch_action
+                                                   admin_devices GET        /admin/devices(.:format)                                                  admin/devices#index
+                                                                 POST       /admin/devices(.:format)                                                  admin/devices#create
+                                                new_admin_device GET        /admin/devices/new(.:format)                                              admin/devices#new
+                                               edit_admin_device GET        /admin/devices/:id/edit(.:format)                                         admin/devices#edit
+                                                    admin_device GET        /admin/devices/:id(.:format)                                              admin/devices#show
+                                                                 PATCH      /admin/devices/:id(.:format)                                              admin/devices#update
+                                                                 PUT        /admin/devices/:id(.:format)                                              admin/devices#update
+                                                                 DELETE     /admin/devices/:id(.:format)                                              admin/devices#destroy
+                                batch_action_admin_request_exams POST       /admin/request_exams/batch_action(.:format)                               admin/request_exams#batch_action
+                                             admin_request_exams GET        /admin/request_exams(.:format)                                            admin/request_exams#index
+                                                                 POST       /admin/request_exams(.:format)                                            admin/request_exams#create
+                                          new_admin_request_exam GET        /admin/request_exams/new(.:format)                                        admin/request_exams#new
+                                         edit_admin_request_exam GET        /admin/request_exams/:id/edit(.:format)                                   admin/request_exams#edit
+                                              admin_request_exam GET        /admin/request_exams/:id(.:format)                                        admin/request_exams#show
+                                                                 PATCH      /admin/request_exams/:id(.:format)                                        admin/request_exams#update
+                                                                 PUT        /admin/request_exams/:id(.:format)                                        admin/request_exams#update
+                                                                 DELETE     /admin/request_exams/:id(.:format)                                        admin/request_exams#destroy
+                         batch_action_admin_patient_informations POST       /admin/patient_informations/batch_action(.:format)                        admin/patient_informations#batch_action
+                                      admin_patient_informations GET        /admin/patient_informations(.:format)                                     admin/patient_informations#index
+                                                 admin_dashboard GET        /admin/dashboard(.:format)                                                admin/dashboard#index
+                        batch_action_admin_medical_consultations POST       /admin/medical_consultations/batch_action(.:format)                       admin/medical_consultations#batch_action
+                                     admin_medical_consultations GET        /admin/medical_consultations(.:format)                                    admin/medical_consultations#index
+                                                                 POST       /admin/medical_consultations(.:format)                                    admin/medical_consultations#create
+                                  new_admin_medical_consultation GET        /admin/medical_consultations/new(.:format)                                admin/medical_consultations#new
+                                 edit_admin_medical_consultation GET        /admin/medical_consultations/:id/edit(.:format)                           admin/medical_consultations#edit
+                                      admin_medical_consultation GET        /admin/medical_consultations/:id(.:format)                                admin/medical_consultations#show
+                                                                 PATCH      /admin/medical_consultations/:id(.:format)                                admin/medical_consultations#update
+                                                                 PUT        /admin/medical_consultations/:id(.:format)                                admin/medical_consultations#update
+                                                                 DELETE     /admin/medical_consultations/:id(.:format)                                admin/medical_consultations#destroy
+                               batch_action_admin_system_manuals POST       /admin/system_manuals/batch_action(.:format)                              admin/system_manuals#batch_action
+                                            admin_system_manuals GET        /admin/system_manuals(.:format)                                           admin/system_manuals#index
+                                                                 POST       /admin/system_manuals(.:format)                                           admin/system_manuals#create
+                                         new_admin_system_manual GET        /admin/system_manuals/new(.:format)                                       admin/system_manuals#new
+                                        edit_admin_system_manual GET        /admin/system_manuals/:id/edit(.:format)                                  admin/system_manuals#edit
+                                             admin_system_manual PATCH      /admin/system_manuals/:id(.:format)                                       admin/system_manuals#update
+                                                                 PUT        /admin/system_manuals/:id(.:format)                                       admin/system_manuals#update
+                                                                 DELETE     /admin/system_manuals/:id(.:format)                                       admin/system_manuals#destroy
+                                                  admin_comments GET        /admin/comments(.:format)                                                 admin/comments#index
+                                                                 POST       /admin/comments(.:format)                                                 admin/comments#create
+                                                   admin_comment GET        /admin/comments/:id(.:format)                                             admin/comments#show
+                                                                 DELETE     /admin/comments/:id(.:format)                                             admin/comments#destroy
+                                                            root GET        /                                                                         landing/home#index
+                                         home_landing_home_index GET        /landing/home/home(.:format)                                              landing/home#home
+                                     about_us_landing_home_index GET        /landing/home/about_us(.:format)                                          landing/home#about_us
+                                     services_landing_home_index GET        /landing/home/services(.:format)                                          landing/home#services
+                                      support_landing_home_index GET        /landing/home/support(.:format)                                           landing/home#support
+                                sales_contact_landing_home_index GET        /landing/home/sales_contact(.:format)                                     landing/home#sales_contact
+                                 form_contact_landing_home_index POST       /landing/home/form_contact(.:format)                                      landing/home#form_contact
+                                        terms_landing_home_index GET        /landing/home/terms(.:format)                                             landing/home#terms
+                                        event_landing_home_index GET        /landing/home/event(.:format)                                             landing/home#event
+                                              landing_home_index GET        /landing/home(.:format)                                                   landing/home#index
+                                                                 POST       /landing/home(.:format)                                                   landing/home#create
+                                                new_landing_home GET        /landing/home/new(.:format)                                               landing/home#new
+                                               edit_landing_home GET        /landing/home/:id/edit(.:format)                                          landing/home#edit
+                                                    landing_home GET        /landing/home/:id(.:format)                                               landing/home#show
+                                                                 PATCH      /landing/home/:id(.:format)                                               landing/home#update
+                                                                 PUT        /landing/home/:id(.:format)                                               landing/home#update
+                                                                 DELETE     /landing/home/:id(.:format)                                               landing/home#destroy
+                            assign_update_admin_mesa_ayuda_index PUT        /admin/mesa_ayuda/assign_update(.:format)                                 admin/mesa_ayuda#assign_update
+                          response_update_admin_mesa_ayuda_index PUT        /admin/mesa_ayuda/response_update(.:format)                               admin/mesa_ayuda#response_update
+                                          admin_mesa_ayuda_index GET        /admin/mesa_ayuda(.:format)                                               admin/mesa_ayuda#index
+                                                                 POST       /admin/mesa_ayuda(.:format)                                               admin/mesa_ayuda#create
+                                            new_admin_mesa_ayuda GET        /admin/mesa_ayuda/new(.:format)                                           admin/mesa_ayuda#new
+                                           edit_admin_mesa_ayuda GET        /admin/mesa_ayuda/:id/edit(.:format)                                      admin/mesa_ayuda#edit
+                                                admin_mesa_ayuda GET        /admin/mesa_ayuda/:id(.:format)                                           admin/mesa_ayuda#show
+                                                                 PATCH      /admin/mesa_ayuda/:id(.:format)                                           admin/mesa_ayuda#update
+                                                                 PUT        /admin/mesa_ayuda/:id(.:format)                                           admin/mesa_ayuda#update
+                                                                 DELETE     /admin/mesa_ayuda/:id(.:format)                                           admin/mesa_ayuda#destroy
+                               assign_update_admin_contact_index PUT        /admin/contact/assign_update(.:format)                                    admin/contact#assign_update
+                             response_update_admin_contact_index PUT        /admin/contact/response_update(.:format)                                  admin/contact#response_update
+                                             admin_contact_index GET        /admin/contact(.:format)                                                  admin/contact#index
+                                                                 POST       /admin/contact(.:format)                                                  admin/contact#create
+                                               new_admin_contact GET        /admin/contact/new(.:format)                                              admin/contact#new
+                                              edit_admin_contact GET        /admin/contact/:id/edit(.:format)                                         admin/contact#edit
+                                                                 GET        /admin/contact/:id(.:format)                                              admin/contact#show
+                                                                 PATCH      /admin/contact/:id(.:format)                                              admin/contact#update
+                                                                 PUT        /admin/contact/:id(.:format)                                              admin/contact#update
+                                                                 DELETE     /admin/contact/:id(.:format)                                              admin/contact#destroy
+                        search_consults_admin_consultation_index GET        /admin/consultation/search_consults(.:format)                             admin/consultation#search_consults
+                                        admin_consultation_index GET        /admin/consultation(.:format)                                             admin/consultation#index
+                                                                 POST       /admin/consultation(.:format)                                             admin/consultation#create
+                                          new_admin_consultation GET        /admin/consultation/new(.:format)                                         admin/consultation#new
+                                         edit_admin_consultation GET        /admin/consultation/:id/edit(.:format)                                    admin/consultation#edit
+                                                                 GET        /admin/consultation/:id(.:format)                                         admin/consultation#show
+                                                                 PATCH      /admin/consultation/:id(.:format)                                         admin/consultation#update
+                                                                 PUT        /admin/consultation/:id(.:format)                                         admin/consultation#update
+                                                                 DELETE     /admin/consultation/:id(.:format)                                         admin/consultation#destroy
+                       assignment_admin_traceability_admin_index PUT        /admin/traceability_admin/assignment(.:format)                            admin/traceability_admin#assignment
+                                  admin_traceability_admin_index GET        /admin/traceability_admin(.:format)                                       admin/traceability_admin#index
+                                                                 POST       /admin/traceability_admin(.:format)                                       admin/traceability_admin#create
+                                    new_admin_traceability_admin GET        /admin/traceability_admin/new(.:format)                                   admin/traceability_admin#new
+                                   edit_admin_traceability_admin GET        /admin/traceability_admin/:id/edit(.:format)                              admin/traceability_admin#edit
+                                                                 GET        /admin/traceability_admin/:id(.:format)                                   admin/traceability_admin#show
+                                                                 PATCH      /admin/traceability_admin/:id(.:format)                                   admin/traceability_admin#update
+                                                                 PUT        /admin/traceability_admin/:id(.:format)                                   admin/traceability_admin#update
+                                                                 DELETE     /admin/traceability_admin/:id(.:format)                                   admin/traceability_admin#destroy
+                     generate_certified_specialists_especialista GET        /specialists/especialista/generate_certified(.:format)                    specialists/especialista#generate_certified
+                         search_patient_specialists_especialista GET        /specialists/especialista/search_patient(.:format)                        specialists/especialista#search_patient
+                         assign_massive_specialists_especialista PUT        /specialists/especialista/assign_massive(.:format)                        specialists/especialista#assign_massive
+                        reasign_consult_specialists_especialista PUT        /specialists/especialista/reasign_consult(.:format)                       specialists/especialista#reasign_consult
+                          edit_profile_specialists_especialistum PUT        /specialists/especialista/:id/edit_profile(.:format)                      specialists/especialista#edit_profile
+                                        specialists_especialista GET        /specialists/especialista(.:format)                                       specialists/especialista#index
+                                                                 POST       /specialists/especialista(.:format)                                       specialists/especialista#create
+                                   new_specialists_especialistum GET        /specialists/especialista/new(.:format)                                   specialists/especialista#new
+                                  edit_specialists_especialistum GET        /specialists/especialista/:id/edit(.:format)                              specialists/especialista#edit
+                                       specialists_especialistum GET        /specialists/especialista/:id(.:format)                                   specialists/especialista#show
+                                                                 PATCH      /specialists/especialista/:id(.:format)                                   specialists/especialista#update
+                                                                 PUT        /specialists/especialista/:id(.:format)                                   specialists/especialista#update
+                                                                 DELETE     /specialists/especialista/:id(.:format)                                   specialists/especialista#destroy
+                              subsidiaries_clients_cliente_index GET        /clients/cliente/subsidiaries(.:format)                                   clients/cliente#subsidiaries
+                            new_subsidiary_clients_cliente_index GET        /clients/cliente/new_subsidiary(.:format)                                 clients/cliente#new_subsidiary
+                                      kits_clients_cliente_index GET        /clients/cliente/kits(.:format)                                           clients/cliente#kits
+                             professionals_clients_cliente_index GET        /clients/cliente/professionals(.:format)                                  clients/cliente#professionals
+                          new_professional_clients_cliente_index GET        /clients/cliente/new_professional(.:format)                               clients/cliente#new_professional
+                       create_professional_clients_cliente_index POST       /clients/cliente/create_professional(.:format)                            clients/cliente#create_professional
+                            search_patient_clients_cliente_index GET        /clients/cliente/search_patient(.:format)                                 clients/cliente#search_patient
+                   generate_history_clinic_clients_cliente_index GET        /clients/cliente/generate_history_clinic(.:format)                        clients/cliente#generate_history_clinic
+                               new_patient_clients_cliente_index GET        /clients/cliente/new_patient(.:format)                                    clients/cliente#new_patient
+                            create_patient_clients_cliente_index POST       /clients/cliente/create_patient(.:format)                                 clients/cliente#create_patient
+                                insurances_clients_cliente_index GET        /clients/cliente/insurances(.:format)                                     clients/cliente#insurances
+                             update_status_clients_cliente_index PUT        /clients/cliente/update_status(.:format)                                  clients/cliente#update_status
+                             generate_rips_clients_cliente_index GET        /clients/cliente/generate_rips(.:format)                                  clients/cliente#generate_rips
+                          bills_insurances_clients_cliente_index GET        /clients/cliente/bills_insurances(.:format)                               clients/cliente#bills_insurances
+                        new_bill_insurance_clients_cliente_index GET        /clients/cliente/new_bill_insurance(.:format)                             clients/cliente#new_bill_insurance
+                                     users_clients_cliente_index GET        /clients/cliente/users(.:format)                                          clients/cliente#users
+                                  new_user_clients_cliente_index GET        /clients/cliente/new_user(.:format)                                       clients/cliente#new_user
+                        update_user_status_clients_cliente_index PUT        /clients/cliente/update_user_status(.:format)                             clients/cliente#update_user_status
+                               create_user_clients_cliente_index POST       /clients/cliente/create_user(.:format)                                    clients/cliente#create_user
+                            system_manuals_clients_cliente_index GET        /clients/cliente/system_manuals(.:format)                                 clients/cliente#system_manuals
+                               show_professional_clients_cliente GET        /clients/cliente/:id/show_professional(.:format)                          clients/cliente#show_professional
+                             send_history_clinic_clients_cliente PUT        /clients/cliente/:id/send_history_clinic(.:format)                        clients/cliente#send_history_clinic
+                                            edit_clients_cliente GET        /clients/cliente/:id/edit(.:format)                                       clients/cliente#edit
+                                           clients_cliente_index GET        /clients/cliente(.:format)                                                clients/cliente#index
+                                                                 POST       /clients/cliente(.:format)                                                clients/cliente#create
+                                             new_clients_cliente GET        /clients/cliente/new(.:format)                                            clients/cliente#new
+                                                                 GET        /clients/cliente/:id/edit(.:format)                                       clients/cliente#edit
+                                                 clients_cliente GET        /clients/cliente/:id(.:format)                                            clients/cliente#show
+                                                                 PATCH      /clients/cliente/:id(.:format)                                            clients/cliente#update
+                                                                 PUT        /clients/cliente/:id(.:format)                                            clients/cliente#update
+                                                                 DELETE     /clients/cliente/:id(.:format)                                            clients/cliente#destroy
+                       generate_certified_nurses_enfermera_index GET        /nurses/enfermera/generate_certified(.:format)                            nurses/enfermera#generate_certified
+                           search_patient_nurses_enfermera_index GET        /nurses/enfermera/search_patient(.:format)                                nurses/enfermera#search_patient
+                                   edit_profile_nurses_enfermera PUT        /nurses/enfermera/:id/edit_profile(.:format)                              nurses/enfermera#edit_profile
+                                          nurses_enfermera_index GET        /nurses/enfermera(.:format)                                               nurses/enfermera#index
+                                                                 POST       /nurses/enfermera(.:format)                                               nurses/enfermera#create
+                                            new_nurses_enfermera GET        /nurses/enfermera/new(.:format)                                           nurses/enfermera#new
+                                           edit_nurses_enfermera GET        /nurses/enfermera/:id/edit(.:format)                                      nurses/enfermera#edit
+                                                nurses_enfermera GET        /nurses/enfermera/:id(.:format)                                           nurses/enfermera#show
+                                                                 PATCH      /nurses/enfermera/:id(.:format)                                           nurses/enfermera#update
+                                                                 PUT        /nurses/enfermera/:id(.:format)                                           nurses/enfermera#update
+                                                                 DELETE     /nurses/enfermera/:id(.:format)                                           nurses/enfermera#destroy
+      create_library_treatment_api_v1_especialista_consult_index POST       /api/v1/especialista/consult/create_library_treatment(.:format)           api/v1/especialista/consult#create_library_treatment
+        create_library_formula_api_v1_especialista_consult_index POST       /api/v1/especialista/consult/create_library_formula(.:format)             api/v1/especialista/consult#create_library_formula
+           create_request_exam_api_v1_especialista_consult_index POST       /api/v1/especialista/consult/create_request_exam(.:format)                api/v1/especialista/consult#create_request_exam
+                create_formula_api_v1_especialista_consult_index POST       /api/v1/especialista/consult/create_formula(.:format)                     api/v1/especialista/consult#create_formula
+        create_formula_mipress_api_v1_especialista_consult_index POST       /api/v1/especialista/consult/create_formula_mipress(.:format)             api/v1/especialista/consult#create_formula_mipress
+           create_next_control_api_v1_especialista_consult_index POST       /api/v1/especialista/consult/create_next_control(.:format)                api/v1/especialista/consult#create_next_control
+                create_request_api_v1_especialista_consult_index POST       /api/v1/especialista/consult/create_request(.:format)                     api/v1/especialista/consult#create_request
+           get_info_specialist_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_info_specialist(.:format)                api/v1/especialista/consult#get_info_specialist
+                   get_history_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_history(.:format)                        api/v1/especialista/consult#get_history
+              response_consult_api_v1_especialista_consult_index PUT        /api/v1/especialista/consult/response_consult(.:format)                   api/v1/especialista/consult#response_consult
+         get_library_treatment_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_library_treatment(.:format)              api/v1/especialista/consult#get_library_treatment
+   get_autocomplete_diagnostic_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_autocomplete_diagnostic(.:format)        api/v1/especialista/consult#get_autocomplete_diagnostic
+      get_treatment_specialist_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_treatment_specialist(.:format)           api/v1/especialista/consult#get_treatment_specialist
+      delete_library_treatment_api_v1_especialista_consult_index DELETE     /api/v1/especialista/consult/delete_library_treatment(.:format)           api/v1/especialista/consult#delete_library_treatment
+           get_library_formula_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_library_formula(.:format)                api/v1/especialista/consult#get_library_formula
+        get_formula_specialist_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_formula_specialist(.:format)             api/v1/especialista/consult#get_formula_specialist
+        delete_library_formula_api_v1_especialista_consult_index DELETE     /api/v1/especialista/consult/delete_library_formula(.:format)             api/v1/especialista/consult#delete_library_formula
+             get_charge_images_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_charge_images(.:format)                  api/v1/especialista/consult#get_charge_images
+               get_edit_images_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_edit_images(.:format)                    api/v1/especialista/consult#get_edit_images
+    create_specialist_response_api_v1_especialista_consult_index POST       /api/v1/especialista/consult/create_specialist_response(.:format)         api/v1/especialista/consult#create_specialist_response
+        get_diagnostic_consult_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_diagnostic_consult(.:format)             api/v1/especialista/consult#get_diagnostic_consult
+            evolution_consults_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/evolution_consults(.:format)                 api/v1/especialista/consult#evolution_consults
+          get_consults_control_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_consults_control(.:format)               api/v1/especialista/consult#get_consults_control
+                client_credits_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/client_credits(.:format)                     api/v1/especialista/consult#client_credits
+      update_remission_consult_api_v1_especialista_consult_index PUT        /api/v1/especialista/consult/update_remission_consult(.:format)           api/v1/especialista/consult#update_remission_consult
+                  edit_consult_api_v1_especialista_consult_index PUT        /api/v1/especialista/consult/edit_consult(.:format)                       api/v1/especialista/consult#edit_consult
+                     show_info_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/show_info(.:format)                          api/v1/especialista/consult#show_info
+                                                                 GET        /api/v1/especialista/consult/evolution_consults(.:format)                 api/v1/especialista/consult#evolution_consults
+                                                                 GET        /api/v1/especialista/consult/get_consults_control(.:format)               api/v1/especialista/consult#get_consults_control
+          evolution_specialist_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/evolution_specialist(.:format)               api/v1/especialista/consult#evolution_specialist
+       get_response_specialist_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_response_specialist(.:format)            api/v1/especialista/consult#get_response_specialist
+       create_library_analysis_api_v1_especialista_consult_index POST       /api/v1/especialista/consult/create_library_analysis(.:format)            api/v1/especialista/consult#create_library_analysis
+   get_library_injury_analysis_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_library_injury_analysis(.:format)        api/v1/especialista/consult#get_library_injury_analysis
+get_injury_analysis_specialist_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_injury_analysis_specialist(.:format)     api/v1/especialista/consult#get_injury_analysis_specialist
+delete_library_injury_analysis_api_v1_especialista_consult_index DELETE     /api/v1/especialista/consult/delete_library_injury_analysis(.:format)     api/v1/especialista/consult#delete_library_injury_analysis
+     get_library_case_analysis_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_library_case_analysis(.:format)          api/v1/especialista/consult#get_library_case_analysis
+  get_case_analysis_specialist_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/get_case_analysis_specialist(.:format)       api/v1/especialista/consult#get_case_analysis_specialist
+  delete_library_case_analysis_api_v1_especialista_consult_index DELETE     /api/v1/especialista/consult/delete_library_case_analysis(.:format)       api/v1/especialista/consult#delete_library_case_analysis
+           dermatoscopy_images_api_v1_especialista_consult_index GET        /api/v1/especialista/consult/dermatoscopy_images(.:format)                api/v1/especialista/consult#dermatoscopy_images
+      update_specialist_consultation_api_v1_especialista_consult PUT        /api/v1/especialista/consult/:id/update_specialist_consultation(.:format) api/v1/especialista/consult#update_specialist_consultation
+                update_images_injury_api_v1_especialista_consult PUT        /api/v1/especialista/consult/:id/update_images_injury(.:format)           api/v1/especialista/consult#update_images_injury
+                               api_v1_especialista_consult_index GET        /api/v1/especialista/consult(.:format)                                    api/v1/especialista/consult#index
+                                                                 POST       /api/v1/especialista/consult(.:format)                                    api/v1/especialista/consult#create
+                                 new_api_v1_especialista_consult GET        /api/v1/especialista/consult/new(.:format)                                api/v1/especialista/consult#new
+                                edit_api_v1_especialista_consult GET        /api/v1/especialista/consult/:id/edit(.:format)                           api/v1/especialista/consult#edit
+                                     api_v1_especialista_consult GET        /api/v1/especialista/consult/:id(.:format)                                api/v1/especialista/consult#show
+                                                                 PATCH      /api/v1/especialista/consult/:id(.:format)                                api/v1/especialista/consult#update
+                                                                 PUT        /api/v1/especialista/consult/:id(.:format)                                api/v1/especialista/consult#update
+                                                                 DELETE     /api/v1/especialista/consult/:id(.:format)                                api/v1/especialista/consult#destroy
+                         get_subsidiary_api_v1_cliente_admin_ips GET        /api/v1/cliente/admin_ips/get_subsidiary(.:format)                        api/v1/cliente/admin_ips#get_subsidiary
+                    create_subsidiaries_api_v1_cliente_admin_ips POST       /api/v1/cliente/admin_ips/create_subsidiaries(.:format)                   api/v1/cliente/admin_ips#create_subsidiaries
+                    delete_subsidiaries_api_v1_cliente_admin_ips DELETE     /api/v1/cliente/admin_ips/delete_subsidiaries(.:format)                   api/v1/cliente/admin_ips#delete_subsidiaries
+                         get_insurances_api_v1_cliente_admin_ips GET        /api/v1/cliente/admin_ips/get_insurances(.:format)                        api/v1/cliente/admin_ips#get_insurances
+                       create_insurance_api_v1_cliente_admin_ips POST       /api/v1/cliente/admin_ips/create_insurance(.:format)                      api/v1/cliente/admin_ips#create_insurance
+                      delete_insurances_api_v1_cliente_admin_ips DELETE     /api/v1/cliente/admin_ips/delete_insurances(.:format)                     api/v1/cliente/admin_ips#delete_insurances
+                        get_kits_client_api_v1_cliente_admin_ips GET        /api/v1/cliente/admin_ips/get_kits_client(.:format)                       api/v1/cliente/admin_ips#get_kits_client
+                   get_bills_insurances_api_v1_cliente_admin_ips GET        /api/v1/cliente/admin_ips/get_bills_insurances(.:format)                  api/v1/cliente/admin_ips#get_bills_insurances
+                  create_bill_insurance_api_v1_cliente_admin_ips POST       /api/v1/cliente/admin_ips/create_bill_insurance(.:format)                 api/v1/cliente/admin_ips#create_bill_insurance
+                 delete_bills_insurance_api_v1_cliente_admin_ips DELETE     /api/v1/cliente/admin_ips/delete_bills_insurance(.:format)                api/v1/cliente/admin_ips#delete_bills_insurance
+                                        api_v1_cliente_admin_ips GET        /api/v1/cliente/admin_ips(.:format)                                       api/v1/cliente/admin_ips#index
+                                                                 POST       /api/v1/cliente/admin_ips(.:format)                                       api/v1/cliente/admin_ips#create
+                                     new_api_v1_cliente_admin_ip GET        /api/v1/cliente/admin_ips/new(.:format)                                   api/v1/cliente/admin_ips#new
+                                    edit_api_v1_cliente_admin_ip GET        /api/v1/cliente/admin_ips/:id/edit(.:format)                              api/v1/cliente/admin_ips#edit
+                                         api_v1_cliente_admin_ip GET        /api/v1/cliente/admin_ips/:id(.:format)                                   api/v1/cliente/admin_ips#show
+                                                                 PATCH      /api/v1/cliente/admin_ips/:id(.:format)                                   api/v1/cliente/admin_ips#update
+                                                                 PUT        /api/v1/cliente/admin_ips/:id(.:format)                                   api/v1/cliente/admin_ips#update
+                                                                 DELETE     /api/v1/cliente/admin_ips/:id(.:format)                                   api/v1/cliente/admin_ips#destroy
+        create_next_control_api_v1_enfermera_nurse_consult_index POST       /api/v1/enfermera/nurse_consult/create_next_control(.:format)             api/v1/enfermera/nurse_consult#create_next_control
+             create_request_api_v1_enfermera_nurse_consult_index POST       /api/v1/enfermera/nurse_consult/create_request(.:format)                  api/v1/enfermera/nurse_consult#create_request
+             get_info_nurse_api_v1_enfermera_nurse_consult_index GET        /api/v1/enfermera/nurse_consult/get_info_nurse(.:format)                  api/v1/enfermera/nurse_consult#get_info_nurse
+                get_history_api_v1_enfermera_nurse_consult_index GET        /api/v1/enfermera/nurse_consult/get_history(.:format)                     api/v1/enfermera/nurse_consult#get_history
+           response_consult_api_v1_enfermera_nurse_consult_index PUT        /api/v1/enfermera/nurse_consult/response_consult(.:format)                api/v1/enfermera/nurse_consult#response_consult
+          get_charge_images_api_v1_enfermera_nurse_consult_index GET        /api/v1/enfermera/nurse_consult/get_charge_images(.:format)               api/v1/enfermera/nurse_consult#get_charge_images
+            get_edit_images_api_v1_enfermera_nurse_consult_index GET        /api/v1/enfermera/nurse_consult/get_edit_images(.:format)                 api/v1/enfermera/nurse_consult#get_edit_images
+ create_specialist_response_api_v1_enfermera_nurse_consult_index POST       /api/v1/enfermera/nurse_consult/create_specialist_response(.:format)      api/v1/enfermera/nurse_consult#create_specialist_response
+                  show_info_api_v1_enfermera_nurse_consult_index GET        /api/v1/enfermera/nurse_consult/show_info(.:format)                       api/v1/enfermera/nurse_consult#show_info
+   update_remission_consult_api_v1_enfermera_nurse_consult_index PUT        /api/v1/enfermera/nurse_consult/update_remission_consult(.:format)        api/v1/enfermera/nurse_consult#update_remission_consult
+        update_nurse_consultation_api_v1_enfermera_nurse_consult PUT        /api/v1/enfermera/nurse_consult/:id/update_nurse_consultation(.:format)   api/v1/enfermera/nurse_consult#update_nurse_consultation
+             update_images_injury_api_v1_enfermera_nurse_consult PUT        /api/v1/enfermera/nurse_consult/:id/update_images_injury(.:format)        api/v1/enfermera/nurse_consult#update_images_injury
+                            api_v1_enfermera_nurse_consult_index GET        /api/v1/enfermera/nurse_consult(.:format)                                 api/v1/enfermera/nurse_consult#index
+                                                                 POST       /api/v1/enfermera/nurse_consult(.:format)                                 api/v1/enfermera/nurse_consult#create
+                              new_api_v1_enfermera_nurse_consult GET        /api/v1/enfermera/nurse_consult/new(.:format)                             api/v1/enfermera/nurse_consult#new
+                             edit_api_v1_enfermera_nurse_consult GET        /api/v1/enfermera/nurse_consult/:id/edit(.:format)                        api/v1/enfermera/nurse_consult#edit
+                                  api_v1_enfermera_nurse_consult GET        /api/v1/enfermera/nurse_consult/:id(.:format)                             api/v1/enfermera/nurse_consult#show
+                                                                 PATCH      /api/v1/enfermera/nurse_consult/:id(.:format)                             api/v1/enfermera/nurse_consult#update
+                                                                 PUT        /api/v1/enfermera/nurse_consult/:id(.:format)                             api/v1/enfermera/nurse_consult#update
+                                                                 DELETE     /api/v1/enfermera/nurse_consult/:id(.:format)                             api/v1/enfermera/nurse_consult#destroy
+                                           login_api_v1_sessions POST       /api/v1/sessions/login(.:format)                                          api/v1/sessions#login
+                                        register_api_v1_sessions POST       /api/v1/sessions/register(.:format)                                       api/v1/sessions#register
+                                 forget_password_api_v1_sessions POST       /api/v1/sessions/forget_password(.:format)                                api/v1/sessions#forget_password
+                                    certificated_api_v1_sessions GET        /api/v1/sessions/certificated(.:format)                                   api/v1/sessions#certificated
+                                        tutorial_api_v1_sessions PUT        /api/v1/sessions/tutorial(.:format)                                       api/v1/sessions#tutorial
+                                                  api_v1_session PATCH      /api/v1/sessions/:id(.:format)                                            api/v1/sessions#update
+                                                                 PUT        /api/v1/sessions/:id(.:format)                                            api/v1/sessions#update
+                                                 api_v1_patients POST       /api/v1/patients(.:format)                                                api/v1/patients#create
+                                                  api_v1_patient GET        /api/v1/patients/:id(.:format)                                            api/v1/patients#show
+                      archived_consultation_api_v1_consultations POST       /api/v1/consultations/archived_consultation(.:format)                     api/v1/consultations#archived_consultation
+                       shared_consultations_api_v1_consultations POST       /api/v1/consultations/shared_consultations(.:format)                      api/v1/consultations#shared_consultations
+                      shared_formula_mipres_api_v1_consultations POST       /api/v1/consultations/shared_formula_mipres(.:format)                     api/v1/consultations#shared_formula_mipres
+                               traceability_api_v1_consultations POST       /api/v1/consultations/traceability(.:format)                              api/v1/consultations#traceability
+                           show_information_api_v1_consultations GET        /api/v1/consultations/show_information(.:format)                          api/v1/consultations#show_information
+                            all_information_api_v1_consultations GET        /api/v1/consultations/all_information(.:format)                           api/v1/consultations#all_information
+                            response_request_api_v1_consultation PUT        /api/v1/consultations/:id/response_request(.:format)                      api/v1/consultations#response_request
+                              reject_request_api_v1_consultation PUT        /api/v1/consultations/:id/reject_request(.:format)                        api/v1/consultations#reject_request
+                                            api_v1_consultations GET        /api/v1/consultations(.:format)                                           api/v1/consultations#index
+                                                                 POST       /api/v1/consultations(.:format)                                           api/v1/consultations#create
+                                             api_v1_consultation PATCH      /api/v1/consultations/:id(.:format)                                       api/v1/consultations#update
+                                                                 PUT        /api/v1/consultations/:id(.:format)                                       api/v1/consultations#update
+                                                                 DELETE     /api/v1/consultations/:id(.:format)                                       api/v1/consultations#destroy
+                                      api_v1_nurse_consultations GET        /api/v1/nurse_consultations(.:format)                                     api/v1/nurse_consultations#index
+                                                                 POST       /api/v1/nurse_consultations(.:format)                                     api/v1/nurse_consultations#create
+                                       api_v1_nurse_consultation PATCH      /api/v1/nurse_consultations/:id(.:format)                                 api/v1/nurse_consultations#update
+                                                                 PUT        /api/v1/nurse_consultations/:id(.:format)                                 api/v1/nurse_consultations#update
+                                                                 DELETE     /api/v1/nurse_consultations/:id(.:format)                                 api/v1/nurse_consultations#destroy
+                                           api_v1_nurse_controls GET        /api/v1/nurse_controls(.:format)                                          api/v1/nurse_controls#index
+                                                                 POST       /api/v1/nurse_controls(.:format)                                          api/v1/nurse_controls#create
+                                            api_v1_nurse_control PATCH      /api/v1/nurse_controls/:id(.:format)                                      api/v1/nurse_controls#update
+                                                                 PUT        /api/v1/nurse_controls/:id(.:format)                                      api/v1/nurse_controls#update
+                                                                 DELETE     /api/v1/nurse_controls/:id(.:format)                                      api/v1/nurse_controls#destroy
+                                individual_image_api_v1_injuries POST       /api/v1/injuries/individual_image(.:format)                               api/v1/injuries#individual_image
+                                                 api_v1_injuries POST       /api/v1/injuries(.:format)                                                api/v1/injuries#create
+                                         api_v1_medical_controls POST       /api/v1/medical_controls(.:format)                                        api/v1/medical_controls#create
+                             departments_api_v1_static_resources GET        /api/v1/static_resources/departments(.:format)                            api/v1/static_resources#departments
+                        system_constants_api_v1_static_resources GET        /api/v1/static_resources/system_constants(.:format)                       api/v1/static_resources#system_constants
+                              insurances_api_v1_static_resources GET        /api/v1/static_resources/insurances(.:format)                             api/v1/static_resources#insurances
+                              body_areas_api_v1_static_resources GET        /api/v1/static_resources/body_areas(.:format)                             api/v1/static_resources#body_areas
+                                diseases_api_v1_static_resources GET        /api/v1/static_resources/diseases(.:format)                               api/v1/static_resources#diseases
+                      get_municipalities_api_v1_static_resources GET        /api/v1/static_resources/get_municipalities(.:format)                     api/v1/static_resources#get_municipalities
+                          get_insurances_api_v1_static_resources GET        /api/v1/static_resources/get_insurances(.:format)                         api/v1/static_resources#get_insurances
+                          municipalities_api_v1_static_resources GET        /api/v1/static_resources/municipalities(.:format)                         api/v1/static_resources#municipalities
+                          all_insurances_api_v1_static_resources GET        /api/v1/static_resources/all_insurances(.:format)                         api/v1/static_resources#all_insurances
+                      get_ips_insurances_api_v1_static_resources GET        /api/v1/static_resources/get_ips_insurances(.:format)                     api/v1/static_resources#get_ips_insurances
+                                  access_api_v1_static_resources GET        /api/v1/static_resources/access(.:format)                                 api/v1/static_resources#access
+                                  device_api_v1_static_resources GET        /api/v1/static_resources/device(.:format)                                 api/v1/static_resources#device
+                  get_designed_responses_api_v1_static_resources GET        /api/v1/static_resources/get_designed_responses(.:format)                 api/v1/static_resources#get_designed_responses
+                            get_diseases_api_v1_static_resources GET        /api/v1/static_resources/get_diseases(.:format)                           api/v1/static_resources#get_diseases
+                                              api_v1_managements GET        /api/v1/managements(.:format)                                             api/v1/managements#index
+                                                                 POST       /api/v1/managements(.:format)                                             api/v1/managements#create
+                                               api_v1_management PATCH      /api/v1/managements/:id(.:format)                                         api/v1/managements#update
+                                                                 PUT        /api/v1/managements/:id(.:format)                                         api/v1/managements#update

@@ -1,0 +1,25 @@
+# Logs y cache
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Activos compilados
+/public/assets
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+
+# Active Storage
+/storage/*
+!/storage/.keep
+
+# Herramientas
+.byebug_history
+/.bundle
+
+# Credenciales/variables
+/config/master.key
+.env
+.env.*

@@ -1,0 +1,128 @@
+<!--<body class="hold-transition skin-blue sidebar-mini">-->
+  
+    <!--<header class="main-header">
+      
+      <div class="logo">
+        
+        <span class="logo-mini"><b>A</b>LT</span>
+        
+        <span class="logo-lg"><img src="<%#= asset_path("logo_inicio.png") %>" style="width:85px;height:87%;" alt="User Image"></span>
+      </div>
+      
+      <nav class="navbar navbar-static-top">
+        
+        <h3 style="color:white;padding-left:20px;margin-top:13px;">Haz oficial el ingreso a la plataforma</h3>
+      </nav>
+    </header>
+    <%#= if notice %>
+      <div class="alert alert-success" role="alert">
+        <%#= notice %>
+      </div>
+    <%#= end %>
+    <%#= if alert %>
+      <div class="alert alert-danger" role="alert">
+        <%#= alert %>
+      </div>
+    <%#= end %>
+    
+      <%#= form_for @client, url: {controller: 'client_users/registrations', action: 'create'} do |f| %>
+        <div class="form-group">
+          <label for="">
+            Número de documento
+          </label>
+          <%#= f.text_field :business_name, class: "form-control", minlength: "5", maxlength: "15"  %>
+        </div>
+        <div class="form-group">
+          <label for="">
+            Tipo de identificación
+          </label>
+          <%#= f.select :type_identification, options_for_select([['Cédula de ciudadania', 1], ['Cédula de extranjería', 2], ['Carné diplomatico', 3], ['Pasaporte', 4], ['Permiso especial de permanencia', 5], ['Residente especial para la paz', 6], ['NIT', 7]]), {prompt: 'Seleccione'}, class:"form-control", readonly: true %>
+        </div>
+        <div class="form-group">
+          <label for="">
+            Número de documento
+          </label>
+          <%#= f.text_field :identification_number, class: "form-control", minlength: "5", maxlength: "15"  %>
+        </div>
+        <div>
+          <h3>Aseguradora de la IPS</h3>
+        </div>
+        <%#= f.fields_for :ips_insurances do |insurance| %>
+          <%#= render "insurances", f: insurance %>
+        <%#= end %>
+          <%#= link_to_add_fields "Agregar aseguradora", f, :ips_insurances%>
+        -->
+        <!-- Informacion del Cliente -->  
+        <%#= f.fields_for :client_users do |client_user| %>
+          <!--<div class="form-group">
+            <label for="">
+              Nombres
+            </label>
+            <%#= client_user.text_field :name, class: "form-control"  %>
+          </div>
+          <div class="form-group">
+            <label for="">
+              Apellidos
+            </label>
+            <%#= client_user.text_field :surnames, class: "form-control"  %>
+          </div>
+          <div class="form-group">
+            <label for="">
+              Número de documento
+            </label>
+            <%#= client_user.text_field :number_document, class: "form-control"  %>
+          </div>
+          <div class="form-group">
+            <label for="">
+              Tipo de profesional
+            </label>
+            <%#= client_user.text_field :type_professional, class: "form-control"  %>
+          </div>
+          <div class="form-group">
+            <label for="">
+              Teléfono
+            </label>
+            <%#= client_user.text_field :phone, class: "form-control"  %>
+          </div>
+          <div class="form-group">
+            <label for="">
+              Correo electrónico
+            </label>
+            <%#= client_user.text_field :email, class: "form-control"  %>
+          </div>
+          <div class="form-group">
+            <label for="">
+              Contraseña
+            </label>
+            <%#= client_user.text_field :password, class: "form-control"  %>
+          </div>
+          <div class="form-group">
+            <label for="">
+              Terminos y condiciones
+            </label>
+            <%#= client_user.check_box :terms_and_conditions, {required: "required"}, true, false%>
+          </div>
+        <%#=end%>
+        <div class="text-center button">
+          <%#= f.submit class: 'btn button-login', value: "Registrarme", format: 'js' %>
+        </div>
+      <%#= end %>
+</body>
+
+<script type="text/javascript">
+  function add_fields(link, association, content) {
+    var new_id = new Date().getTime();
+
+    // find the new_ + "association" that was defined in Rails helper
+    var regexp = new RegExp("new_" + association, "g");
+
+    // find the container and append in the sub field content
+    $(link).prev().append(content.replace(regexp, new_id));
+    return false;
+  }
+
+  function removeField(link) {
+    $(link).prev("input[type=hidden]").val("1");
+    $(link).closest(".fields").fadeOut();
+  }
+</script>-->

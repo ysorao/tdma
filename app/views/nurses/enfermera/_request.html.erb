@@ -1,0 +1,41 @@
+<div class="col-md-12" id="request" style="display: none;"> 
+  <!-- Requerimiento -->
+  <div class="row">
+    <div class="col-md-12 secondary_title">
+      <h4 class="control">Requerimiento</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <label class="control texto_color" for="Name">Tipo de requerimiento</label>
+    </div>
+    <div>
+      <select class="form-control field_req" ng-model="cCtlr.type_request" ng-init="cCtlr.type_request='1'">
+        <option value="1">No fue posible responder la teleconsulta de enfermería: Imágenes desenfocadas e insuficientes para el diagnóstico. Por favor repetirlas.</option>
+        <option value="2">No fue posible responder la teleconsulta de enfermería: No hay imágenes con acercamiento de la lesión. Por favor adicionar imágenes con detalles de la lesión a 2x, 4x o 6x. Por favor adicionarlas.</option>
+        <option value="3">No fue posible responder la teleconsulta de enfermería: Se requiere imágenes perpendiculares de la lesión. Por favor adicionarlas.</option>
+        <option value="4">No fue posible responder la teleconsulta de enfermería. Examen físico incompleto. Por favor describir mejor y enviar para evaluación.</option>
+      </select>
+    </div>
+    <p class="error" ng-show="cCtlr.type_request == ''">{{cCtlr.request}} </p>
+  </div>
+  <div class="row">
+    <div>
+      <label class="control texto_color" for="Name">Comentario</label>
+    </div>
+    <div>   
+      <textarea class="form-control field_req" placeholder="Ingrese las recomendaciones para responder al requerimiento" ng-model="cCtlr.comment" rows="4" cols="10" ng-keyup="show_button('btn_req', $event)"></textarea>
+    </div>
+  </div>
+  <br>
+  <!-- Botones -->
+  <div class="row">
+    <div class="col-md-offset-10">
+      <button type="button" class="btn button-save" ng-click="cCtlr.NewRequestNurse()" id="btn_req" ng-disabled="checked5">Guardar</button>
+    </div>
+  </div>
+  <br>
+  <div class="row"> 	
+    <button type="button" class="btn btn-primary form-control button_respond" ng-click="cCtlr.UpdateResponseConsult(true, 2)">Responder consulta</button>
+  </div>
+</div>

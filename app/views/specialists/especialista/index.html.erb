@@ -1,0 +1,505 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center col-sm-6 col-xs-12" id="myDIV"> 
+    <br>
+    <br>
+    <% if params[:option].to_s == "1" %>
+      <%= link_to specialists_especialista_path(status: Consultation::PENDIENTE, option: 1), class:"btn btn-primary btn-lg boton_superior presionar activo", "data-turbolinks" => "false", format: 'js' do %>
+        <span class=""><img src="<%= asset_path("pendientes.png")%>", style="width:20px;"> Pendientes</span>
+      <% end %>
+    <% else %>
+      <%= link_to specialists_especialista_path(status: Consultation::PENDIENTE, option: 1), class:"btn btn-primary btn-lg boton_superior presionar", "data-turbolinks" => "false", format: 'js' do %>
+        <span class=""><img src="<%= asset_path("pendientes.png")%>", style="width:20px;"> Pendientes</span>
+      <% end %>
+    <% end %>
+    <% if current_user.type_professional == User::ESPECIALISTA && current_user.type_specialist == User::DERMATOLOGO %>
+      <% if params[:option].to_s == "2" %>
+        <%= link_to specialists_especialista_path(status: Consultation::EVALUANDO, option: 2), class:"btn btn-primary btn-lg boton_superior presionar activo", "data-turbolinks" => "false", format: 'js' do %>
+          <span class=""><img src="<%= asset_path("asignadas.png")%>", style="width:30px;"> Asignadas</span>
+        <% end %>
+      <% else %>
+        <%= link_to specialists_especialista_path(status: Consultation::EVALUANDO, option: 2), class:"btn btn-primary btn-lg boton_superior presionar", "data-turbolinks" => "false", format: 'js' do %>
+          <span class=""><img src="<%= asset_path("asignadas.png")%>", style="width:30px;"> Asignadas</span>
+        <% end %>
+      <% end %>
+      <% if params[:option].to_s == "3" %>
+        <%= link_to specialists_especialista_path(status: Consultation::RESUELTO, option: 3), class:"btn btn-primary btn-lg boton_superior presionar activo", "data-turbolinks" => "false", format: 'js', id:'pendiente' do %>
+          <span class="", id="prueba"><img src="<%= asset_path("resueltas.png")%>", style="width:33px;"> Resueltas</span>
+        <% end %>
+      <%else%>
+        <%= link_to specialists_especialista_path(status: Consultation::RESUELTO, option: 3), class:"btn btn-primary btn-lg boton_superior presionar", "data-turbolinks" => "false", format: 'js', id:'pendiente' do %>
+          <span class="", id="prueba"><img src="<%= asset_path("resueltas.png")%>", style="width:33px;"> Resueltas</span>
+        <% end %>
+      <%end%>
+      <% if params[:option].to_s == "4" %>
+        <%= link_to specialists_especialista_path(status: Consultation::REQUERIMIENTO, option: 4), class:"btn btn-primary btn-lg boton_superior presionar activo", "data-turbolinks" => "false", format: 'js', id:'pendiente' do %>
+          <span class="", id="prueba"><img src="<%= asset_path("requerimientos.png")%>", style="width:32px;"> Requerimientos</span>
+        <% end %>
+      <%else%>
+        <%= link_to specialists_especialista_path(status: Consultation::REQUERIMIENTO, option: 4), class:"btn btn-primary btn-lg boton_superior presionar", "data-turbolinks" => "false", format: 'js', id:'pendiente' do %>
+          <span class="", id="prueba"><img src="<%= asset_path("requerimientos.png")%>", style="width:32px;"> Requerimientos</span>
+        <% end %>
+      <%end%>
+    <% end %>   
+    </div>
+  </div>
+  <br>
+  <br>
+  <%#= unless @consults.nil? %>
+    <%#= if @consults.any? %>
+      <% if params[:status].to_i == Consultation::PENDIENTE %>
+        <div class="row">
+          <div class="col-md-offset-10">
+            <button class="btn btn-success" data-toggle="modal" data-target="#assign_massive_specialist" id="massive" style="display: none">
+              Asignación masiva
+            </button>
+            <%= render partial: 'modal_assign_massive'%>
+          </div>
+        </div>
+      <%end%>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table table-condensed">
+              <table class="table table-hover custom-table" id="dev-table">
+                <thead>
+                  <tr>
+                    <% if params[:status].to_i == Consultation::PENDIENTE %>
+                      <th class="border_color">
+                      <!--<input type="checkbox" id="checkall" onclick="all_checkbox();"/></th>-->
+                    <%end%>
+                    <th class="text-center border_color">
+                      <%= Patient.human_attribute_name :name %>
+                    </th>
+                    <% if params[:status].to_i == Consultation::EVALUANDO %>
+                      <th class="text-center border_color">
+                        Fecha
+                      </th>
+                    <%end%>
+                    <% if params[:status].to_i == Consultation::EVALUANDO %>
+                      <th class="text-center border_color">
+                        Hora
+                      </th>
+                    <%end%>
+                    <% if params[:status].to_i != Consultation::EVALUANDO %>
+                      <% if params[:status].to_i == Consultation::RESUELTO %>
+                        <th class="text-center border_color" style="padding-left:12px;">
+                          <%= Patient.human_attribute_name :number_document %>  
+                        </th>
+                      <%else%>
+                        <th class="text-center border_color">
+                          <%= Patient.human_attribute_name :number_document %>  
+                        </th>
+                      <%end%>
+                    <%end%>
+                    <% if params[:status].to_i != Consultation::EVALUANDO %>
+                      <% if params[:status].to_i == Consultation::RESUELTO %>
+                        <th class="text-right border_color" style="padding-right:20px;">
+                          Fecha
+                        </th>
+                      <%else%>
+                        <th class="text-center border_color">
+                          Fecha
+                        </th>
+                      <%end%>
+                    <%end%>
+                    <% if params[:status].to_i != Consultation::EVALUANDO %>
+                      <% if params[:status].to_i == Consultation::RESUELTO %>
+                        <th class="text-right border_color" style="padding-right:20px;">
+                          Hora
+                        </th>
+                      <%else%>
+                        <th class="text-center border_color">
+                          Hora
+                        </th>
+                      <%end%>
+                    <%end%>
+                    <th class="text-center border_color">
+                      Estado de la consulta 
+                    </th>
+                    <% if params[:status].to_i == Consultation::PENDIENTE %>
+                      <th class="text-center border_color">Impresión diagnóstica</th>
+                    <%end%>
+                    <%#= if params[:status].to_i == Consultation::ARCHIVADO %>
+                      <!--<th class="text-center border_color">
+                        Desarchivar 
+                      </th>-->
+                    <%#=end%>
+                    <% if params[:status].to_i == Consultation::EVALUANDO %>
+                      <th class="text-center border_color">
+                        Asignación  
+                      </th>
+                      <th class="text-center border_color">
+                        Reasignar  
+                      </th>
+                    <%end%>
+
+                    <% if params[:status].to_i == Consultation::PENDIENTE || request.fullpath == "/specialists/especialista" %>
+                      <th class="border_color text-center">Asignar consulta</th>
+                    <%end%>
+                  </tr>
+                </thead>
+                <tbody>
+                <% a = [] %>
+                <% @consults.each_with_index do |consult, i| %>
+                  <tr>
+                    <% if params[:status].to_i == Consultation::PENDIENTE %>
+                      <td>
+                        <!-- Permite diferenciar entre id de control y consulta -->
+                        <% consulta_id = list_consult(consult.id, consult.class)%>
+                        <% if a.include?(consult.id) %>
+                          <input type="checkbox" name="check" id='checkbox_<%=consult.id.to_s + '-' + '1'%>' onclick="consultas_masivas('<%=consulta_id%>', '<%=consult.id.to_s + '-' + '1'%>')">
+                        <%else%>
+                          <input type="checkbox" name="check" id='checkbox_<%=consult.id.to_s + '-' + '0'%>' onclick="consultas_masivas('<%=consulta_id%>', '<%=consult.id.to_s + '-' + '0'%>')">
+                        <%end%>
+                      </td>
+                      <% a.push(consult.id) %>
+                    <%end%>
+                    <% if params[:status].to_i != Consultation::RESUELTO %>
+                      <% if consult.class.name == "ConsultationControl"%>
+                        <td class="text-center"><%= consult.consultation.patient.name.to_s + ' ' + consult.consultation.patient.second_name.to_s + ' ' + consult.consultation.patient.last_name.to_s + ' ' + consult.consultation.patient.second_surname.to_s %></td>
+                      <%else%>
+                        <td class="text-center"><%= consult.patient.name.to_s + ' ' + consult.patient.second_name.to_s + ' ' + consult.patient.last_name.to_s + ' ' + consult.patient.second_surname.to_s %></td>
+                      <%end%>
+                    <%end%>
+                    <% if params[:status].to_i == Consultation::EVALUANDO %>
+                      <td class="text-center"><%= consult.updated_at.strftime("%d/%m/%Y")%></td>
+                    <%end%>
+                    <% if params[:status].to_i == Consultation::EVALUANDO %>
+                      <td class="text-center"><%= consult.updated_at.strftime("%I:%M %P")%></td>
+                    <%end%>
+                    <% if params[:status].to_i != Consultation::EVALUANDO && params[:status].to_i != Consultation::RESUELTO%>
+                      <% if consult.class.name == "ConsultationControl"%>
+                        <td class="text-center"><%= consult.consultation.patient.number_document %></td>
+                      <%else%>
+                        <td class="text-center"><%= consult.patient.number_document %></td>
+                      <%end%>
+                    <%end%>
+                    <% if params[:status].to_i != Consultation::EVALUANDO && params[:status].to_i != Consultation::RESUELTO%>
+                      <td class="text-center"><%= consult.updated_at.strftime("%d/%m/%Y")%></td>
+                    <%end%>
+                    <% if params[:status].to_i != Consultation::EVALUANDO && params[:status].to_i != Consultation::RESUELTO%> 
+                        <td class="text-center"><%= consult.updated_at.strftime("%I:%M%P")%></td> 
+                    <%end%>
+                    <% if consult.status == Consultation::PENDIENTE %>
+                      <% if Date.today == consult.updated_at.to_date && Time.now <= consult.updated_at + 6.hour %>
+                        <td class="text-center">
+                            <label for="male">
+                              <span class="btn btn-success btn-md" style="cursor:none;">Pendiente</span>
+                            </label>
+                        </td>
+                      <%elsif Date.today == consult.updated_at.to_date && Time.now <= consult.updated_at + 12.hour %>
+                        <td class="text-center">  
+                          <label for="male">
+                            <span class="btn btn-warning btn-md" style="cursor:none;">Pendiente</span>
+                          </label>
+                        </td>
+                      <%else%>
+                        <td class="text-center">  
+                          <label for="male">
+                            <span class="btn btn-danger btn-md" style="cursor:none;">Pendiente</span>
+                          </label>
+                        </td>
+                      <%end%>     
+                    <%elsif consult.status == Consultation::EVALUANDO%>
+                      <% if Date.today == consult.updated_at.to_date && Time.now <= consult.updated_at + 6.hour %>
+                          <td class="text-center">
+                            <% if consult.class.name == "ConsultationControl"%>
+                              <%= link_to new_specialists_especialistum_path(control_id: consult.id), "data-turbolinks" => "false" do %>
+                                <span class="btn btn-success btn-md">Pendiente</span>
+                              <% end %>
+                            <%else%>
+                              <%= link_to new_specialists_especialistum_path(consult_id: consult.id), "data-turbolinks" => "false" do %>
+                                <span class="btn btn-success btn-md">Pendiente</span>
+                              <% end %>
+                            <%end%>
+                          </td>
+                        <%elsif Date.today == consult.updated_at.to_date && Time.now <= consult.updated_at + 12.hour %>
+                          <td class="text-center">
+                            <% if consult.class.name == "ConsultationControl"%>
+                              <%= link_to new_specialists_especialistum_path(control_id: consult.id), "data-turbolinks" => "false" do %>
+                                <span class="btn btn-warning btn-md">Pendiente</span>
+                              <% end %>
+                            <%else%>
+                              <%= link_to new_specialists_especialistum_path(consult_id: consult.id), "data-turbolinks" => "false" do %>
+                                <span class="btn btn-warning btn-md">Pendiente</span>
+                              <% end %>
+                            <%end%>
+                          </td>
+                        <%else%>
+                          <td class="text-center">
+                            <% if consult.class.name == "ConsultationControl"%>
+                              <%= link_to new_specialists_especialistum_path(control_id: consult.id), "data-turbolinks" => "false" do %>
+                                <span class="btn btn-danger btn-md">Pendiente</span>
+                              <% end %>
+                            <%else%>
+                              <%= link_to new_specialists_especialistum_path(consult_id: consult.id), "data-turbolinks" => "false" do %>
+                                <span class="btn btn-danger btn-md">Pendiente</span>
+                              <% end %>
+                            <%end%>
+                          </td>
+                        <%end%>
+                    <%#=elsif consult.status == Consultation::REMISION%>
+                      <!--<td class="text-center">
+                        <%#= link_to new_specialists_especialistum_path(consult_id: consult.id) do %>
+                          <span class="btn btn-danger btn-md">Remisión</span>
+                        <%#= end %>
+                      </td>-->
+                    <%#=else%>
+                      <!--<td class="text-center"><span class="btn btn-success btn-md">Resuelta</span></td>-->
+                    <%elsif consult.status == Consultation::REQUERIMIENTO%>
+                      <td class="text-center">
+                        <% if consult.class.name == "ConsultationControl"%>
+                          <%= link_to new_specialists_especialistum_path(control_id: consult.id), "data-turbolinks" => "false" do %>
+                            <span class="btn btn-warning btn-md">Requerimiento</span>
+                          <% end %>
+                        <%else%>
+                          <%= link_to new_specialists_especialistum_path(consult_id: consult.id), "data-turbolinks" => "false" do %>
+                            <span class="btn btn-warning btn-md">Requerimiento</span>
+                          <% end %>
+                        <%end%>
+                      </td>  
+                    <%end%>
+                    <% if consult.status == Consultation::PENDIENTE %>
+                      <td class="text-left" style="width: 35%"><%= Disease.find_by_code(consult.diagnostic_impression).nil? ? 'No tiene' : Disease.find_by_code(consult.diagnostic_impression).name%></td>
+                    <%end%>
+                    <% if consult.status == Consultation::PENDIENTE %>
+                      <td class="text-center">
+                        <button class="btn button-login btn-open" data-toggle="modal" data-target="#assign_specialist<%=consult.id%>">
+                          <i class="fa fa-share-alt fa-2x"></i>
+                        </button>
+                        <%= render partial: 'modal_assign', locals: {consult: consult.id, object: consult}%>
+                      </td>
+                    <%end%>
+                    <% if consult.status == Consultation::EVALUANDO %>
+                      <td class="text-center"><%= consult.assign_id.nil? ? '' : user_assign(consult.assign_id)%></td>
+                      <td class="text-center"> 
+                        <button class="btn btn-success" data-toggle="modal" data-target="#reasign_specialist<%=consult.id%>" id="">
+                          Reasignar
+                        </button>
+                        <%= render partial: 'modal_reasign', locals: {consult: consult.id, object: consult.class.name}%>
+                      </td>
+                    <%end%>
+                  </tr>
+                <%end%>
+                </tbody>
+                <% @consults.group_by(&:patient_id).each_with_index do |consult, i| %>
+                  <% if consult[1][0].status == Consultation::RESUELTO || consult[1][0].status == Consultation::REMISION%>
+                    <tbody>
+                      <tr>
+                        <td colspan="5">
+                          <table cellpadding="0" cellspacing="0" class="tbl-accordion-nested">
+                            <thead>
+                              <% if consult[1][0].status == Consultation::RESUELTO || consult[1][0].status == Consultation::REMISION%>
+                                <tr>
+                                  <th style="cursor: pointer"><b><%= Patient.find(consult[0]).name.to_s.capitalize + ' ' + Patient.find(consult[0]).second_name.to_s.capitalize + ' ' + Patient.find(consult[0]).last_name.to_s.capitalize + ' ' + Patient.find(consult[0]).second_surname.to_s.capitalize %></b></th>
+                                </tr>
+                              <%end%>
+                            </thead>
+                            <tbody>
+                              <% consult[1].each_with_index do |info, i| %>
+                                <% y = i %>
+                                <% if info.status == Consultation::RESUELTO || info.status == Consultation::REMISION %>
+                                  <tr>
+                                    <% if consult[1][i].class.name == "Consultation" %>
+                                      <td class="text-center" style="width:201px;"><%= "Consulta principal # #{i-i+1}" %></td>
+                                    <%else%>
+                                      <td class="text-center" style="width:201px;"><%= "Control # #{y == 0 ? 1 : y+1}" %></td>
+                                    <%end%>
+                                    <td class="text-center" style="width:281px;"><%= info.patient.number_document %></td>
+                                    <td class="text-center" style="width:229px;"><%= info.updated_at.strftime("%d/%m/%Y")%></td>
+                                    <td class="text-center" style="width:73px;"><%= info.updated_at.strftime("%I:%M %P")%></td>
+                                    <% if info.status == Consultation::RESUELTO %> 
+                                      <td class="text-center" style="width:336px;padding-bottom: 8px;">
+                                        <% if info.class.name == "ConsultationControl"%>
+                                          <%= link_to new_specialists_especialistum_path(control_id: info.id), "data-turbolinks" => "false" do %>
+                                            <span class="btn btn-success btn-md">Resuelta</span>
+                                          <% end %>
+                                        <%else%>
+                                          <%= link_to new_specialists_especialistum_path(consult_id: info.id), "data-turbolinks" => "false" do %>
+                                            <span class="btn btn-success btn-md">Resuelta</span>
+                                          <%end%>
+                                        <%end%>
+                                      </td>
+                                    <%else%>
+                                      <td class="text-center" style="width:336px;padding-bottom: 8px;">
+                                        <% if info.class.name == "ConsultationControl"%>
+                                          <% if info.status == Consultation::REMISION %>
+                                            <%= link_to new_specialists_especialistum_path(control_id: info.id), "data-turbolinks" => "false" do %>
+                                              <span class="btn btn-danger btn-md">Remitida</span>
+                                            <%end%>
+                                          <% else %>
+                                            <%= link_to new_specialists_especialistum_path(control_id: info.id), "data-turbolinks" => "false" do %>
+                                              <span class="btn btn-success btn-md">Resuelta</span>
+                                            <%end%>
+                                          <% end %>
+                                        <%else%>
+                                          <% if info.status == Consultation::REMISION %>
+                                            <%= link_to new_specialists_especialistum_path(consult_id: info.id), "data-turbolinks" => "false" do %>
+                                              <span class="btn btn-danger btn-md">Remitida</span>
+                                            <%end%>
+                                          <% else %>
+                                            <%= link_to new_specialists_especialistum_path(consult_id: info.id), "data-turbolinks" => "false" do %>
+                                              <span class="btn btn-success btn-md">Resuelta</span>
+                                            <%end%>
+                                          <% end %>
+                                        <%end%>
+                                      </td>
+                                    <%end%>
+                                  </tr>
+                                <%end%>
+                              <%end%>                 
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  <%end%>
+                <%end%>
+                  <% if @consults.blank? %>
+                    <tr>
+                      <td colspan="6">
+                        <p class="text-center"><img src="<%= asset_path("ventana_vacia_consultas.png") %>" class="user-image" style="width: 40%;" alt="User Image"></p>
+                      </td>
+                    </tr>
+                  <%end%>
+                <!--<tfoot>
+                  <tr>
+                    <td colspan="6" class="text-center"><%#= paginate @consults %></td>
+                  </tr>
+                  </tfoot>-->
+              </table>
+            </div>
+          </div>
+        </div>  
+    <%#=end%>
+  <%#=end%>
+  </div>
+</div>
+<style>
+  .tbl-accordion{
+  margin: 0 auto;
+  width: 900px;
+  border: 1px solid #d9d9d9;
+  
+  
+  .tbl-accordion-nested{
+    width: 100%;
+    
+    td, th{
+      padding: 10px;
+      border-bottom: 1px solid #d9d9d9;
+    }
+    .tbl-accordion-section{
+      background:#333;
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+}
+</style>
+
+<script>
+  $(document).ready(function(){
+    $(".tbtn").click(function () {
+      $(this).parents(".custom-table").find(".toggler1").removeClass("toggler1");
+      $(this).parents("tbody").find(".toggler").addClass("toggler1");
+      $(this).parents(".custom-table").find(".fa-minus-circle").removeClass("fa-minus-circle");
+      $(this).parents("tbody").find(".fa-plus-circle").addClass("fa-minus-circle");
+    });        
+  });
+  
+  var header = document.getElementById("myDIV");
+  var btns = header.getElementsByClassName("presionar");
+  var consultas = [];
+
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+      var current = document.getElementsByClassName("activo");
+      current[0].className = current[0].className.replace(" activo", "");
+      this.className += " activo";
+      console.log(this.className);
+    });
+  }
+
+  //Metodo que permite seleccionar varias consultas
+  function consultas_masivas(id, i){
+    var seleccion_ca = [];
+    var seleccion_co = [];
+
+    console.log(i);
+    if($("#checkbox_"+i).prop("checked") == true){
+      consultas.push(id);
+      aux = [];
+      consultas.forEach(function(w) {
+        if(aux.includes(w) == false){ aux.push(w); }
+      });
+      consultas = aux;
+    }else{
+      aux = [];
+      consultas.forEach(function(q) {
+        if((aux.includes(q) == false) && (q != id) ){ 
+          aux.push(q); 
+        }
+      });
+      consultas = aux
+    }
+    console.log("orly1", consultas);
+    consultas.forEach(function(w){
+      x = w.split("-");
+      console.log("orly2", x[0]);
+      console.log("orly2", x[1]);
+      if(x[1] == "ca") {
+        seleccion_ca.push(x[0]);
+        aux = [];
+        seleccion_ca.forEach(function(ca){
+          if(aux.includes(ca) == false){ aux.push(ca); }
+        });
+        seleccion_ca = aux;
+      }
+      if(x[1] == "co"){
+        seleccion_co.push(x[0]);
+        aux = [];
+        seleccion_co.forEach(function(co){
+          if(aux.includes(co) == false){ aux.push(co); }
+        });
+        seleccion_co = aux;
+      }
+    });
+
+    $('#ids').val(seleccion_ca);
+    $('#ids_control').val(seleccion_co);
+
+    if (consultas.length >= 2) {
+      $('#massive').css("display", "block");
+    }else{
+      $('#massive').css("display", "none");
+    }
+  }
+
+  $(".tbl-accordion-nested").each(function() {
+    var thead = $(this).find("thead");
+    var tbody = $(this).find("tbody");
+
+    tbody.show();
+    thead.click(function() {
+      tbody.slideToggle();
+    });
+  });
+
+  // function all_checkbox(){
+  //   if ($("#dev-table #checkall").is(':checked')) {
+  //     $("#dev-table input[type=checkbox]").each(function () {
+  //       console.log($(this).val());
+  //       $(this).prop("checked", true);
+  //       $('#massive').css("display", "block");
+  //     });
+  //   } else {
+  //     $("#dev-table input[type=checkbox]").each(function () {
+  //       $(this).prop("checked", false);
+  //       $('#massive').css("display", "none");
+  //     });
+  //   }
+  // }
+
+</script>

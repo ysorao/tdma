@@ -1,0 +1,28 @@
+<div id="todo">
+  <%= form_tag(assignment_admin_traceability_admin_index_path(), method: 'put') do %>
+    <div class="seccion1">
+      <div class="barra_superior1">
+        Asignar especialista
+      </div>
+      <li class="lista"> 
+        <label><h2 id="name_esp">Nombre especialista</h2></label>
+        <%= select_tag(:other_user, options_for_select(User.where(type_professional: User::ESPECIALISTA, type_specialist: User::DERMATOLOGO, status: User::ACTIVO).collect {|r| [ r.name.to_s + ' ' + r.surnames.to_s, r.id] }), prompt: 'Seleccionar', class: 'form-control', required: true) %>
+        <%= hidden_field_tag(:consultation_id, params[:consult_id]) %>
+        <%= hidden_field_tag(:consultation_control_id, params[:control_id]) %>
+        <% if params[:t] == 'a'%>
+          <%= hidden_field_tag(:type, 'asignar') %>
+        <%else%>
+          <%= hidden_field_tag(:type, 'reasignar') %>
+        <%end%>    
+      </li>  
+    </div>
+    <div class="botones1">
+       <%= button_tag(type: "submit", class:"btn btn-primary btn-lg") do %>
+         Asignar
+        <% end %>
+       <a class="boton_cancelar1" href="/admin/consultations">
+         Cancelar
+       </a>
+    </div>
+  <%end%>
+</div>

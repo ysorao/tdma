@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="row">
+    <br>
+    <br>
+    <div class="col-md-12">
+      <div class="borde"><h4 class="title_app">Usuarios auxiliares</h4></div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="table table-condensed">
+        <table class="table table-hover custom-table" id="dev-table">
+          <thead>
+            <tr>
+              <th class="text-center border_color" scope="col">Nombre del auxiliar</th>
+              <th class="text-center border_color" scope="col">Correo electrónico</th>
+              <th class="text-center border_color" scope="col">Estado</th>
+              <th class="border_color" scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.order(:created_at).each do |usuario| %>
+              <tr>
+                <td class="text-center"><%= usuario.name.to_s  + ' ' + usuario.surnames.to_s%></td>
+                <td class="text-center"><%= usuario.email %></td>
+                <td class="text-center">
+                  <div class="row"> 
+                    <div class="col-md-3">
+                      <%= form_tag(update_user_status_clients_cliente_index_path, method: 'put', remote: true, style:"margin-left: 73px;") do %>
+                        <%= hidden_field_tag(:id, nil, id:"id_switch#{usuario.id}") %>
+                        <%= hidden_field_tag(:status, nil, id:"status_switch#{usuario.id}") %>
+                        <%= button_tag(type: "submit", id:"idBoton") do %>
+                          <% if Contract.where(client_id: usuario.client_id).detect{|w| w.status == Contract::ACTIVO} %>
+                            <% if usuario.status == 1 %>
+                              <span class="toggle-switch active" id="switch<%= usuario.id%>" onclick="move_switch(<%= usuario.id%>)">
+                                <span class="toggle-knob"></span>
+                              </span>
+                            <%else%>
+                              <span class="toggle-switch" id="switch<%= usuario.id%>" onclick="move_switch(<%= usuario.id%>)">
+                                <span class="toggle-knob"></span>
+                              </span>
+                            <%end%>
+                          <%else%>
+                            <span class="toggle-switch" id="switch<%= usuario.id%>">
+                              <span class="toggle-knob"></span>
+                            </span>
+                          <% end %>
+                        <%end%>
+                      <% end %>                
+                    </div>
+                    <div class="col-md-4" style="margin-left: 46px;">
+                      <% if usuario.status == 1 %>
+                        <h4 id="status<%=usuario.id%>" style="color:green">Activado</h4>
+                      <%else%>
+                        <h4 id="status<%=usuario.id%>" style="color:red">Desactivado</h4>
+                      <%end%>
+                    </div>
+                  </div>
+                </td>
+                <td class="">
+                  <%= link_to 'Eliminar', clients_cliente_path(usuario), :confirm => 'Estas seguro?', :method => :delete %>
+                </td>
+                <!--<td><a href="/clients/cliente/<%#= profesional.user.id%>/show_professional" data-turbolinks='false'"><i class="fa fa-user fa-lg"></i><span>Ver</span></a></td>
+              </tr>-->
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <%= link_to "Crear usuario", new_user_clients_cliente_index_path, method: :get, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+
+<script>
+//Permite el funcionamiento del activar o desactivar usuario
+function move_switch(id){
+  var toggler = document.querySelector('#switch'+id);
+  toggler.classList.toggle('active');
+  
+  if (toggler.classList[1] == 'active'){
+    $('#status'+id).text("Activado");
+    $('#status'+id).css("color", "green");
+    $('#id_switch'+id).val(id);
+    $('#status_switch'+id).val(1);
+  }else{
+    $('#status'+id).text("Desactivado");
+    $('#status'+id).css("color", "red");
+    $('#id_switch'+id).val(id);
+    $('#status_switch'+id).val(0);
+  }
+}
+</script>

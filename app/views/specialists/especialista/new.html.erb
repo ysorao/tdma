@@ -1,0 +1,202 @@
+<div ng-controller="ConsultController as cCtlr" ng-init="cCtlr.initialize('<%= current_user.email %>', '<%= current_user.authentication_token %>', '<%= params[:consult_id]%>', '<%= params[:control_id]%>')">
+	<div class="row">
+	  <div id="div_oculto">
+	  	<h3></h3>
+	  	<div id="div_consult">
+		  	<% unless Consultation.pending_consults(current_user.id).blank? %>
+          <% if Consultation.find_by(id: Consultation.pending_consults(current_user.id).first).nil? %>
+	          <h3>Abrir la siguiente teleconsulta: <%= link_to("Continuar", new_specialists_especialistum_path(control_id: Consultation.pending_consults(current_user.id).first), class:"btn btn-primary") %></h3>
+          <%else%>
+            <h3>Abrir la siguiente teleconsulta: <%= link_to("Continuar", new_specialists_especialistum_path(consult_id: Consultation.pending_consults(current_user.id).first), class:"btn btn-primary") %></h3>
+          <%end%>
+	      <%end%>
+	    </div>
+	    <!-- Panel especialista -->
+		  <div id="contenedor">
+				<div class="col-md-offset-1 col-md-5">
+					<div class="col-md-12">
+            <div class="row">
+              <div class="borde"><h4 class="style_title">Panel especialista</h4></div>
+              <br>
+  			      <ul class="list-inline list_buttons">
+  			        <li>
+  			        	<button class="btn btn-primary panel_principal">Respuesta</button>
+  			        </li>
+  			        <li>
+  			        	<button class="btn btn-primary panel_principal">Requerimiento</button>
+  			        </li>
+  			        <li>
+  			        	<button class="btn btn-primary panel_principal">Remisión</button>
+  			        </li>
+                <li>
+                  <button class="btn btn-success" data-toggle="modal" data-target="#reasign_specialist<%= params[:consult_id].nil? ? params[:control_id] : params[:consult_id]%>" id="">
+                    Reasignar
+                  </button>
+                    <%= render partial: 'modal_reasign', locals: {consult: params[:consult_id].nil? ? params[:control_id] : params[:consult_id], object: params.keys[0]}%>
+                </li>
+  			        <br>
+  			        <br>
+  			        <br>
+  			        <%= render partial: 'response_principal'%>
+  						  <%= render partial: 'request'%>
+  						  <%= render partial: 'remission'%>
+  			      </ul>
+            </div>
+				  </div>
+				</div>
+	    </div>
+	  </div>
+		<!-- Panel APP -->
+    <div class="col-md-6">
+    	<div class="col-md-offset-1 col-md-7">
+    	  <div class="borde"><h4 class="title_app">Panel App</h4></div>
+    	</div>
+    	<br>
+    	<div class="col-md-offset-1 col-md-12">
+	      <ul class="list-inline list_buttons menu">
+	      	<div class="borde" id="titulo_app" style="display: none;"><h4 class="title_app">Panel App</h4></div>
+	      	<br>
+	        <li class="lista_clinica">
+	        	<button ng-click="cCtlr.get_patient_information()" class="btn btn-primary listas">Historia clínica</button>
+	        </li>
+	        <li class="lista_imagen">
+            <% if @consulta.status == Consultation::EVALUANDO %>
+	        	  <button ng-click="cCtlr.charge_images()" class="btn btn-primary listas">Imágenes</button>
+            <%else%>
+              <button ng-click="cCtlr.edited_images()" class="btn btn-primary listas">Imágenes</button>
+            <%end%>
+	        </li>
+	        <li class="lista_resp">
+	        	<button ng-click="cCtlr.get_specialist_information()" class="btn btn-primary listas">Respuesta</button>
+	        </li>
+	        <li>
+	        	<button class="btn btn-primary listas">Historial</button>
+	        </li>
+	          <%= render partial: 'history_clinic_information'%>
+	          <%= render partial: 'consultation_images'%>
+	          <%= render partial: 'response_specialist'%>
+	          <%= render partial: 'history'%>
+	      </ul>
+	    </div>
+	  </div>
+  </div>
+  <!-- Mensajes sistema -->
+  <%= render partial: 'messages_system'%>
+</div>
+<script>
+
+function show_loader2(){
+    
+    $(".sigPad").signaturePad({ drawOnly:true })
+  }
+
+var altura = $('.menu').offset().top;
+$(window).on('scroll', function(){
+	if ( $(window).scrollTop() > altura ){
+		$('#titulo_app').show();
+		$('.menu').addClass('menu-fixed');
+	} else {
+		$('#titulo_app').hide();
+		$('.menu').removeClass('menu-fixed');
+	}
+});
+
+$('#div_oculto > h3').hide();
+$('#div_consult > h3').hide();
+
+<% unless params[:consult_id].nil? %>
+  <% if Consultation.find(params[:consult_id]).status == Consultation::RESUELTO%>
+    $('#contenedor').hide();
+    $('#div_oculto').addClass('col-md-6');
+    $('#div_oculto > h3').text("ACTUALMENTE LA CONSULTA ESTA RESUELTA");
+    $('#div_oculto > h3').show();
+    $('#div_oculto > h3').css("padding-left","44px");
+    $('#div_consult > h3').show();
+    $('#div_consult > h3').css("padding","100px 0px 0px 100px");
+  <%elsif Consultation.find(params[:consult_id]).status == Consultation::REQUERIMIENTO %>
+    $('#contenedor').hide();
+    $('#div_oculto').addClass('col-md-6')
+    $('#div_oculto > h3').text("ACTUALMENTE LA CONSULTA ESTA EN REQUERIMIENTO");
+    $('#div_oculto > h3').show();
+    $('#div_oculto > h3').css("padding-left","44px");
+  <%elsif Consultation.find(params[:consult_id]).status == Consultation::REMISION %>
+    $('#contenedor').hide();
+    $('#div_oculto').addClass('col-md-6');
+    $('#div_oculto > h3').text("ACTUALMENTE LA CONSULTA ESTA EN REMISIÓN");
+    $('#div_oculto > h3').show();
+    $('#div_oculto > h3').css("padding-left","44px");
+    $('#div_consult > h3').show();
+    $('#div_consult > h3').css("padding","100px 0px 0px 100px");
+  <%end%>
+<%end%>
+
+<% unless params[:control_id].nil? %>
+  <% if ConsultationControl.find(params[:control_id]).status == Consultation::RESUELTO %>
+    $('#contenedor').hide();
+    $('#div_oculto').addClass('col-md-6');
+    $('#div_oculto > h3').text("ACTUALMENTE LA CONSULTA ESTA RESUELTA");
+    $('#div_oculto > h3').show();
+    $('#div_oculto > h3').css("padding-left","44px");
+    $('#div_consult > h3').show();
+    $('#div_consult > h3').css("padding","100px 0px 0px 100px");
+  <%elsif ConsultationControl.find(params[:control_id]).status == Consultation::REQUERIMIENTO %>
+    $('#contenedor').hide();
+    $('#div_oculto').addClass('col-md-6')
+    $('#div_oculto > h3').text("ACTUALMENTE LA CONSULTA ESTA EN REQUERIMIENTO");
+    $('#div_oculto > h3').show();
+    $('#div_oculto > h3').css("padding-left","44px");
+  <%elsif ConsultationControl.find(params[:control_id]).status == Consultation::REMISION %>
+    $('#contenedor').hide();
+    $('#div_oculto').addClass('col-md-6');
+    $('#div_oculto > h3').text("ACTUALMENTE LA CONSULTA ESTA EN REMISIÓN");
+    $('#div_oculto > h3').show();
+    $('#div_oculto > h3').css("padding-left","44px");
+    $('#div_consult > h3').show();
+    $('#div_consult > h3').css("padding","100px 0px 0px 100px");
+  <%end%>
+<%end%>
+
+//$(document).ready(function() {
+  $('.listas').click(function(){
+    article = $(this).text(); //$(this) is what you clicked!
+    if (article == "Historia clínica") {
+    	$('#clinic').show();
+    	$('#images').hide();
+    	$('#response_specialist').hide();
+    	$('#history').hide();
+    }else if (article == "Imágenes") {
+      $('#images').show();
+      $('#clinic').hide();
+      $('#response_specialist').hide();
+      $('#history').hide();
+    }else if (article == "Respuesta") {
+      $('#response_specialist').show();
+      $('#clinic').hide();
+      $('#images').hide();
+      $('#history').hide();
+    }else if (article == "Historial") {
+    	$('#history').show();
+      $('#clinic').hide();
+      $('#images').hide();
+      $('#response_specialist').hide();
+    }
+  });
+
+  //Panel especialista
+  $('.panel_principal').click(function(){
+    articulo = $(this).text(); //$(this) is what you clicked!
+    if (articulo == "Respuesta") {
+    	$('#response').show();
+    	$('#request').hide();
+    	$('#remission').hide();
+    }else if (articulo == "Requerimiento") {
+      $('#request').show();
+      $('#response').hide();
+      $('#remission').hide();
+    }else if (articulo == "Remisión") {
+      $('#remission').show();
+      $('#request').hide();
+      $('#response').hide();
+    }
+  });
+</script>

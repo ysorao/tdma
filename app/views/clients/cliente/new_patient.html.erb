@@ -1,0 +1,322 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-6">
+    <div class="row">
+      <div class="borde"><h4 class="style_title">Crear paciente</h4></div>
+    </div>
+    <br>
+    <%#= console %>
+    <div class="row">
+      <div class="col-sm-3 col-md-12">
+        <div id="imaginary_container">
+          <%= form_for @patient, url: {controller: 'cliente', action: 'create_patient'}, html: {method: "post"} do |f| %>
+            <% if @patient.errors.any? %>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong>No se puede guardar este paciente por que: </strong>
+                    <ul>
+                      <% @patient.errors.full_messages.each do |msg| %>
+                      <li>
+                        <%= msg %>
+                      </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <div class="row">
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">*Primer nombre</h4>
+                </div>
+                <%= f.text_field :name, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Segundo nombre</h4>
+                </div>
+                <%= f.text_field :second_name, class: "form-control"%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">*Primer apellido</h4>
+                </div>
+                <%= f.text_field :last_name, class: "form-control", required: true%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Segundo apellido</h4>
+                </div>
+                <%= f.text_field :second_surname, class: "form-control"%>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">Fecha de nacimiento</h4>
+                </div>
+                <%= f.text_field :birthdate, class: "form-control", id: "datepicker", onChange: 'Edad($("#datepicker").val());'%>
+              </div>
+              <div class="form-group" id="type_document">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">*Tipo de identificación</h4>
+                </div>
+                <%= f.select :type_document, options_for_select([['Cédula de ciudadania', 1], ['Cédula de extranjería', 2], ['Carné diplomático', 3], ['Pasaporte', 4], ['Salvoconducto', 5], ['Permiso especial permanencía', 6], ['Residente especial para la paz', 7], ['Registro civil', 8], ['Tarjeta de identidad', 9], ['Certificado de nacido vivo', 10], ['Adulto sin identificar', 11], ['Menor sin identificar', 12]], selected: @patient.type_document), {}, onchange: 'show_hide_type_document();', class:'form-control', required: true%>
+              </div>
+              <div class="form-group" id="type_condition" style="<%= @patient.type_document == 11 || @patient.type_document == 12 ? '' : 'display: none'%>">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">*Condición</h4>
+                </div>
+                <%= f.select :type_condition, options_for_select([['Tercera edad', 1], ['Indígenas mayor de edad', 2], ['Habitantes calle mayor de edad', 3], ['Habitantes calle menor de edad', 4], ['Menor de edad ICBF', 5], ['Indígenas menor de edad', 6], ['Menor de edad recien nacido', 7], ['Víctimas menor de edad', 8], ['Víctimas mayor de edad', 9], ['Población reclusa', 10]], selected: @patient.type_condition), {prompt: "Seleccione"}, onchange: 'show_hide_type_condition();', class:'form-control'%>
+              </div>
+              <% if @patient.type_document == 11 || @patient.type_document == 12 %>
+                <div class="form-group" id="number_document" style="display: none">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Número de identificación</h4>
+                  </div>
+                    <%= f.text_field :number_document, class: "form-control"%>
+                </div>
+              <%else%>
+                <div class="form-group" id="number_document">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Número de identificación</h4>
+                  </div>
+                    <%= f.text_field :number_document, class: "form-control"%>
+                </div>
+              <%end%>
+              <div class="form-group">
+                <div class="col-md-12 secondary_title">
+                  <h4 class="control">*Sexo</h4>
+                </div>
+                <p style="float:left">Masculino <%= f.radio_button :genre, 1%></p>
+                <div>
+                  <p style="margin-left:15%">Femenino <%= f.radio_button :genre, 2%></p>
+                </div>
+              </div>
+              <%= f.hidden_field :client_id, value: current_client_user.client_id %>
+              <%= f.fields_for :patient_informations, @patient.patient_informations.build do |info| %>
+                <div id="inpec" class="form-group" style="<%= @patient.type_condition == 10 ? '' : 'display: none'%>">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Número del INPEC</h4>
+                  </div>
+                  <%= f.text_field :number_inpec, id: "number_inpec", class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Estado civíl</h4>
+                  </div>
+                  <%= info.select :civil_status, options_for_select([['Soltero(a)', 1], ['Casado(a)', 2], ['Union libre', 3], ['Viudo(a)', 4], ['Separado(a) o Divorciado(a)', 5]], [@patient.patient_informations[0].civil_status]), {}, class:'form-control', required: true%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Edad</h4>
+                  </div>
+                  <%= info.text_field :age, value: @patient.patient_informations[0].age, class: "form-control", required: true%>
+                  <br>
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Unidad de medida</h4>
+                  </div>
+                  <%= info.select :unit_measure_age, options_for_select([['Años', 1], ['Meses', 2], ['Días', 3]], selected: @patient.patient_informations[0].unit_measure_age), {}, class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Asegurador</h4>
+                  </div>
+                  <%#= info.select :insurance_id, options_for_select(IpsInsurance.where(client_id: current_client_user.client_id).collect {|r| [r.insurance.name, r.id]}, selected: @patient.patient_informations[0].insurance_id), {prompt: "Seleccione"}, class: 'form-control' %>
+                  <%= text_field_tag('search_insurance', params[:search_insurance], placeholder: "Ingrese la EAPB", class: "form-control", id:"insurance_word", onClick:"autocomplete_insurance_patient('insurance_word')", required: true) %>
+
+                  <%= info.hidden_field :insurance_id, value: params[:insurance_id], id:"insurance"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">Ocupación</h4>
+                  </div>
+                  <%= info.text_field :occupation, value: @patient.patient_informations[0].occupation , class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">Celular</h4>
+                  </div>
+                  <%= info.text_field :phone, value: @patient.patient_informations[0].phone, class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">Email</h4>
+                  </div>
+                  <%= info.text_field :email, value: @patient.patient_informations[0].email, class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">Dirección de domicilio</h4>
+                  </div>
+                  <%= info.text_field :address, value: @patient.patient_informations[0].address, class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Departamento</h4>
+                  </div>
+                  <%= select_tag(:department, options_for_select(Department.order(name: :asc).collect {|u| [u.name, u.id]}, selected: params[:country]), prompt: "Seleccione un departamento", id: "country_id", name: "country", onChange: 'change_country_general("country_id", "patient_patient_informations_attributes_0_municipality_id", "Seleccione un pais");', class:'form-control', required: true) %>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Municipio</h4>
+                  </div>
+                  <% if !params[:country].nil? %>
+                    <%= info.select :municipality_id, options_for_select(Municipality.all.where(department_id: params[:country]).collect {|u| [u.name, u.id]}, selected: params[:otro]), {}, class:'form-control', onChange: '$("#otro").val($("#patient_patient_informations_attributes_0_municipality_id option:selected").val());', required: true%>
+                  <% else %>
+                    <%= info.select :municipality_id, options_from_collection_for_select([], 'id', 'name'), {prompt: 'Seleccione un municipio'}, name: "department_id", class:'form-control', onChange: '$("#otro").val($("#patient_patient_informations_attributes_0_municipality_id option:selected").val());' %>
+                  <%end%>
+                  <%= hidden_field_tag(:otro, params[:otro]) %>
+                  <%#= info.select :municipality, options_for_select(Municipality.order(name: :asc).collect {|u| [u.name, u.id]}), prompt: "Seleccione un Municipio" %>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Zona de residencia</h4>
+                  </div>
+                  <p style="float:left">Urbana <%= radio_button_tag :urban_zone, 1, @patient.patient_informations[0].urban_zone %></p>
+                  <div>
+                    <p style="margin-left:12%">Rural <%= radio_button_tag :urban_zone, 2, @patient.patient_informations[0].urban_zone %></p>
+                  </div>
+                </div>
+                <br>
+                <h4 style="font-weight: bold;">Persona acompañante</h4>
+                <br>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">Nombre </h4>
+                  </div>
+                  <%= info.text_field :name_companion, value: @patient.patient_informations[0].name_companion, class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">Celular</h4>
+                  </div>
+                  <%= info.text_field :phone_companion, value: @patient.patient_informations[0].phone_companion, class: "form-control"%>
+                </div>
+                <br>
+                <h4 style="font-weight: bold;">Persona responsable</h4>
+                <br>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">Nombre </h4>
+                  </div>
+                  <%= info.text_field :name_responsible, value: @patient.patient_informations[0].name_responsible, class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">Celular</h4>
+                  </div>
+                  <%= info.text_field :phone_responsible, value: @patient.patient_informations[0].phone_responsible, class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">Parentesco</h4>
+                  </div>
+                  <%= info.text_field :relationship, value: @patient.patient_informations[0].relationship, class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Tipo de usuario</h4>
+                  </div>
+                  <%= info.select :type_user, options_for_select([['Contributivo', 1], ['Subsidiado', 2], ['Vinculado', 3], ['Particular', 4], ['Otro', 5], ['Víctima afiliación regimen contributivo', 6], ['Víctima afiliación regimen subsidiado', 7], ['Víctima no asegurado', 8]], selected: @patient.patient_informations[0].type_user), {}, class:'form-control', required: true%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">Número de autorización</h4>
+                  </div>
+                  <%= info.text_field :authorization_number, value: @patient.patient_informations[0].authorization_number, class: "form-control"%>
+                </div>
+                <div class="form-group">
+                  <!--<div class="col-md-12 secondary_title">
+                    <h4 class="control">*Finalidad de la consulta</h4>
+                  </div>-->
+                  <%#= info.select :purpose_consultation, options_for_select([['No aplica', 1], ['Atención parto', 2], ['Atención recien nacido', 3], ['Atención planificación familiar', 4], ['Detección alteraciones crecimiento menos de diez años', 5], ['Detección alteraciones desarrollo joven', 6], ['Detección alteraciones crecimiento menos de diez años embarazo', 7], ['Detección alteraciones adulto', 8], ['Detección alteraciones agudeza visual', 9], ['Detección enfermedad profesional', 10], ['No aplica', 1]], selected: @patient.patient_informations[0].purpose_consultation, class:'form-control', required: true)%>
+                  <%= info.hidden_field :purpose_consultation, value: 1%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Causa externa</h4>
+                  </div>
+                  <%= info.select :external_cause, options_for_select([['Enfermedad general', 1], ['Accidente trabajo', 2], ['Accidente tránsito', 3], ['Accidente rábico', 4], ['Accidente ofídico', 5], ['Otro accidente', 6], ['Evento catastrófico', 7], ['Lesión por agresión', 8], ['Lesión autoinflingida', 9], ['Sospecha maltrato físico', 10], ['Sospecha abuso sexual', 11], ['Sospecha violencia sexual', 12], ['Sospecha maltrato emocional', 13], ['Enfermedad laboral', 14], ['Otra', 15]], selected: @patient.patient_informations[0].external_cause), {}, class:'form-control', required: true%>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-12 secondary_title">
+                    <h4 class="control">*Consentimiento informado</h4>
+                  </div>
+                  <%#= if @patient.patient_informations[0].terms_conditions? %>
+                    <p><%= info.check_box :terms_conditions, {checked: true}%> Paciente firmó consentimiento informado</p>
+                  <%#=else%>
+                    <!--<p><%#= info.check_box :terms_conditions, {}, true, false%> Paciente firmó consentimiento informado</p>-->
+                  <%#=end%>
+                </div>
+              <%end%>
+            </div>
+            <%= button_tag(type: "submit", class:"btn btn-primary btn-md") do %>
+                  Guardar <span class=""></span>
+            <% end %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('#datepicker').datepicker({
+    language: 'es',
+    format: "dd/mm/yyyy",
+    startDate: Date.today,
+    autoclose: true
+  });
+
+function show_hide_type_document(){
+  var a = $('#patient_type_document').find(":selected").val();
+  if (a == 11 || a == 12){
+    $('#type_condition').show();
+    $('#number_document').hide();
+  }else{
+    $('#type_condition').hide(); 
+    $('#number_document').show(); 
+    $('#inpec').hide();
+  }
+}
+
+function show_hide_type_condition(){
+  var b = $('#patient_type_condition').find(":selected").val();
+  if (b == 10){
+    $('#inpec').show();
+    $('#number_document').hide();
+  }else if (b == 7){
+    $('#inpec').hide();
+    $('#number_document').show();
+  }else{
+    $('#inpec').hide();
+    $('#number_document').hide();
+  }
+}
+
+function change_country_general(element_country, element_department, name_default_deparment){
+  // se vacia primero el select de departamentos
+  $('select#'+element_department).empty();
+  $.get('/api/v1/static_resources/get_municipalities?department_id='+$('select#'+element_country).val(), function(responses){
+      // se añade al select de departamentos la opcion 'name_default_deparment' seleccionada por defecto
+      //$('select#'+element_department).append('<option value="" selected>'+name_default_deparment+'</option>');
+      // se recorren los departamentos traidos del ajax
+      $.each(responses.municipality, function (i, item){
+        console.log('select#'+element_department);
+        //se añade uno a uno los departamentos traidos en el ajax
+        $('select#'+element_department).append($('<option>', {
+            value: item.id,
+            text : item.name
+        }));
+        $("#otro").val($("#patient_patient_informations_attributes_0_municipality_id option:selected").val());
+        // se llama el trigger del plugin chosen para que
+        // funcione correctamente y aparescan los departamentos
+        $('select#'+element_department).trigger('chosen:updated');
+        if(name_default_deparment != 'Seleccione un pais'){
+            $('select#'+element_department).val(name_default_deparment)
+        }
+      });// end each
+  });// end ajax
+}
+</script>

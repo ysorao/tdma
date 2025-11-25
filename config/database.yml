@@ -1,0 +1,16 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: telederma_development
+  pool: 10
+  username: desarrollo
+  password: DesarrolloHeon2025+
+
+# production:
+#   adapter: postgresql
+#   #host: 127.0.0.1
+#   database: telederma_production_actual
+#   username: rails
+#   password: h_5FP)J5Wqw4v.?(hgr3es12WXH654
+#   encoding: unicode
+#   pool: 5

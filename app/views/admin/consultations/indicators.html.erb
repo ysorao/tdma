@@ -1,0 +1,163 @@
+<div class='container' style="float: left;width:65%;">
+    <!-- PATOLOGÍA  -->
+    <h2 style="font-weight:bold;margin-left:50px;">1. Diagnóstico CIE 10 por patología</h2>
+    <div class="center">
+      <%= form_tag(indicators_admin_consultations_path(), method: 'get') do %>
+	      <div class="row">    
+	        <%= text_field_tag('search', params[:search], placeholder: "Patologías CIE10", class: "form-control", id:"disease", onKeyup: "autocomplete_disease('disease');", required: true) %>
+	        <%= button_tag(type: "submit", class:"btn btn-primary btn-lg") do %>
+            Buscar <span class="glyphicon glyphicon-triangle-right"></span>
+          <% end %>
+	      </div>
+	    <%end%>
+	  </div>
+    <br>
+    <% if params[:search].nil? %>
+      <h4 style="margin-left:12%;font-weight:bold;"><%= "#{@consultation[1]} teleconsultas #{@disease.nil? ? 'en total' : "de #{@disease}"}"%><a class="see_more" onClick="muestra_oculta('patologia')">Ver consultas</a></h4>
+      <%= render partial: 'table_consults', locals: {div_id: 'patologia'}%>
+    <%else%>
+      <h4 style="margin-left:12%;font-weight:bold;"><%= "#{@teleconsultas.count} teleconsultas #{@disease.nil? ? 'en total' : "de #{@disease}"}"%><a class="see_more" onClick="muestra_oculta('diagnostico')">Ver consultas</a></h4>
+      <%= render partial: 'table_diagnostic', locals: {div_id: 'diagnostico'}%>
+    <%end%>
+    <br>
+    <!-- PERFIL FRECUENCIA  -->
+    <h2 style="font-weight:bold;margin-left:50px;">2. Diagnóstico CIE 10 - frecuencia</h2>
+    <div class="sidebar_section panel" id="analisis_sidebar_section" style="margin-left: 6%;
+  width:89%;">
+      <h3>Resultados</h3>
+      <div class="panel_contents">
+        <span>
+          <% if OtherDiagnostic.order_diagnostics.blank? %>
+            <h4 style="display: inline">No tiene resultados.</h4>
+          <%else%>
+            <% @orden.take(10).each_with_index do |aux, i| %>
+              <div style="width: 62%;float: left;margin-bottom: 10px;">
+                <h4 style="display: inline"><%= "#{i+1}. #{Disease.find(aux[:name]).name}"%>: </h4>
+              </div>
+              <div>
+                <b data-no-turbolink="true" style="display: inline; font-size: 13px;"><%= aux[:cuenta]%></b>
+              </div>
+              <br>
+            <%end%>
+          <%end%>
+        </span>
+      </div>
+    </div>
+    <br>
+    <h2 style="font-weight:bold;margin-left:50px;">3. Diagnósticos CIE 10 según perfil demográfico</h2>
+    <p style="margin-left:30%;">Aplicar filtros para ver resultados</p>
+		<div class="sidebar_section panel" id="analisis2_sidebar_section" style="margin-left: 6%;
+  width:89%;">
+      <h3>Resultados</h3>
+      <div class="panel_contents">
+        <span> 
+          <% if request.fullpath == "/admin/consultations/indicators" %>
+            <h4 style="display: inline">No tiene resultados.</h4>
+          <%else%>
+            <% if @orden_diag.blank? %>
+              <h4 style="display: inline">No tiene resultados.</h4>
+            <%else%>
+              <% @orden_diag.take(10).each_with_index do |aux, i| %>
+                <div style="width: 62%;float: left;margin-bottom: 10px;">
+                  <h4 style="display: inline"><%= "#{i+1}. #{Disease.find(aux[:name]).name}"%>: </h4>
+                </div>
+                <div>
+                  <b data-no-turbolink="true" style="display: inline; font-size: 13px;"><%= aux[:cuenta]%></b>
+                </div>
+                <br>
+              <%end%>
+            <%end%>
+          <%end%>
+        </span>
+      </div>
+    </div>
+    <br>
+    <!-- TELECONSULTAS  -->
+		<div>
+			<h2 style="font-weight:bold;margin-left:50px;">4. Estados teleconsultas</h2>
+      <h3 style="margin-left: 6%;font-weight:bold;">Teleconsultas resueltas</h3>
+      <% if !@resueltas.blank? %>
+        <h4 style="margin-left:12%;font-weight:bold;"><%= "#{@result_res} teleconsultas son el #{((@result_res.to_f * 100)/$global_total).round(2)}%"%><a class="see_more" onClick="muestra_oculta('resueltas')">Ver consultas</a></h4>
+        <%= render partial: 'table_status', locals: {div_id: 'resueltas', consultas: @resueltas, resultado: @result_res}%>
+      <%else%>
+        <h4 style="margin-left: 6%;display: inline">No tiene resultados.</h4>
+      <%end%>
+      <br>
+      <h3 style="margin-left: 6%;font-weight:bold;">Teleconsultas en requerimiento</h3>
+      <% if !@req.blank? %>
+        <h4 style="margin-left:12%;font-weight:bold;"><%= "#{@result_req} teleconsultas son el #{((@result_req.to_f * 100)/$global_total).round(2)}%"%><a class="see_more" onClick="muestra_oculta('req')">Ver consultas</a></h4>
+        <%= render partial: 'table_status', locals: {div_id: 'req', consultas: @req, resultado: @result_req}%>
+      <%else%>
+        <h4 style="margin-left: 6%;display: inline">No tiene resultados.</h4>
+      <%end%>
+      <br>
+      <h3 style="margin-left: 6%;font-weight:bold;">Teleconsultas en remisión</h3>
+      <% if !@remision.blank? %>
+        <h4 style="margin-left:12%;font-weight:bold;"><%= "#{@result_rem} teleconsultas son el #{((@result_rem.to_f * 100)/$global_total).round(2)}%"%><a class="see_more" onClick="muestra_oculta('remision')">Ver consultas</a></h4>
+        <%= render partial: 'table_status', locals: {div_id: 'remision', consultas: @remision, resultado: @result_rem}%>
+      <%else%>
+        <h4 style="margin-left: 6%;display: inline">No tiene resultados.</h4>
+      <%end%>
+      <br>  
+    </div>
+</div>
+<!-- FILTROS  -->
+<div style="width:320px;float: right;margin: 58.5% 7% 0 0;">
+  <div class="sidebar_section panel" id="filters_sidebar_section">
+    <h3>Filtros</h3>
+    <div class="panel_contents">
+  	  <%= form_tag(indicators_admin_consultations_path(), method: 'get') do %>
+			  <div class="select input optional filter_form_field filter_select" id="input_municipality">
+  			  <label class="label">Municipio</label>
+  			  <%= select_tag(:municipality, options_for_select(Municipality.all.collect {|r| [r.name, r.id]}, selected: params[:municipality]), prompt: 'Seleccione', id: 'municipio', style: 'width: 290px;') %>
+			  </div>
+			  <br>
+			  <div class="select input optional filter_form_field filter_select" id="input_municipality">
+  			  <label class="label">Edad</label>
+  			  <%= select_tag(:age, options_for_select((1..100), selected: params[:age]), prompt: 'Seleccione', id: 'edad', style: 'width: 290px;') %>
+			  </div>
+			  <br>
+			  <div class="select input optional filter_form_field filter_select" id="input_municipality">
+  			  <label class="label">Rango de edades</label>
+  			  <%= select_tag(:age1, options_for_select((1..100), selected: params[:age1]), prompt: 'Seleccione', id: 'edad1', style: 'width: 140px;display: inline;') %>
+  			  <%= select_tag(:age2, options_for_select((1..100), selected: params[:age2]), prompt: 'Seleccione', id: 'edad2', style: 'width: 146px;display: inline;') %>
+			  </div>
+			  <br>
+			  <div class="select input optional filter_form_field filter_select" id="input_municipality">
+  			  <label class="label">Genero</label>
+  			  <%= select_tag(:genre, options_for_select([['Masculino', 1], ['Femenino', 2]], selected: params[:genre]),prompt: 'Seleccione', id: 'genero', style: 'width: 290px;') %>
+			  </div>
+			  <br>
+			  <div class="select input optional filter_form_field filter_select" id="input_municipality">
+  			  <label class="label">Zona residencial</label>
+  			  <%= select_tag(:urban_zone, options_for_select([['Urbana', 1], ['Rural', 2]], selected: params[:urban_zone]), prompt: 'Seleccione', id: 'zona_urbana', style: 'width: 290px;') %>
+			  </div>
+			  <br>
+			  <div class="select input optional filter_form_field filter_select" id="input_municipality">
+  			  <label class="label">Tipo de usuario</label>
+  			  <%= select_tag(:type_user, options_for_select([['Contributivo', 1], ['Subsidiado', 2], ['Vinculado', 3], ['Particular', 4], ['Otro', 5], ['Víctima afiliación regimen contributivo', 6], ['Víctima afiliación regimen subsidiado', 7], ['Víctima no asegurado', 8]], selected: params[:type_user]), prompt: 'Seleccione', id: 'tipo_usuario', style: 'width: 290px;') %>
+			  </div>
+			  <br>
+			  <div class="select input optional filter_form_field filter_select" id="input_specialist">
+  			  <label class="label">Dermatólogo</label>
+  			  <%= select_tag(:specialist, options_for_select(User.where(type_specialist: User::DERMATOLOGO).collect {|r| [r.name + ' ' + r.surnames, r.id]}, selected: params[:especialista]), name: "especialista[]", id: "especialista", style: 'width: 290px;', multiple:"", class:"chosen-select", 'data-placeholder': "Seleccione") %>
+			  </div>
+        
+			  <div class="buttons center">
+			  	<%= button_tag(type: "submit", id:"filtrar", onClick: "validate_range_ages()", class:"btn btn-primary btn-lg") do %>
+            Filtrar <span class="glyphicon glyphicon-triangle-right"></span>
+          <%end%>
+			  </div>
+		  <%end%>
+	  </div>
+  </div>
+</div>
+<script>
+  $('table').tableExport({
+		formats: ["xlsx"], //Tipo de archivos a exportar ("xlsx","txt", "csv", "xls")
+		position: 'button',  // Posicion que se muestran los botones puedes ser: (top, bottom)
+		bootstrap: false,//Usar lo estilos de css de bootstrap para los botones (true, false)
+		fileName: "Teleconsultas",    //Nombre del archivo 
+	});
+	$("#especialista").chosen();
+</script>

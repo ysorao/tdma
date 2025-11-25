@@ -1,0 +1,53 @@
+<div id="<%= div_id%>" style="overflow:auto;width:auto;height:400px;margin-left:50px;display: none;">
+	<table border="0" cellspacing="0" cellpadding="0" id="tabla" class="index_table index" paginator="true">
+	  <thead>
+	      <tr>
+	        <th>Código</th>
+		      <th>Estado</th>
+		      <th>Paciente</th>
+		      <th>Identificación</th>
+		      <th>Género</th>
+		      <th>Edad</th>
+		      <th>Medico</th>
+		      <th>Especialista</th>
+		      <th>Ips</th>
+		      <th>Creado el</th>
+	      </tr>
+	  </thead>
+    <% @teleconsultas.each do |aux| %>
+	    <tbody> 
+		    <tr>
+		      <td><%= aux.class.name == "Consultation" ? "Consulta ##{aux.id}" : "Control ##{aux.id}" %></td>
+		      <td><%= estado_consulta(aux.status) %></td>
+		      <td><%= aux.patient.name.to_s + ' ' + aux.patient.second_name.to_s + ' ' + aux.patient.last_name.to_s + ' ' + aux.patient.second_surname.to_s%></td>
+		      <td><%= aux.patient.number_document%></td>
+		      <td><%= aux.patient.genre == 1 ? 'Masculino' : 'Femenino'%></td>
+		      <td><%= aux.patient.patient_informations.last.age%></td>
+		      <td>
+		      	<% if aux.class.name == "Consultation"%>
+		      	  <%= aux.doctor.nil? ? 'No aplica' : aux.doctor.name.to_s + ' ' + aux.doctor.surnames.to_s%>
+		      	<%else%>
+              <%= aux.doctor_control.nil? ? 'No aplica' : aux.doctor_control.name.to_s + ' ' + aux.doctor_control.surnames.to_s%>
+		      	<%end%>
+		      </td>
+		      <td>
+		      	<% if aux.class.name == "Consultation"%>
+		      	  <%= aux.specialist.nil? ? 'No aplica' : aux.specialist.name.to_s + ' ' + aux.specialist.surnames.to_s%>
+		        <%else%>
+              <%= aux.specialist_control.nil? ? 'No aplica' : aux.specialist_control.name.to_s + ' ' + aux.specialist_control.surnames.to_s%>
+		        <%end%>		
+		      	</td>
+		      <td>
+            <% if aux.class.name == "Consultation"%>
+		      	  <%= aux.doctor.nil? ? 'No tiene' : Client.find(aux.doctor.user_clients.first.client_id).business_name%>
+		      	<%else%>
+              <%= aux.doctor_control.nil? ? 'No tiene' : Client.find(aux.doctor_control.user_clients.first.client_id).business_name%>
+		      	<%end%>
+		      </td>
+		      <td><%= aux.created_at.strftime("%d/%m/%Y")%></td>
+		    </tr>
+	    </tbody>
+	  <%end%>
+	</table>
+	<p class="pagination_information">Mostrando <b>un total de <%= @teleconsultas.count %></b> Teleconsultas</p>
+</div>

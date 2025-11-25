@@ -1,0 +1,504 @@
+// SASS variable overrides must be declared before loading up Active Admin's styles.
+//
+// To view the variables that Active Admin provides, take a look at
+// `app/assets/stylesheets/active_admin/mixins/_variables.scss` in the
+// Active Admin source.
+//
+// For example, to change the sidebar width:
+// $sidebar-width: 242px;
+
+// Active Admin's got SASS!
+@import "active_admin/mixins";
+@import "active_admin/base";
+@import "tableexport.css";
+@import "chosen.css";
+
+// Overriding any non-variable SASS must be done after the fact.
+// For example, to change the default status-tag color:
+//
+//   .status_tag { background: #6090DB; }
+
+.attributes_table {
+  overflow-x:auto !important;
+}
+
+#header > img {
+  background-image: url("paper.gif");
+  background-color: #cccccc;
+}
+
+.label_info {
+  display: inline-flex;
+}
+
+.form_fields {
+  float: right;
+  margin:0;
+  padding:0 0 0 5px;
+  font-weight: normal;
+}
+
+// ESTILOS PARA EL SELECCIONAR DE UN TICKET EN MESA DE AYUDA
+
+#todo {
+	width:950px;
+	height:auto;
+	margin:auto;
+}
+.barra_superior1{
+	margin:auto;
+	width:929px;
+	height:18px;
+	background-color: #efefef;
+  background-image: linear-gradient(180deg, #efefef, #dfe1e2);
+  text-shadow: #fff 0 1px 0;
+  border: solid 1px #cdcdcd;
+  border-color: #d4d4d4;
+  border-top-color: #e6e6e6;
+  border-right-color: #d4d4d4;
+  border-bottom-color: #cdcdcd;
+  border-left-color: #d4d4d4;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 0 1px #FFF inset;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 18px;
+  margin-bottom: 0.5em;
+  color: #5E6469;
+  padding: 5px 10px 3px 10px;
+	margin-bottom:20px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.seccion1 {
+	margin:auto;
+	width:950px;
+	height:110px;
+	background-color:#f4f4f4;
+	border:solid 1px #DCDDDD;
+	border-radius: 0px 0px 3px 3px;
+}
+
+.select_espe {
+	border: none;
+	font-size: 12px;
+	height: 20px;
+	width: 290px;  /*auto*/
+	text-transform: none;
+	color: black;
+	background-color: white;
+	cursor: default;
+	font: Arial;
+	border: solid 1px;
+	border-color: rgb(169, 169, 169);
+ }
+ 
+ #name_esp {
+	width:220px;
+	height:12px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #5E6469;
+	float:left;
+	margin-top:4px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+ 
+.lista {
+	list-style:none;
+	font-size: 12px;
+	font-weight: bold;
+	color: #5E6469;
+	padding:10px;
+}
+
+.botones1 {
+	width:100%;
+	height:auto;
+	margin-top:15px;
+}
+
+.boton_cancelar1 {
+	border-radius: 200px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1.0em;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 12px;
+  margin-right: 3px;
+  padding: 7px 16px 6px;
+  text-decoration: none;
+  background-color: #FFFFFF;
+  background-image: linear-gradient(180deg, #FFFFFF, #E7E7E7);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255, 255, 255, 0.8) inset;
+  border: solid 1px #c7c7c7;
+  border-color: #c7c7c7;
+  border-top-color: #d3d3d3;
+  border-right-color: #c7c7c7;
+  border-bottom-color: #c2c2c2;
+  border-left-color: #c7c7c7;
+  text-shadow: #fff 0 1px 0;
+  color: #5E6469 !important;
+  text-decoration: none !important;
+}
+
+// ESTILOS PARA EL HISTORIAL DE UN TICKET EN MESA DE AYUDA
+
+#historial {
+	width:950px;
+	height:auto;
+	margin:auto;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.barra_superior2{
+	margin:auto;
+	width:929px;
+	height:18px;
+	background-color: #efefef;
+	background-image: linear-gradient(180deg, #efefef, #dfe1e2);
+	text-shadow: #fff 0 1px 0;
+	border: solid 1px #cdcdcd;
+	border-color: #d4d4d4;
+	border-top-color: #e6e6e6;
+	border-right-color: #d4d4d4;
+	border-bottom-color: #cdcdcd;
+	border-left-color: #d4d4d4;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 0 1px #FFF inset;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 18px;
+	margin-bottom: 0.5em;
+	color: #5E6469;
+	padding: 5px 10px 3px 10px;
+	margin-bottom:20px;
+}
+
+.seccion2 {
+	margin:auto;
+	width:950px;
+	height:179px;
+	background-color:#f4f4f4;
+	border:solid 1px #DCDDDD;
+	border-radius: 0px 0px 3px 3px;
+}
+
+#titulo_hist {
+	width:930px;
+	height:12px;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	color: #5E6469;
+	float:left;
+	margin-top:4px;
+} 
+
+.orden {
+	width:20px;
+	height:12px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #5E6469;
+	float:left;
+	margin-top:3px;
+}
+
+.area_texto {
+	font-size: 12px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	height: 20px;
+	width: 710px;  /*auto*/
+	margin-left:20px;
+	font-weight: 500;
+	display:block;
+}
+
+.parrafo {
+	list-style:none;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #5E6469;
+	padding:10px;
+}
+
+.botones2 {
+	width:100%;
+	height:auto;
+	margin-top:15px;
+}
+
+.boton_atras {
+  width:80px;
+	height:13px;
+	background-color: #FFFFFF;
+  background-image: linear-gradient(180deg, #fff, #E7E7E7);
+	border-radius: 200px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 12px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 12px;
+	padding: 8px 16px 6px;
+  text-decoration: none;
+	border: solid 1px #c7c7c7;
+  border-color: #c7c7c7;
+  border-top-color: #d3d3d3;
+  border-right-color: #c7c7c7;
+  border-bottom-color: #c2c2c2;
+  border-left-color: #c7c7c7;
+  text-shadow: #fff 0 1px 0;
+  color: #5E6469;
+  cursor: pointer;
+	text-align:center;
+	color: #5E6469 !important;
+  text-decoration: none !important;
+}
+
+.boton_atras:hover {
+  background-color: #FFFFFF;
+  background-image: linear-gradient(180deg, #fff, #F1F1F1);
+}
+
+// ESTILOS PARA EL RESPONDER UN TICKET EN MESA DE AYUDA
+
+#responder {
+	width:950px;
+	height:auto;
+	margin:auto;
+}
+
+.barra_superior3{
+	margin:auto;
+	width:679px;
+	height:18px;
+	background-color: #efefef;
+	background-image: linear-gradient(180deg, #efefef, #dfe1e2);
+	text-shadow: #fff 0 1px 0;
+	border: solid 1px #cdcdcd;
+	border-color: #d4d4d4;
+	border-top-color: #e6e6e6;
+	border-right-color: #d4d4d4;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	border-bottom-color: #cdcdcd;
+	border-left-color: #d4d4d4;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 0 1px #FFF inset;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 18px;
+	margin-bottom: 0.5em;
+	color: #5E6469;
+	padding: 5px 10px 3px 10px;
+	margin-bottom:20px;
+}
+
+.seccion3 {
+	margin:auto;
+	width:700px;
+	height:530px;
+	background-color:#f4f4f4;
+	border:solid 1px #DCDDDD;
+	border-radius: 0px 0px 3px 3px;
+}
+ 
+.titulo {
+	width:220px;
+	height:12px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #5E6469;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	float:left;
+	margin-top:4px;
+}
+
+.area_texto3 {
+	font-size: 12px;
+	height: 20px;
+	width: 710px;  /*auto*/
+	margin-left:220px;
+	font-weight: 500;
+	display:block;
+}
+
+.area_texto_descrip {
+	font-size: 12px;
+	height: 20px;
+	width: 710px;  /*auto*/
+	margin-left:220px;
+	font-weight: 500;
+	display:block;
+}
+
+.area_texto_img {
+	font-size: 12px;
+	height: 120px;
+	width: 120px;  /*auto*/
+	margin-left:220px;
+	font-weight: 500;
+	display:block;
+	background-color:#FFFFFF;
+	border-radius:7px;
+}
+
+.campo {
+	list-style:none;
+	font-size: 12px;
+	font-weight: bold;
+	color: #5E6469;
+	padding:10px;
+}
+
+.texto_area {
+	width:80%;
+	height:auto;
+	padding:10px;
+}
+
+#respuesta {
+	width:922px;
+	max-width:922px;
+	min-width:922px;
+	height: 80px;
+	max-height:80px;
+	min-height:80px;
+	padding:3px;
+	border-radius:3px;
+  border: solid 1px #DCDDDD;
+  cursor:text;
+	font-weight: 500;
+	font-family: Arial;
+}
+
+#formulario {
+	width:auto;
+	height:auto;
+	padding-left:10px;
+}
+
+#cancelar {
+	color:#FFFFFF;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  background-color:#515151;
+  box-sizing: border-box;
+  font: 100 14px Arial;
+  padding: 1px 4px;
+	border-radius:10px;
+	border:none;
+}
+
+#cancelar:hover {
+	color:#FFFFFF;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  background-color:#FF4245;
+  box-sizing: border-box;
+  font: 100 14px Arial;
+  padding: 1px 4px;
+	border-radius:10px;
+	border:none;
+}
+
+.botones3 {
+	width:100%;
+	height:auto;
+	margin-left:13%;
+}
+
+.boton_asignar {
+  width:50px;
+	height:13px;
+	background-color: #8b9297;
+  background-image: linear-gradient(180deg, #8b9297, #484d51);
+	border-radius: 200px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 12px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 12px;
+	padding: 8px 16px 6px;
+  text-decoration: none;
+	text-shadow: #000 0 1px 0;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1), 0 1px 0 0px rgba(255,255,255,0.2) inset;
+  border: solid 1px #484e53;
+  border-color: #484e53;
+  border-top-color: #616a71;
+  border-right-color: #484e53;
+  border-bottom-color: #363b3f;
+  border-left-color: #484e53;
+  color: #efefef;
+  cursor: pointer;
+	text-align:center;
+}
+
+.boton_asignar:hover {
+  background-image: linear-gradient(180deg, #838a90, #414549);
+}
+
+.boton_cancelar3 {
+	margin-left:8px;
+	width:80px;
+	height:13px;
+	background-color: #FFFFFF;
+  background-image: linear-gradient(180deg, #fff, #E7E7E7);
+	border-radius: 200px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 12px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 12px;
+	padding: 8px 16px 6px;
+  text-decoration: none;
+	border: solid 1px #c7c7c7;
+  border-color: #c7c7c7;
+  border-top-color: #d3d3d3;
+  border-right-color: #c7c7c7;
+  border-bottom-color: #c2c2c2;
+  border-left-color: #c7c7c7;
+  text-shadow: #fff 0 1px 0;
+  color: #5E6469;
+  cursor: pointer;
+	text-align:center;
+	color: #5E6469 !important;
+  text-decoration: none !important;
+}
+
+.boton_cancelar3:hover {
+  background-color: #FFFFFF;
+  background-image: linear-gradient(180deg, #fff, #F1F1F1);
+}
+
+.see_more {
+  cursor:pointer;
+  margin-left:50%;
+}
+
+.center {
+  text-align: center;
+}
+
+.ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front{
+	background-color: white;
+	z-index: 9;
+	border: 1px solid;
+	list-style: none;
+	padding: 0px;
+	max-height: 300px;
+  overflow: auto;
+}
+
+#ui-id-1{
+	width: 691px;
+}
+
+.ui-menu-item{
+  padding: 5px;
+  &:hover{
+	  background-color: rgba(51,122,183,.7) !important;
+	  cursor:pointer;
+	  color:white;
+	}
+}

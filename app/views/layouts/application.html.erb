@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Telederma</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+
+  <% if (defined?(resource)).nil? %>
+  	<%= render template: "/layouts/menu.html.erb" %>
+  <% end %>
+  <%= yield %>
+  <% if (defined?(resource)).nil? %>
+  	<%= render template: "/layouts/footer.html.erb" %>
+  <% end %>
+</body>
+</html>

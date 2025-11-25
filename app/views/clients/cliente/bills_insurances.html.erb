@@ -1,0 +1,84 @@
+<div style="padding-top: 1px;" ng-controller="AdminIpsController as cCtlr" ng-init="cCtlr.initialize('<%= current_client_user.email %>', '<%= current_client_user.authentication_token %>', '<%= current_client_user.client_id%>')">
+  <div class="container">
+    <div class="row">
+      <br>
+      <br>
+      <div class="col-md-12">
+        <div class="borde"><h4 class="title_app">Lista de facturas</h4></div>
+        <br>
+      </div>
+      <div class="col-md-12">
+        <div class="table table-condensed" style="overflow:auto;">
+          <table class="table table-hover custom-table" id="dev-table">
+            <thead>
+              <tr>
+                <th class="text-center border_color"></th>
+              	<th class="text-center border_color" scope="col">Ips aseguradora</th>
+                <th class="text-center border_color" scope="col">Número de la factura</th>
+                <th class="text-center border_color" scope="col">Fecha de expedición de la factura</th>
+                <th class="text-center border_color" scope="col">Fecha de inicio</th>
+                <th class="text-center border_color" scope="col">Fecha final</th>
+                <th class="text-center border_color" scope="col">Código entidad administradora </th>
+                <th class="text-center border_color" scope="col">Nombre entidad administradora</th>
+                <th class="text-center border_color" scope="col">Número del contrato</th>
+                <th class="text-center border_color" scope="col">Plan de beneficios</th>
+                <th class="text-center border_color" scope="col">Número de la póliza</th>
+                <th class="text-center border_color" scope="col">Valor de la consulta</th>
+                <th class="text-center border_color" scope="col">Valor de la couota moderadora</th>
+                <th class="text-center border_color" scope="col">Valor total del pago compartido (copago) </th>
+                <th class="text-center border_color" scope="col">Valor de la comisión</th>
+                <th class="text-center border_color" scope="col">Valor total de descuentos</th>
+                <th class="text-center border_color" scope="col">Valor neto a pagar por la entidad contratante</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="factura in cCtlr.bills_insurances">
+              	<td  align="center">
+                  <input type="checkbox" ng-model="factura.selected" ng-click="cCtlr.SelectedBillsInsurances(factura.id)"/>
+                </td>
+                <td class="text-center">{{factura.ips_insurance_id}}</td>
+                <td class="text-center">{{factura.bill_number}}</td>
+                <td class="text-center">{{factura.bill_expedition_date}}</td>
+                <td class="text-center">{{factura.init_date}}</td>
+                <td class="text-center">{{factura.end_date}}</td>
+                <td class="text-center">{{factura.administrator_entity_code}}</td>
+                <td class="text-center">{{factura.administrator_entity_name}}</td>
+                <td class="text-center">{{factura.contract_number}}</td>
+                <td class="text-center">{{factura.benefits_plan}}</td>
+                <td class="text-center">{{factura.policy_number}}</td>
+                <td class="text-center">{{factura.value_consultation}}</td>
+                <td class="text-center">{{factura.value_moderator_fee}}</td>
+                <td class="text-center">{{factura.total_value_shared_payment}}</td>
+                <td class="text-center">{{factura.commision_value}}</td>
+                <td class="text-center">{{factura.total_value_discounts}}</td>
+                <td class="text-center">{{factura.net_to_pay_contract_entity}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="col-md-12">
+        <button type="button" class="btn btn-primary" ng-click="cCtlr.DeleteBillsInsurance()">Eliminar seleccionados</button>
+        <%= link_to 'Añadir factura', new_bill_insurance_clients_cliente_index_path(), class:"btn btn-primary", style:"background-color: #2f91eb;"%>
+      </div>
+    </div>
+  </div> 
+  <!-- Mensajes sistema -->
+  <%= render partial: '/specialists/especialista/messages_system.html.erb'%>
+</div>
+<script>
+  function preventBack() {
+    window.history.forward();
+  }
+
+  setTimeout("preventBack()", 0);
+    window.onunload = function() {
+      null
+  };
+</script>

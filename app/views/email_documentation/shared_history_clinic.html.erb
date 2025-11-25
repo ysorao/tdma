@@ -1,0 +1,10 @@
+<div>
+  <p>Señor(a) <%= @object.patient.name + ' ' + @object.patient.second_name.to_s + ' ' + @object.patient.last_name.to_s + ' ' + @object.patient.second_surname.to_s%></span></p>
+
+  <p>Le informamos que puede descargar su historia clínica de teledermatología.</span></p>
+  <br>
+  <div style="margin-top: 20px;">
+    <%= link_to("Descargar", generate_history_clinic_clients_cliente_index_url(p: @object.patient_id, c: @client, format: :pdf), style: "background: #0fd9a9; border: 0;padding: 15px;color: #fff;border-left: 3px solid #0db88b;text-transform: uppercase;font-family: 'Oswald', sans-serif;text-decoration: none;") %>
+    <!--<a href="www.telederma.gov.co/clients/cliente/generate_history_clinic.pdf?p=<%#= @object.patient_id %>" target="_blank" class="btn btn-info btn-lg" style="background: #0fd9a9; border: 0;padding: 15px;color: #fff;border-left: 3px solid #0db88b;text-transform: uppercase;font-family: 'Oswald', sans-serif;text-decoration: none;">Descargar</a>-->
+  </div>
+</div>

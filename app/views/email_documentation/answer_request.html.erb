@@ -1,0 +1,22 @@
+<div class="email">
+  <h3>Cordial saludo doctor(a) <%= @desk.user.name.to_s + @desk.user.surnames.to_s %></h3>
+
+  <p>El ticket <%= "##{@desk.ticket}" %> enviado por usted ha sido resuelto. A continuación, se encuentra la respuesta</p>
+
+  <div>
+	  <label style="font-weight:bold;"><%= HelpDesk.human_attribute_name :subject %>: </label><p style="display: inline-block;line-height:0px;"><%= @desk.subject %></p>
+	  <br>
+	  <label style="font-weight:bold;"><%= HelpDesk.human_attribute_name :description %>: </label><p style="display: inline-block;line-height:0px;"><%= @desk.description%></p>
+	  <br>
+	  <% unless @desk.image_user.blank? %>
+	    <label style="font-weight:bold;"><%= HelpDesk.human_attribute_name :image_user %>: </label><p style="line-height:0px;"><%= image_tag @desk.image_user, style: "height: 100px" unless @desk.image_user.blank?%></p>
+	    <br>
+	  <%end%>
+	  <label style="font-weight:bold;"><%= HelpDesk.human_attribute_name :response_ticket %>: </label><p style="display: inline-block;line-height:0px;"><%= @desk.response_ticket %></p>
+	  <br>
+	  <% unless @desk.image_admin.blank? %>
+	    <label style="font-weight:bold;"><%= HelpDesk.human_attribute_name :image_admin %>: </label><p style="line-height:0px;"><%= image_tag @desk.image_admin.url, style: "height: 100px" unless @desk.image_admin.blank?%></p>
+	    <br>
+	  <%end%>
+  </div>
+</div>

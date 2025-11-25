@@ -1,0 +1,12 @@
+<div class="email">
+  <h3>Cordial saludo usuario(a) <%= @contact.name_complete.to_s %></h3>
+
+  <p>El mensaje enviado por usted ha sido resuelto. A continuación, se encuentra la respuesta</p>
+
+  <div>
+	  <label style="font-weight:bold;"><%= Contact.human_attribute_name :message %>: </label><p style="display: inline-block;line-height:1em;"><%= @contact.message %></p>
+	  <br>
+	  <label style="font-weight:bold;"><%= Contact.human_attribute_name :response_contact %>: </label><p style="display: inline-block;line-height:1em;"><%= @contact.response_contact %></p>
+	  <br>
+  </div>
+</div>

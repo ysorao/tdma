@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="row">
+    <br>
+    <br>
+    <div class="col-md-12">
+      <div class="borde"><h4 class="title_app">Lista de kits</h4></div>
+      <br>
+    </div>
+    <div class="col-md-12">
+      <div class="table table-condensed">
+        <table class="table table-hover custom-table" id="dev-table">
+          <thead>
+            <tr>
+            	<th class="text-center border_color" scope="col">Kit</th>
+              <th class="text-center border_color" scope="col">Dispositivo</th>
+              <th class="text-center border_color" scope="col">Contrato</th>
+              <th class="text-center border_color" scope="col">Expira</th>
+              <th class="text-center border_color" scope="col">Créditos cargados</th>
+              <th class="text-center border_color" scope="col">Créditos disponibles</th>
+              <!--<th class="text-center border_color" scope="col">Verificado</th>-->
+            </tr>
+          </thead>
+          <% unless @kits.blank? %>
+            <tbody>
+              <% @kits.group_by(&:contract_id).each_with_index do |kit, i| %>
+                <tr>
+                  <% if kit[1][0].class.name == "Kit" %>
+                    <td class="text-center"><%= kit[1][0].code %></td>
+                    <td class="text-center">
+                      <% Kit.find(kit[1][0].id).devices.each do |device| %>
+                        <ul type="none">
+                          <li><%= device.imei%></li>
+                        </ul>
+                      <%end%>
+                    </td>
+                  <%else%>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                  <%end%>
+                  <td class="text-center"><%= kit[1][0].class.name == "Kit" ? "Contrato #{kit[1][0].contract.contract_number}" : "Adición#{} al contrato #{kit[1][0].contract.contract_number}"%></td>
+                  <td class="text-center"><%= kit[1][0].contract.date_end.nil? ? kit[1][0].contract.date_end_addition : kit[1][0].contract.date_end%></td>
+                  <td class="text-center"><%= kit[1][0].class.name == "Kit" ? PrepayCardClient.total_credits(kit[1][0].contract.client.id) : PrepayCard.prepay_additional(kit[1][0].contract.client.id)%></td>
+                  <td class="text-center"><%= kit[1][0].contract.client.available_credits%></td>
+                  <%#= if kit.class.name == "Kit" %>
+                    <!--<td class="text-center"><%#= kit[1][0].code_verified == 0 ? 'Inactivo' : 'Activo'%></td>-->
+                  <%#=else%>
+                    <!--<td class="text-center"></td>-->
+                  <%#=end%>
+                </tr>
+              <% end %>
+            </tbody>
+          <%else%>
+            <tr>
+              <td colspan="6">
+                <p class="text-center"><img src="<%= asset_path("ventana_vacia_consultas.png") %>" class="user-image" style="width: 40%;" alt="User Image"></p>
+              </td>
+            </tr>
+          <%end%>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

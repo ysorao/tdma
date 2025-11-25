@@ -1,0 +1,59 @@
+<!-- Top Menu -->
+<nav class="navbar navbar-default top-menu <%= current_page?(home_landing_home_index_path) ? 'navbar-fixed-top
+' : 'top-menu-small' %>">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/landing/home/home">
+        <img src="<%= asset_path("landing/logopng.png") %>" alt="Telederma en Dermatología">
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li class="<%= current_page?(home_landing_home_index_path) ? 'active' : '' %>"><a href="/landing/home/home">Principal</a></li>
+        <li class="dropdown <%= current_page?(about_us_landing_home_index_path) ? 'active' : '' %>">
+          <a class="dropdown-toggle hidden-sm hidden-md hidden-lg" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quiénes somos <span class="caret"></span></a>
+          <a href="/landing/home/about_us" class="dropdown-toggle disabled hidden-xs " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-turbolinks='false'>Quiénes somos</a>
+          <ul class="dropdown-menu">
+            <li data-menuanchor="/landing/home/about_us#what-is-telederma"><a href="/landing/home/about_us#what-is-telederma" data-turbolinks='false'>¿Qué es Telederma?</a></li>
+            <li data-menuanchor="/landing/home/about_us#benefits"><a href="/landing/home/about_us#benefits" data-turbolinks='false'>Beneficios</a></li>
+            <li data-menuanchor="/landing/home/about_us#instalations"><a href="/landing/home/about_us#instalations" data-turbolinks='false'>Instalaciones</a></li>
+            <li data-menuanchor="/landing/home/about_us#testimonials"><a href="/landing/home/about_us#testimonials" data-turbolinks='false'>Testimonios</a></li>
+          </ul>
+        </li>
+        <li class="dropdown <%= current_page?(services_landing_home_index_path) ? 'active' : '' %>" >
+          <a class="dropdown-toggle hidden-sm hidden-md hidden-lg" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Servicios <span class="caret"></span></a>
+          <a href="/landing/home/services" class="dropdown-toggle disabled hidden-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-turbolinks='false'>Servicios</a>
+          <ul class="dropdown-menu">
+            <li data-menuanchor="/landing/home/services#model-telederma"><a href="/landing/home/services#model-telederma" data-turbolinks='false'>Modelo Telederma</a></li>
+            <li data-menuanchor="/landing/home/services#kit-telederma"><a href="/landing/home/services#kit-telederma" data-turbolinks='false'>Kit Telederma</a></li>
+          </ul>
+        </li>
+        <li><a class="<%= current_page?(event_landing_home_index_path) ? 'active' : '' %>" href="/landing/home/event">Evento</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contacto <span class="caret hidden-md hidden-lg hidden-sm"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/landing/home/support">Soporte técnico</a></li>
+            <li><a href="/landing/home/sales_contact">Contacto de ventas</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Módulos <span class="caret hidden-md hidden-lg hidden-sm"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to 'Inicio', root_path(), class:"btn btn-default"%></li>
+            <li><%= link_to 'Especialistas', new_user_session_path(), class:"btn btn-default"%></li>
+            <li><%= link_to 'IPS', new_client_user_session_path(), class:"btn btn-default"%></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+<!-- Fin Top Menu -->

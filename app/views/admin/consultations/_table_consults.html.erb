@@ -1,0 +1,53 @@
+<div id="<%= div_id%>" style="overflow:auto;width:auto;height:400px;margin-left:50px;display: none;">
+	<table border="0" cellspacing="0" cellpadding="0" id="tabla" class="index_table index" paginator="true">
+	  <thead>
+	      <tr>
+	        <th>Código</th>
+		      <th>Estado</th>
+		      <th>Paciente</th>
+		      <th>Identificación</th>
+		      <th>Género</th>
+		      <th>Edad</th>
+		      <th>Medico</th>
+		      <th>Especialista</th>
+		      <th>Ips</th>
+		      <th>Creado el</th>
+	      </tr>
+	  </thead>
+    <% @consultation[0].each do |aux| %>
+	    <tbody> 
+		    <tr>
+		      <td><%= "Consulta ##{aux[:consulta].id}" %></td>
+		      <td><%= estado_consulta(aux[:consulta].status) %></td>
+		      <td><%= aux[:consulta].patient.name.to_s + ' ' + aux[:consulta].patient.second_name.to_s + ' ' + aux[:consulta].patient.last_name.to_s + ' ' + aux[:consulta].patient.second_surname.to_s%></td>
+		      <td><%= aux[:consulta].patient.number_document%></td>
+		      <td><%= aux[:consulta].patient.genre == 1 ? 'Masculino' : 'Femenino'%></td>
+		      <td><%= aux[:consulta].patient_information.age%></td>
+		      <td><%= aux[:consulta].doctor.nil? ? 'No aplica' : aux[:consulta].doctor.name.to_s + ' ' + aux[:consulta].doctor.surnames.to_s%></td>
+		      <td><%= aux[:consulta].specialist.nil? ? 'No aplica' : aux[:consulta].specialist.name.to_s + ' ' + aux[:consulta].specialist.surnames.to_s%></td>
+		      <td><%= aux[:consulta].doctor.nil? ? 'No tiene' : Client.find(aux[:consulta].doctor.user_clients.first.client_id).business_name%></td>
+		      <td><%= aux[:consulta].created_at.strftime("%d/%m/%Y")%></td>
+		    </tr>
+	    </tbody>
+	    <% unless aux[:controles].flatten.blank? %>
+		    <% aux[:controles].flatten.each do |aux2| %>
+			    <tbody id="group-of-rows-1" class="collapse">
+		        <tr style="background-color: #9e9e9e42;">
+		          <td><%= "Control ##{aux2.id}" %></td>
+				      <td><%= estado_consulta(aux2.status) %></td>
+				      <td><%= aux2.patient.name.to_s + ' ' + aux2.patient.second_name.to_s + ' ' + aux2.patient.last_name.to_s + ' ' + aux2.patient.second_surname.to_s%></td>
+				      <td><%= aux2.patient.number_document%></td>
+				      <td><%= aux2.patient.genre == 1 ? 'Masculino' : 'Femenino'%></td>
+				      <td><%= aux2.patient.patient_informations.first.age%></td>
+				      <td><%= aux2.doctor_control.nil? ? 'No aplica' : aux2.doctor_control.name.to_s + ' ' + aux2.doctor_control.surnames.to_s%></td>
+				      <td><%= aux2.specialist_control.nil? ? 'No aplica' : aux2.specialist_control.name.to_s + ' ' + aux2.specialist_control.surnames.to_s%></td>
+				      <td><%= aux2.doctor_control.nil? ? 'No tiene' : Client.find(aux2.doctor_control.user_clients.first.client_id).business_name%></td>
+				      <td><%= aux2.created_at.strftime("%d/%m/%Y")%></td>
+		        </tr>
+			    </tbody>
+			  <%end%>
+			<%end%>
+	  <%end%>
+	</table>
+	<p class="pagination_information">Mostrando <b>un total de <%= @consultation[1] %></b> Consultas</p>
+</div>

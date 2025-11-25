@@ -1,0 +1,62 @@
+<%= render partial: 'top_menu.html.erb'%>
+    
+<!-- contacto de ventas -->
+<div class="contact-support sales-contact relative">
+  <div class="container">
+    <div class="col-md-7"></div>
+    <div class="col-md-5 center-vertical" style="min-height: 88vh">
+      <div class="text-left">
+        <img src="<%= asset_path("landing/selling-title.png") %>" class="support-title">
+      </div>
+      <br/>
+      <%= render partial: 'contact.html.erb', locals: {number: "1"}%> 
+    </div>
+  </div>
+  <%= render partial: 'social_network.html.erb'%> 
+</div>
+<!-- Fin contacto ventas -->
+
+<!-- Contacto Datos y mapa -->
+<div class="info-contact">
+  <div class="bg-info-contact">
+    <div class="container">
+      <h2 class="text-center white-title">Contacto</h2>
+      <hr style="border-width: 3px" />
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-contact-text">
+            <p>Dirección <img src="<%= asset_path("icons/icon-pin.png") %>"></p>
+            <p>Sede principal:</p>
+            <p>Correspondencia: <span>Cr. 10 No. 01 - 99 Sur</span></p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-contact-text">
+            <p>Línea atención al usuario <img src="<%= asset_path("icons/icon-phone.png") %>"></p>
+            <p><span>(571) 3077072</span></p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="info-contact-text">
+            <p>Email <img src="<%= asset_path("icons/icon-mail.png") %>"></p>
+            <p><span>sectelederma@dermatologia.gov.co</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="logos-p text-center">
+    <img src="<%= asset_path("landing/logos-asociados.png") %>" class="img-responsive" style="display: inline-block;">
+  </div>
+
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3977.0207938880376!2d-74.08956048534986!3d4.590291243883434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f991cb1efa3af%3A0x3e397ec3284a9d1e!2sE.S.E.+Centro+Dermatol%C3%B3gico+Federico+Lleras+Acosta!5e0!3m2!1ses!2sco!4v1545353454542" height="400" frameborder="0" style="border:0; width: 100%;" allowfullscreen></iframe>
+
+</div>
+<!-- Fin Contacto Datos y mapa -->
+
+
+
+

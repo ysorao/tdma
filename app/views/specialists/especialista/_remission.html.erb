@@ -1,0 +1,31 @@
+<div class="col-md-12 line" id="remission" style="display: none;padding-left: 20px;"> 
+  <!-- Requerimiento -->
+  <div class="row">
+  	<div class="col-md-12 secondary_title">
+      <h4 class="control text-center">Remisión</h4>
+    </div>
+  </div>
+  <div class="row">
+    <label class="control texto_color" for="Name">Motivo de remisión</label>
+    <select class="form-control field_req" ng-model="cCtlr.type_remission" ng-click="show_button('btn_remission', $event)" ng-init="cCtlr.type_remission='1'">
+  		<option value="1">- Cuadro clínico complejo para evaluar por teledermatología. Favor remitir el paciente a dermatólogo presencial.</option>
+  		<option value="2">- Se requiere valoración por otra especialidad diferente a dermatología. Favor remitir el paciente a la especialidad correspondiente.</option>
+      <option value="3">- Otro.</option>
+		</select>
+  </div>
+  <br>
+  <div class="row">
+  	<div>
+      <label class="control texto_color" for="Name">Comentarios</label>
+    </div>
+    <div>  	
+      <textarea class="form-control field_req" placeholder="Explique el porque de la remisión" ng-model="cCtlr.remission_comments" ng-keyup="show_button('btn_remission', $event)" rows="4" cols="10"></textarea>
+    </div>
+    <br>
+    <p class="text-right"><button type="button" class="btn button-save" ng-click="cCtlr.UpdateConsultation()" id="btn_remission" ng-disabled="checked5 || cCtlr.remission_comments == '' || cCtlr.remission_comments == null">Guardar</button></p>
+  </div>
+  <br>
+  <div class="row"> 	
+    <button type="button" class="btn btn-success form-control" style="background-color: rgb(0, 128, 0); color: rgb(255, 255, 255);" ng-click="cCtlr.UpdateResponseConsult(false)">Remitir consulta</button>
+  </div>
+</div>

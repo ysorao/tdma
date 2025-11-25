@@ -1,0 +1,177 @@
+<div style="padding-top: 1px;" ng-controller="AdminIpsController as cCtlr" ng-init="cCtlr.initialize('<%= current_client_user.email %>', '<%= current_client_user.authentication_token %>', '<%= current_client_user.client_id%>')">
+  <!-- CREAR FACTURA -->
+  <div class="container">
+    <div style="padding-top: 35px;">
+      <%= link_to bills_insurances_clients_cliente_index_path, format: 'js' do %>
+        <span class="glyphicon glyphicon-chevron-left"></span>Regresar
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="borde"><h4 class="title_app">Formulario</h4></div>
+      </div>
+      <br>
+      <br>
+      <br>
+    <div class="row">
+      <!-- Ips aseguradora -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Aseguradora</h5>
+        </div>
+        <select class="form-control" ng-model="cCtlr.ips_insurance_id">
+          <option disabled selected value> Seleccione una opción </option>
+          <option ng-repeat="aseguradora in cCtlr.ips_insurance" value="{{aseguradora.id}}">{{aseguradora.insurance}}</option>
+        </select>
+        <p class="error" ng-show="cCtlr.errors.ips_insurance_id != null || cCtlr.errors.ips_insurance_id != undefined">{{cCtlr.errors.ips_insurance_id[0]}} </p>
+      </div>
+      <!-- Número de la factura -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Número de la factura</h5>
+        </div>
+        <input type="text" class="form-control" id="bills" placeholder="Ingrese el número de la factura" ng-model="cCtlr.bill_number" ng-keyup="message('bill', 'bills')">
+        <p class="error" id="bill" ng-show="cCtlr.errors.bill_number != null || cCtlr.errors.bill_number != undefined">{{cCtlr.errors.bill_number[0]}} </p>
+      <br>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Fecha de expedición de la factura -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Fecha expedición factura</h5>
+        </div>
+        <input type="text" class="form-control datepicker" id="bill_expedition" placeholder="Ingrese la fecha de expedición" ng-model="cCtlr.bill_expedition_date" ng-keyup="message('expedition', 'bill_expedition')">
+        <p class="error" id="expedition" ng-show="cCtlr.errors.bill_expedition_date != null || cCtlr.errors.bill_expedition_date != undefined">{{cCtlr.errors.bill_expedition_date[0]}} </p>
+      </div>
+
+      <!-- Fecha de inicio -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Fecha de inicio</h5>
+        </div>
+        <input type="text" class="form-control datepicker" id="init" placeholder="Ingrese la fecha inicio" ng-model="cCtlr.init_date" ng-keyup="message('date_init', 'init')">
+        <p class="error" id="date_init" ng-show="cCtlr.errors.init_date != null || cCtlr.errors.init_date != undefined">{{cCtlr.errors.init_date[0]}} </p>
+      <br>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Fecha final -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Fecha final</h5>
+        </div>
+        <input type="text" class="form-control datepicker" id="end" placeholder="Ingrese la fecha final" ng-model="cCtlr.end_date" ng-keyup="message('finish', 'end')">
+        <p class="error" id="finish" ng-show="cCtlr.errors.end_date != null || cCtlr.errors.end_date != undefined">{{cCtlr.errors.end_date[0]}} </p>
+      </div>
+      <!-- Código entidad administradora -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Código entidad administradora</h5>
+        </div>
+        <input type="text" class="form-control" id="entity_code" placeholder="Ingrese el código entidad" ng-model="cCtlr.administrator_entity_code">
+        <p class="error" id="code" ng-show="cCtlr.errors.administrator_entity_code.length > 0">{{cCtlr.errors.administrator_entity_code[0]}} </p>
+      <br>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Nombre entidad administradora -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Nombre entidad administradora</h5>
+        </div>
+        <input type="text" class="form-control" id="entity_name" placeholder="Ingrese el nombre de la entidad" ng-model="cCtlr.administrator_entity_name" ng-keyup="message('name', 'entity_name')">
+        <p class="error" id="name" ng-show="cCtlr.errors.administrator_entity_name.length > 0">{{cCtlr.errors.administrator_entity_name[0]}} </p>
+        <br>
+      </div>
+      <!-- Número del contrato -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">Número del contrato</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el número del contrato" ng-model="cCtlr.contract_number">
+      <br>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Plan de beneficios -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">Plan de beneficios</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el plan de beneficios" ng-model="cCtlr.benefits_plan">
+        <br>
+      </div>
+      <!-- Número de la póliza -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">Número de la póliza</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el número de póliza" ng-model="cCtlr.policy_number">
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Valor consulta -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">Valor de la consulta</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el valor de la consulta" ng-model="cCtlr.value_consultation">
+        <p class="error" ng-show="cCtlr.errors.value_consultation.length > 0">{{cCtlr.errors.value_consultation[0]}}</p>
+        <br>
+      </div>
+      <!-- Valor cuota moderadora -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">Valor cuota moderadora</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el valor de la cuota moderadora" ng-model="cCtlr.value_moderator_fee">
+        <p class="error" ng-show="cCtlr.errors.value_moderator_fee.length > 0">{{cCtlr.errors.value_moderator_fee[0]}}</p>
+      <br>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Valor total del pago compartido (copago) -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">Valor total del pago compartido (copago)</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el valor total" ng-model="cCtlr.total_value_shared_payment">
+        <p class="error" ng-show="cCtlr.errors.total_value_shared_payment.length > 0">{{cCtlr.errors.total_value_shared_payment[0]}}</p>
+        <br>
+      </div>
+      <!-- Valor de la comisión -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">Valor de la comisión</h5>
+        </div>
+        <input type="text" class="form-control" placeholder="Ingrese el valor de la comisión" ng-model="cCtlr.commision_value">
+        <p class="error" ng-show="cCtlr.errors.commision_value.length > 0">{{cCtlr.errors.commision_value[0]}}</p>
+      <br>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Valor total de descuentos -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">Valor total de descuentos</h5>
+        </div>
+        <input type="text" id="discount" class="form-control" placeholder="Ingrese el valor total" ng-model="cCtlr.total_value_discounts">
+        <p class="error" ng-show="cCtlr.errors.total_value_discounts.length > 0">{{cCtlr.errors.total_value_discounts[0]}}</p>
+      </div>
+      <!-- Valor neto a pagar por la entidad contratante -->
+      <div class="col-md-6">
+        <div class="col-md-12 secondary_title">
+          <h5 class="control">*Valor neto a pagar por la entidad contratante</h5>
+        </div>
+        <input type="text" class="form-control" id="pay_value" placeholder="Ingrese el valor neto a pagar" ng-model="cCtlr.net_to_pay_contract_entity" ng-blur="message2('pay_value', self.errors.net_to_pay_contract_entity)">
+        <p class="error" ng-show="cCtlr.errors.net_to_pay_contract_entity.length > 0">{{cCtlr.errors.net_to_pay_contract_entity[0]}} </p>
+      </div>
+    </div>
+      <br>
+    </div>
+    <br>
+    <button type="button" class="btn btn-primary button-save" id="save_formula" ng-click="cCtlr.NewBillInsurance()">Guardar</button>
+  </div>
+</div>
