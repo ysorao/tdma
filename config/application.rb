@@ -14,7 +14,7 @@ module Telederma
   	# Evita error de llamado de libreria de carrierwave para subida de imagenes
     require 'carrierwave'
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    config.load_defaults 6.0
 
     # Se Configura la arquitectura DDD(Domain Driven Design)
     config.autoload_paths += %W(#{config.root}/lib/modules)
