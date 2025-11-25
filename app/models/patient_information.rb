@@ -9,7 +9,7 @@ class PatientInformation < ApplicationRecord
   #validates :phone, length: { in: 7..15 }
   #validates :age, length: { in: 1..3 }
   validates :age, numericality: { only_integer: true }
-  validates :urban_zone, :presence => { :if => 'urban_zone.nil?' }
+  validates :urban_zone, presence: true
   validate :validate_terms?, on: :create
   #validate :validate_unit_measure_age?, on: :create
 
