@@ -6,8 +6,8 @@ git_source(:github) do |repo_name|
 end
 
 ruby '3.1.6'
-gem 'rails', '~> 7.1.5'
-gem 'concurrent-ruby', '~> 1.2.0'
+gem 'rails', '~> 7.2.0'
+gem 'concurrent-ruby', '~> 1.3.1'
 gem 'pg', '~> 1.4'
 gem 'puma', '~> 6.4'
 gem 'sass-rails', '~> 5.0'
