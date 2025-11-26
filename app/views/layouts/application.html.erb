@@ -10,11 +10,11 @@
   <body>
 
   <% if (defined?(resource)).nil? %>
-  	<%= render template: "/layouts/menu.html.erb" %>
+  	<%= render template: "layouts/menu" %>
   <% end %>
   <%= yield %>
   <% if (defined?(resource)).nil? %>
-  	<%= render template: "/layouts/footer.html.erb" %>
+  	<%= render template: "layouts/footer" %>
   <% end %>
 </body>
 </html>

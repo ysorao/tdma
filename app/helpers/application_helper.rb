@@ -467,4 +467,21 @@ module ApplicationHelper
       "/#{a[1]}/#{a[2]}/#{a[3]}/#{a[4]}/#{b}"
     end
   end
+
+
+
+  def reduction_image_for_pdf(url_image)
+    relative_path = reduction_image(url_image)
+    return nil if relative_path.nil?
+    full_path = Rails.root.join('public', relative_path.sub(/^\//, ''))
+    return nil unless File.exist?(full_path)
+    "file://#{full_path}"
+  end
+
+  def pdf_image_tag(url_image, options = {})
+    src = reduction_image_for_pdf(url_image)
+    return '' if src.nil?
+    style = options[:style] || ''
+    "<img src=\"#{src}\" style=\"#{style}\" />".html_safe
+  end
 end

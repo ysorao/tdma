@@ -179,10 +179,11 @@ class Clients::ClienteController < ApplicationController
           #:wkhtmltopdf => '/usr/local/bin/wkhtmltopdf', zoom: '2.5', margin: { top: 5, left: 0, right: 0, bottom: 10 }, footer: { :html => {:template => 'clients/cliente/footer.pdf.erb'}}
         pdf_file = render_to_string(
           pdf: "Telederma_#{@paciente.name}_#{@paciente.last_name}",
-          template: "clients/cliente/generate_history_clinic.pdf.erb",
+          template: "clients/cliente/generate_history_clinic", formats: [:html],
+          enable_local_file_access: true,
           zoom: "2.5",
           margin: { top: 5, left: 0, right: 0, bottom: 10 },
-          footer: { html: { template: "clients/cliente/footer.pdf.erb" } }
+          footer: { html: { template: "clients/cliente/footer", formats: [:html] } }
         )
 
         tempfile = Tempfile.new(['invoice', '.pdf'], Rails.root.join('tmp'))

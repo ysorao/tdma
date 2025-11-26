@@ -69,7 +69,7 @@ Rails.application.configure do
   }
 
   # si da problemas enviando correos localmente
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'https://teledermaqa.heon.com.co' }
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
