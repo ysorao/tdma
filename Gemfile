@@ -5,11 +5,11 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '3.0.7'
-gem 'rails', '~> 7.0.8'
+ruby '3.1.6'
+gem 'rails', '~> 7.1.5'
 gem 'concurrent-ruby', '~> 1.2.0'
 gem 'pg', '~> 1.4'
-gem 'puma', '~> 5.6'
+gem 'puma', '~> 6.4'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'jquery-rails'
@@ -31,7 +31,7 @@ gem 'aws-sdk-s3', '~> 1.0'
 gem 'wicked_pdf', '~> 2.1'
 gem 'wkhtmltopdf-binary'
 gem 'origami', '~> 2.1'
-gem 'activeadmin', '~> 2.9'
+gem 'activeadmin', '~> 3.2'
 gem 'sidekiq', '~> 6.0'
 gem 'angularjs-rails'
 gem 'font-awesome-rails'
@@ -73,3 +73,4 @@ group :production do
   gem 'rails_12factor'
 end
 gem 'rexml'
+gem 'matrix'

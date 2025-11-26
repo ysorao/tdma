@@ -30,4 +30,13 @@ class AdminUser < ApplicationRecord
       TraceabilityAdmin.create(admin_user_id: self.admin, update_admin: true, user_admin_id: self.id)
     end
   end
+  # Ransack 4.x - required for ActiveAdmin
+  def self.ransackable_attributes(auth_object = nil)
+    ["id", "email", "name", "surnames", "number_document", "phone", "role", "status", "created_at", "updated_at"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["contacts", "help_desks", "traceability_admins", "user_admins"]
+  end
+
 end
