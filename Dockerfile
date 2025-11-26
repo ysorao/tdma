@@ -1,25 +1,39 @@
-# Usa la versión exacta confirmada: 2.5.0
-FROM ruby:2.5.9-bullseye
+FROM ruby:3.4.1-slim
 
-# 1. Instala dependencias del sistema operativo
-# Incluye libpq-dev para la gem 'pg' (PostgreSQL) y Node.js para Asset Pipeline
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+# Instalar dependencias del sistema
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    nodejs \
+    npm \
+    git \
+    curl \
+    libvips-dev \
+    imagemagick \
+    wkhtmltopdf \
+    fonts-liberation \
+    libfontconfig1 \
+    && rm -rf /var/lib/apt/lists/*
 
-# 2. Establece el directorio de trabajo
-WORKDIR /usr/src/app
+# Directorio de trabajo
+WORKDIR /app
 
-# 3. Copia e instala las Gems
-# Primero copia solo los archivos de dependencias para aprovechar el cache de Docker
-COPY Gemfile Gemfile.lock /usr/src/app/
-RUN bundle install
+# Copiar Gemfile primero para cachear dependencias
+COPY Gemfile Gemfile.lock ./
 
-# 4. Copia el resto del código de la aplicación
-COPY . /usr/src/app
+# Instalar bundler y gemas
+RUN gem install bundler:2.4.22 && \
+    bundle config set --local without 'development test' && \
+    bundle install --jobs 4 --retry 3
 
-# 5. Configuración de puertos
-# El puerto por defecto de Puma o WEBrick
+# Copiar el resto de la aplicación
+COPY . .
+
+# Precompilar assets
+RUN SECRET_KEY_BASE=dummy bundle exec rails assets:precompile
+
+# Exponer puerto
 EXPOSE 3000
 
-# 6. Comando de inicio del servidor
-# Este comando le dice al contenedor cómo iniciar (usando Puma, el servidor común de Rails)
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+# Comando por defecto
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

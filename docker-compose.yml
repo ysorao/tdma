@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: telederma
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-telederma_secret}
+      POSTGRES_DB: telederma_production
+    restart: unless-stopped
+
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: postgres://telederma:${DB_PASSWORD:-telederma_secret}@db:5432/telederma_production
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      RAILS_SERVE_STATIC_FILES: "true"
+      RAILS_LOG_TO_STDOUT: "true"
+    volumes:
+      - uploads_data:/app/public/uploads
+      - pdf_temp:/app/pdf_temp_files
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  uploads_data:
+  pdf_temp:
