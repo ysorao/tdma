@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 ruby '3.2.6'
-gem 'rails', '~> 7.2.0'
+gem 'rails', '~> 8.0.0'
 gem 'concurrent-ruby', '~> 1.3.1'
 gem 'pg', '~> 1.4'
 gem 'puma', '~> 6.4'
@@ -22,7 +22,7 @@ gem 'carrierwave', '~> 2.0'
 gem 'carrierwave-base64'
 gem 'carrierwave-imageoptimizer'
 gem 'devise', '~> 4.7'
-gem 'simple_token_authentication', '~> 1.0'
+gem 'simple_token_authentication', github: 'gonzalo-bulnes/simple_token_authentication'
 gem 'cancancan', '~> 3.0'
 gem 'json', '~> 2.0'
 gem 'rabl'
