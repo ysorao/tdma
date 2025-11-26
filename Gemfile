@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '3.2.6'
+ruby '3.4.1'
 gem 'rails', '~> 8.0.0'
 gem 'concurrent-ruby', '~> 1.3.1'
 gem 'pg', '~> 1.4'
@@ -18,6 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'mutex_m'
 gem 'carrierwave', '~> 2.0'
 gem 'carrierwave-base64'
 gem 'carrierwave-imageoptimizer'
@@ -30,7 +31,7 @@ gem 'fog-aws', '~> 3.0'
 gem 'aws-sdk-s3', '~> 1.0'
 gem 'wicked_pdf', '~> 2.1'
 gem 'wkhtmltopdf-binary'
-gem 'origami', '~> 2.1'
+gem 'origamindee', '~> 4.0'
 gem 'activeadmin', '~> 3.2'
 gem 'sidekiq', '~> 6.0'
 gem 'angularjs-rails'
@@ -60,8 +61,6 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'listen', '~> 3.3'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rb-readline'
 end
 

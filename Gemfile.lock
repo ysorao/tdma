@@ -179,7 +179,6 @@ GEM
       image_optimizer (~> 1.6)
     cgi (0.5.0)
     chronic (0.10.2)
-    colorize (0.8.1)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.5)
     crass (1.0.6)
@@ -291,6 +290,7 @@ GEM
     minitest (5.26.2)
     msgpack (1.8.0)
     multi_json (1.17.0)
+    mutex_m (0.3.0)
     net-imap (0.5.12)
       date
       net-protocol
@@ -308,8 +308,11 @@ GEM
     nio4r (2.7.5)
     nokogiri (1.18.10-x86_64-linux-gnu)
       racc (~> 1.4)
-    origami (2.1.0)
-      colorize (~> 0.7)
+    origamindee (4.0.2)
+      base64 (~> 0.1)
+      matrix (~> 0.4)
+      rainbow (~> 3.1)
+      rexml (~> 3.4)
     orm_adapter (0.5.0)
     ostruct (0.6.3)
     pg (1.6.2-x86_64-linux)
@@ -371,6 +374,7 @@ GEM
       thor (~> 1.0, >= 1.2.2)
       tsort (>= 0.2)
       zeitwerk (~> 2.6)
+    rainbow (3.1.1)
     rake (13.3.1)
     ransack (4.4.0)
       activerecord (>= 7.1)
@@ -425,10 +429,6 @@ GEM
       redis (>= 4.5.0, < 5)
     sitemap_generator (6.3.0)
       builder (~> 3.0)
-    spring (2.1.1)
-    spring-watcher-listen (2.0.1)
-      listen (>= 2.7, < 4.0)
-      spring (>= 1.2, < 3.0)
     sprockets (3.7.5)
       base64
       concurrent-ruby (~> 1.0)
@@ -515,7 +515,8 @@ DEPENDENCIES
   kaminari
   listen (~> 3.3)
   matrix
-  origami (~> 2.1)
+  mutex_m
+  origamindee (~> 4.0)
   pg (~> 1.4)
   puma (~> 6.4)
   rabl
@@ -535,8 +536,6 @@ DEPENDENCIES
   sidekiq (~> 6.0)
   simple_token_authentication!
   sitemap_generator
-  spring
-  spring-watcher-listen (~> 2.0.0)
   sshkit-sudo
   turbolinks (~> 5)
   uglifier (>= 1.3.0)
@@ -546,7 +545,7 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 RUBY VERSION
-   ruby 3.2.6p234
+   ruby 3.4.1p0
 
 BUNDLED WITH
    2.4.22
