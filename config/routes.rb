@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   default_url_options host: "http://localhost:3000" if Rails.env == "development"
 
   devise_for :client_users, controllers: { sessions: 'client_users/sessions', registrations: 'client_users/registrations', passwords: 'client_users/passwords', confirmations: 'client_users/confirmations', unlocks: "client_users/unlocks"}
-  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', passwords: 'users/passwords', confirmations: 'users/confirmations', unlocks: "users/unlocks"}
+  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', passwords: 'users/passwords', confirmations: 'users/confirmations', unlocks: 'users/unlocks'}
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
