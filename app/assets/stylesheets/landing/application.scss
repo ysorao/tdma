@@ -10,16 +10,15 @@
 * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
 * file per style scope.
 *
+*= require landing/bootstrap
+*= require landing/fullpage
+*= require landing/home
+*= require landing/style
+*= require landing/top_menu
+*= require landing/about_us
+*= require landing/contact
+*= require landing/fancybox
+*= require landing/fonts
+*= require landing/page_initial
+*= require landing/services
 */
-
-@import "about_us.css";
-@import "landing/bootstrap";
-@import "contact.css";
-@import "fancybox.css";
-@import "fonts.css";
-@import "landing/fullpage";
-@import "landing/home";
-@import "page_initial.css";
-@import "services.css";
-@import "landing/style";
-@import "landing/top_menu";
