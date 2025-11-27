@@ -1,4 +1,4 @@
-<%= render partial: 'top_menu.html.erb'%>
+<%= render partial: 'top_menu'%>
 
 <!-- Soporte técnico -->
 <div class="contact-support relative">
@@ -8,10 +8,10 @@
         <img src="<%= asset_path("landing/support-title.png") %>" class="support-title">
       </div>
       <br/>
-      <%= render partial: 'contact.html.erb', locals: {number: "2"}%>
+      <%= render partial: 'contact', locals: {number: "2"}%>
     </div>
   </div>
-  <%= render partial: 'social_network.html.erb'%>   
+  <%= render partial: 'social_network'%>   
 </div> 
 
 
