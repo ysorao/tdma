@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   #ADMINISTRADOR
   namespace :admin do
+    resources :logs, only: [:index]
     resources :mesa_ayuda do
       collection do
         put 'assign_update'

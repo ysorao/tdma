@@ -1,0 +1,22 @@
+<div style="padding: 20px; font-family: Arial;">
+  <h1>Logs en Tiempo Real - <%= Rails.env %></h1>
+  <form method="get" style="margin-bottom: 15px;">
+    <label>Lineas: </label>
+    <select name="lines" onchange="this.form.submit()">
+      <option value="50" <%= 'selected' if @lines.to_s == '50' %>>50</option>
+      <option value="100" <%= 'selected' if @lines.to_s == '100' %>>100</option>
+      <option value="200" <%= 'selected' if @lines.to_s == '200' %>>200</option>
+      <option value="500" <%= 'selected' if @lines.to_s == '500' %>>500</option>
+    </select>
+    <button type="submit">Ver</button>
+    <button type="button" onclick="location.reload()">Refrescar</button>
+    <label><input type="checkbox" id="autorefresh" checked> Auto-refresh (5s)</label>
+  </form>
+  <pre style="background: #1e1e1e; color: #0f0; padding: 15px; height: 600px; overflow-y: scroll; font-size: 12px; white-space: pre-wrap;"><%= @logs.join("\n") %></pre>
+  
+  <script>
+    var autoRefresh = setInterval(function(){
+      if(document.getElementById('autorefresh').checked) location.reload();
+    }, 5000);
+  </script>
+</div>
